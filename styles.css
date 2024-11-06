@@ -1,0 +1,57 @@
+html {
+    font-size: 70.5%;
+    box-sizing: border-box;
+}
+
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+
+body {
+    font-size: 16px;
+    font-family: 'Krub', sans-serif;
+}
+
+h1 {
+    font-size: 3.8rem;
+    text-align: center;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 100px; /* Espacio entre el menú y el tablero */
+}
+
+.menu {
+    width: 250px;
+    text-align: left; 
+}
+
+.menu h3 {
+    font-size: 2.2rem;
+    margin-bottom: 2px;
+}
+
+.menu ul {
+    list-style-type:disc;
+    padding: 0;
+}
+
+.menu li {
+    margin: 8px 0;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 2rem;
+}
+
+.canvas-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+canvas {
+    border: 2px solid #000000;
+}
