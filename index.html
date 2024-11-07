@@ -1,45 +1,45 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Comprensión</title>
+    <title>Juego - Comprensión</title>
     <link rel="stylesheet" href="css/styles.css">
-    <div id="attemptCounter" style="position: absolute; top: 10px; right: 10px; font-size: 1.5rem; color: red; font-weight: bold;">
-        Intentos incorrectos: 0
-    </div>
-    
 </head>
+
 <body>
-    <h1>Juego - Comprensión</h1>
-    <div class="container">
-        <div class="menu">
-            <h3>Opciones</h3>
-            <ul><b>
-                <li onclick="setColor('#FF0000')" class="color-option" style="color: #FF0000;">Rojo</li>
-                <li onclick="setColor('#8B4513')" class="color-option" style="color: #8B4513;">Café</li>
-                <li onclick="setColor('#FFC0CB')" class="color-option" style="color: #FFC0CB;">Rosado</li>
-                <li onclick="setColor('#FFFF00')" class="color-option" style="color: #FFFF00;">Amarillo</li>
-                <li onclick="setColor('#800080')" class="color-option" style="color: #800080;">Morado</li>
-                <li onclick="setColor('#008000')" class="color-option" style="color: #008000;">Verde</li>
-                <li onclick="setColor('#ADD8E6')" class="color-option" style="color: #ADD8E6;">Celeste</li>
-                <li onclick="setColor('#000000')" class="color-option" style="color: #000000;">Negro</li>
-                <li onclick="clearColor()" class="color-option" style="color: #000000;">Borrar</li>
-                <li onclick="writeLetter('S')">Escribir 'S'</li>
-                <li onclick="writeLetter('G')">Escribir 'G'</li>
-                <li onclick="drawTriangle()">Dibujar Triángulo</li>
-            </ul></b>
-        </div>
-        <div class="canvas-container">
-            <canvas id="tablero" width="500" height="250"></canvas>
-            <!-- Mensaje de instrucción debajo del tablero -->
-            <p id="instruction" style="margin-top: 15px; font-size: 1.5rem; color: #333;">
-                Colorea de rojo la casilla que está encima de la estrella.
+    <h1>BIENVENIDO AL JUEGO COMPRENSIÓN</h1>
+    <div class="index-container">
+        <!-- Información del Juego -->
+        <div class="info-juego">
+            <p>
+                Bienvenido a un juego de memoria y lógica diseñado especialmente para apoyar a pacientes con alzhéimer.
+                A través de ejercicios visuales y tareas simples de colorear, el juego ayuda a estimular la atención, la
+                concentración y la memoria.
+                Cada actividad está cuidadosamente pensada para ofrecer una experiencia agradable, con instrucciones
+                claras y retos que favorecen el desarrollo cognitivo.
+                ¡Diviértete mientras ejercitas tu mente!
             </p>
-            <!-- Área para mostrar notificaciones de validación -->
-            <p id="notification" style="font-size: 1.5rem; color: green; font-weight: bold;"></p>
+        </div>
+
+        <!-- Material Audiovisual -->
+        <div class="material-audiovisual">
+            <img src="img/cerebro.jpg" alt="Imagen de cerebro" class="audiovisual-img">
+        </div>
+
+        <!-- Menú de opciones -->
+        <div class="menu-opciones">
+            <select id="select-paciente">
+                <option value="" disabled selected>Seleccionar Paciente</option>
+                <!-- Pacientes de la base de datos serán cargados aquí -->
+            </select>
+            <button onclick="window.location.href='html/registro.html'">Agregar paciente</button>
+            <button onclick="window.location.href='html/estadistica.html'">Estadísticas</button>
         </div>
     </div>
+
     <script src="scripts/script.js"></script>
 </body>
+
 </html>
