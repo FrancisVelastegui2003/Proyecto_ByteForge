@@ -6,27 +6,30 @@ const rows = 5;
 const cols = 10;
 let selectedColor = "";
 let selectedLetter = "";
-let drawTriangleMode = false; // Variable para activar el modo de dibujo de triángulo
+let drawTriangleMode = false;
+
+const initialElementsPositions = new Set(); // Guardará las posiciones iniciales
+let starPosition = null; // Guardará la posición de la estrella
 
 // Función para establecer el color seleccionado
 function setColor(color) {
     selectedColor = color;
     selectedLetter = "";
-    drawTriangleMode = false; // Desactivar modo de triángulo
+    drawTriangleMode = false;
 }
 
 // Función para limpiar el color seleccionado
 function clearColor() {
     selectedColor = "clear";
     selectedLetter = "";
-    drawTriangleMode = false; // Desactivar modo de triángulo
+    drawTriangleMode = false;
 }
 
 // Función para seleccionar una letra específica
 function writeLetter(letter) {
     selectedLetter = letter;
     selectedColor = "";
-    drawTriangleMode = false; // Desactivar modo de triángulo
+    drawTriangleMode = false;
 }
 
 // Activar el modo de dibujo de triángulo
@@ -57,9 +60,15 @@ function drawBoard() {
             position = Math.floor(Math.random() * rows * cols);
         } while (usedPositions.has(position));
         usedPositions.add(position);
+        initialElementsPositions.add(position); // Guarda la posición inicial
 
         const row = Math.floor(position / cols);
         const col = position % cols;
+
+        if (element.type === 'star') {
+            starPosition = { row, col }; // Guardar la posición de la estrella
+        }
+
         drawElement(row, col, element);
     });
 
@@ -123,11 +132,12 @@ canvas.addEventListener("click", (event) => {
     const row = Math.floor(y / cellSize);
 
     if (drawTriangleMode) {
-        drawTriangleInCell(row, col); // Dibuja un triángulo en la celda seleccionada
+        drawTriangleInCell(row, col);
     } else if (selectedColor === "clear") {
         clearCell(row, col);
     } else if (selectedColor) {
         colorCell(row, col, selectedColor);
+        checkStarCondition(row, col, selectedColor);
     } else if (selectedLetter) {
         writeOnCell(row, col, selectedLetter);
     }
@@ -153,10 +163,25 @@ function writeOnCell(row, col, letter) {
 
 // Función para borrar una celda específica
 function clearCell(row, col) {
+    const position = row * cols + col;
+    if (initialElementsPositions.has(position)) {
+        return; // No borra si la celda contiene un elemento inicial
+    }
     const x = col * cellSize;
     const y = row * cellSize;
     ctx.clearRect(x, y, cellSize, cellSize);
     ctx.strokeRect(x, y, cellSize, cellSize);
+}
+
+// Función para verificar que la casilla encima de la estrella sea negra
+function checkStarCondition(row, col, color) {
+    if (starPosition && row === starPosition.row  && col === starPosition.col) {
+        if (color === "#FF0000") {
+            document.getElementById("notification").innerText = "¡Correcto! Has coloreado la casilla en negro encima de la estrella.";
+        } else {
+            document.getElementById("notification").innerText = "Incorrecto. Debes colorear la casilla encima de la estrella en negro.";
+        }
+    }
 }
 
 // Función para dibujar un triángulo en una celda específica
@@ -167,12 +192,27 @@ function drawTriangleInCell(row, col) {
 
     ctx.fillStyle = "black";
     ctx.beginPath();
-    ctx.moveTo(x + cellSize / 2, y + cellSize / 4); // Vértice superior
-    ctx.lineTo(x + cellSize / 4, y + 3 * cellSize / 4); // Vértice inferior izquierdo
-    ctx.lineTo(x + 3 * cellSize / 4, y + 3 * cellSize / 4); // Vértice inferior derecho
+    ctx.moveTo(x + cellSize / 2, y + cellSize / 4);
+    ctx.lineTo(x + cellSize / 4, y + 3 * cellSize / 4);
+    ctx.lineTo(x + 3 * cellSize / 4, y + 3 * cellSize / 4);
     ctx.closePath();
     ctx.fill();
 }
+
+let incorrectAttempts = 0; // Variable para contar intentos incorrectos
+
+function checkStarCondition(row, col, color) {
+    if (starPosition && row === starPosition.row - 1 && col === starPosition.col) {
+        if (color === "#FF0000") {
+            document.getElementById("notification").innerText = "¡Correcto! Has coloreado la casilla en negro encima de la estrella.";
+        } else {
+            incorrectAttempts++; // Incrementa el contador de intentos incorrectos
+            document.getElementById("notification").innerText = "Incorrecto. Debes colorear la casilla encima de la estrella en rojo.";
+            document.getElementById("attemptCounter").innerText = `Intentos incorrectos: ${incorrectAttempts}`; // Actualiza el contador en pantalla
+        }
+    }
+}
+
 
 // Inicializa el tablero
 drawBoard();
