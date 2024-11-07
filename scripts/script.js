@@ -1,3 +1,7 @@
+document.addEventListener("DOMContentLoaded", function() {
+    drawBoard();
+});
+
 const canvas = document.getElementById("tablero");
 const ctx = canvas.getContext("2d");
 
@@ -10,6 +14,7 @@ let drawTriangleMode = false;
 
 const initialElementsPositions = new Set(); // Guardará las posiciones iniciales
 let starPosition = null; // Guardará la posición de la estrella
+let incorrectAttempts = 0; // Variable para contar intentos incorrectos
 
 // Función para establecer el color seleccionado
 function setColor(color) {
@@ -60,13 +65,13 @@ function drawBoard() {
             position = Math.floor(Math.random() * rows * cols);
         } while (usedPositions.has(position));
         usedPositions.add(position);
-        initialElementsPositions.add(position); // Guarda la posición inicial
+        initialElementsPositions.add(position);
 
         const row = Math.floor(position / cols);
         const col = position % cols;
 
         if (element.type === 'star') {
-            starPosition = { row, col }; // Guardar la posición de la estrella
+            starPosition = { row, col };
         }
 
         drawElement(row, col, element);
@@ -165,7 +170,7 @@ function writeOnCell(row, col, letter) {
 function clearCell(row, col) {
     const position = row * cols + col;
     if (initialElementsPositions.has(position)) {
-        return; // No borra si la celda contiene un elemento inicial
+        return;
     }
     const x = col * cellSize;
     const y = row * cellSize;
@@ -175,11 +180,13 @@ function clearCell(row, col) {
 
 // Función para verificar que la casilla encima de la estrella sea negra
 function checkStarCondition(row, col, color) {
-    if (starPosition && row === starPosition.row  && col === starPosition.col) {
+    if (starPosition && row === starPosition.row - 1 && col === starPosition.col) {
         if (color === "#FF0000") {
-            document.getElementById("notification").innerText = "¡Correcto! Has coloreado la casilla en negro encima de la estrella.";
+            document.getElementById("notification").innerText = "¡Correcto! Has coloreado la casilla en rojo encima de la estrella.";
         } else {
-            document.getElementById("notification").innerText = "Incorrecto. Debes colorear la casilla encima de la estrella en negro.";
+            incorrectAttempts++;
+            document.getElementById("notification").innerText = "Incorrecto. Debes colorear la casilla encima de la estrella en rojo.";
+            document.getElementById("attemptCounter").innerText = `Intentos incorrectos: ${incorrectAttempts}`;
         }
     }
 }
@@ -198,21 +205,3 @@ function drawTriangleInCell(row, col) {
     ctx.closePath();
     ctx.fill();
 }
-
-let incorrectAttempts = 0; // Variable para contar intentos incorrectos
-
-function checkStarCondition(row, col, color) {
-    if (starPosition && row === starPosition.row - 1 && col === starPosition.col) {
-        if (color === "#FF0000") {
-            document.getElementById("notification").innerText = "¡Correcto! Has coloreado la casilla en negro encima de la estrella.";
-        } else {
-            incorrectAttempts++; // Incrementa el contador de intentos incorrectos
-            document.getElementById("notification").innerText = "Incorrecto. Debes colorear la casilla encima de la estrella en rojo.";
-            document.getElementById("attemptCounter").innerText = `Intentos incorrectos: ${incorrectAttempts}`; // Actualiza el contador en pantalla
-        }
-    }
-}
-
-
-// Inicializa el tablero
-drawBoard();
