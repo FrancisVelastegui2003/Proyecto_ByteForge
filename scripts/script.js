@@ -308,6 +308,7 @@ function showNotification(message) {
     }, 5000);
 }
 
+/*
 // Verificar si se cumplen las condiciones de las instrucciones en orden secuencial
 function checkConditions(row, col, action) {
     const currentInstruction = instructions[completedInstructions];
@@ -332,6 +333,29 @@ function checkConditions(row, col, action) {
         redirectToEstadistica();
     }
 }
+*/
+
+function checkConditions(row, col, action) {
+    const currentInstruction = instructions[completedInstructions];
+
+    if (currentInstruction && currentInstruction.check(row, col, action)) {
+        currentInstruction.fulfilled = true;
+        document.getElementById(`instruction-${completedInstructions}`).style.textDecoration = "line-through";
+        completedInstructions++;
+
+        document.getElementById("notification").innerText = "¡Correcto!";
+    } else {
+        incrementIncorrectAttempts();
+        showNotification("La acción no corresponde a la instrucción actual.");
+        document.getElementById("notification").innerText = "La acción no corresponde a la instrucción actual.";
+    }
+
+    if (completedInstructions === instructions.length) {
+        // Llama a la ventana emergente de finalización
+        showCompletionTime();
+    }
+}
+
 
 // Función para incrementar el contador de intentos incorrectos
 function incrementIncorrectAttempts(amount = 1) {
