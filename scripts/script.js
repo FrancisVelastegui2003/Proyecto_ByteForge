@@ -13,9 +13,9 @@ let selectedLetter = "";
 let drawTriangleMode = false;
 
 const initialElementsPositions = new Set(); // Guardará las posiciones iniciales
-let starPosition = null; // Guardará la posición de la estrella
-let blackPosition = null; // Guardará la posición de la casilla negra
-let incorrectAttempts = 0; // Variable para contar intentos incorrectos
+let starPosition = null; // Posición de la estrella
+let blackPosition = null; // Posición de la casilla negra
+let incorrectAttempts = 0; // Contador de intentos incorrectos
 
 function setColor(color) {
     selectedColor = color;
@@ -65,7 +65,7 @@ function drawBoard() {
             col = position % cols;
         } while (
             usedPositions.has(position) ||
-            !isValidPosition(element, row, col) // Verifica las reglas específicas
+            !isValidPosition(element, row, col)
         );
 
         usedPositions.add(position);
@@ -85,24 +85,12 @@ function drawBoard() {
 }
 
 function isValidPosition(element, row, col) {
-    // Restricciones para cada elemento
     if (element.type === 'star') {
-        if (row === 0) return false; // No puede estar en la primera fila
-        if (initialElementsPositions.has((row - 1) * cols + col)) return false; // No puede tener un elemento aleatorio arriba
+        if (row === 0) return false;
     }
-
     if (element.type === 'black') {
-        if (row === 0 || row === rows - 1) return false; // No puede estar en la primera ni última fila
-        if (initialElementsPositions.has((row - 1) * cols + col) || initialElementsPositions.has((row + 1) * cols + col)) return false; // No puede tener elementos arriba ni abajo
+        if (row === 0 || row === rows - 1) return false;
     }
-
-    if (element.type === 'number') {
-        if (element.value === 15 && col < cols - 1 && initialElementsPositions.has(row * cols + col + 1)) return false; // No puede haber elemento a la derecha
-        if (element.value === 50 && ((col > 0 && initialElementsPositions.has(row * cols + col - 1)) || (col < cols - 1 && initialElementsPositions.has(row * cols + col + 1)))) return false; // No puede haber elementos a los lados
-        if (element.value === 21 && row > 0 && initialElementsPositions.has((row - 1) * cols + col)) return false; // No puede haber elemento encima
-        if (element.value === 48 && (row === 0 || col === 0 || initialElementsPositions.has((row - 1) * cols + col) || initialElementsPositions.has(row * cols + col - 1))) return false; // No en primera fila o columna, ni tener elementos a la izquierda ni arriba
-    }
-
     return true;
 }
 
@@ -161,9 +149,10 @@ canvas.addEventListener("click", (event) => {
         clearCell(row, col);
     } else if (selectedColor) {
         colorCell(row, col, selectedColor);
-        checkStarCondition(row, col, selectedColor);
+        checkConditions(row, col, selectedColor);
     } else if (selectedLetter) {
         writeOnCell(row, col, selectedLetter);
+        checkConditions(row, col, selectedLetter);
     }
 });
 
@@ -208,14 +197,84 @@ function drawTriangleInCell(row, col) {
     ctx.fill();
 }
 
-function checkStarCondition(row, col, color) {
-    if (starPosition && row === starPosition.row - 1 && col === starPosition.col) {
-        if (color === "#FF0000") {
-            document.getElementById("notification").innerText = "¡Correcto!";
-        } else {
-            incorrectAttempts++;
-            document.getElementById("notification").innerText = "Incorrecto.";
-            document.getElementById("attemptCounter").innerText = `Intentos incorrectos: ${incorrectAttempts}`;
-        }
+// Función para actualizar el contador de intentos incorrectos
+function updateAttemptCounter() {
+    incorrectAttempts++;
+    document.getElementById("attemptCounter").textContent = `Intentos incorrectos: ${incorrectAttempts}`;
+}
+
+// Función para manejar el clic en el tablero
+document.getElementById("tablero").addEventListener("click", function (event) {
+    const row = Math.floor(event.offsetY / 50); // Ajusta según tamaño de celda
+    const col = Math.floor(event.offsetX / 50); // Ajusta según tamaño de celda
+    let action = null;
+
+    if (currentColor) {
+        action = currentColor;
+    } else if (currentLetter) {
+        action = currentLetter;
+    } else if (drawTriangleMode) {
+        action = "triangle";
+    }
+
+    if (action) {
+        checkConditions(row, col, action);
+    }
+});
+
+function checkConditions(row, col, action) {
+    // Instrucción 1: Casilla encima de la estrella debe estar coloreada de rojo
+    if (starPosition && row === starPosition.row - 1 && col === starPosition.col && action === "#FF0000") {
+        document.getElementById("instruction-1").style.color = "green";
+    }
+
+    // Instrucción 2: Casilla a la derecha del número 15 debe estar coloreada de café
+    if (row === starPosition.row && col === starPosition.col + 1 && action === "#8B4513") {
+        document.getElementById("instruction-2").style.color = "green";
+    }
+
+    // Instrucción 3: Escribe la primera letra de tu nombre encima de la casilla negra
+    if (blackPosition && row === blackPosition.row - 1 && col === blackPosition.col && action === "S") {
+        document.getElementById("instruction-3").style.color = "green";
+    }
+
+    // Instrucción 4: Casilla con suma 50 coloreada verde
+    if ((row === 1 && col === 1 || row === 3 && col === 3) && action === "#008000") {
+        document.getElementById("instruction-4").style.color = "green";
+    }
+
+    // Instrucción 5: Colorea la primera fila y cuarta columna de rosado
+    if (row === 0 && col === 3 && action === "#FFC0CB") {
+        document.getElementById("instruction-5").style.color = "green";
+    }
+
+    // Instrucción 6: Casilla encima de 21 amarillo y debajo negra
+    if ((row === 2 && col === 1 && action === "#FFFF00") || (row === 4 && col === 1 && action === "#000000")) {
+        document.getElementById("instruction-6").style.color = "green";
+    }
+
+    // Instrucción 7: Colorea de morado debajo de la negra
+    if (blackPosition && row === blackPosition.row + 1 && col === blackPosition.col && action === "#800080") {
+        document.getElementById("instruction-7").style.color = "green";
+    }
+
+    // Instrucción 8: Escribe el número de hijos en la cuarta fila y octava columna
+    if (row === 3 && col === 7 && action === "2") { // Supongamos que 2 hijos
+        document.getElementById("instruction-8").style.color = "green";
+    }
+
+    // Instrucción 9: Colorea de celeste encima de 48
+    if (row === 0 && col === 4 && action === "#ADD8E6") {
+        document.getElementById("instruction-9").style.color = "green";
+    }
+
+    // Instrucción 10: Dibuja un triángulo en la izquierda de 48
+    if (row === 1 && col === 3 && drawTriangleMode) {
+        document.getElementById("instruction-10").style.color = "green";
+    }
+
+    // Instrucción 11: Séptima letra del abecedario en segunda fila y segunda columna
+    if (row === 1 && col === 1 && action === "G") {
+        document.getElementById("instruction-11").style.color = "green";
     }
 }
