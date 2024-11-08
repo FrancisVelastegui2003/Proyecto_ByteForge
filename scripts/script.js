@@ -14,37 +14,33 @@ let drawTriangleMode = false;
 
 const initialElementsPositions = new Set(); // Guardará las posiciones iniciales
 let starPosition = null; // Guardará la posición de la estrella
+let blackPosition = null; // Guardará la posición de la casilla negra
 let incorrectAttempts = 0; // Variable para contar intentos incorrectos
 
-// Función para establecer el color seleccionado
 function setColor(color) {
     selectedColor = color;
     selectedLetter = "";
     drawTriangleMode = false;
 }
 
-// Función para limpiar el color seleccionado
 function clearColor() {
     selectedColor = "clear";
     selectedLetter = "";
     drawTriangleMode = false;
 }
 
-// Función para seleccionar una letra específica
 function writeLetter(letter) {
     selectedLetter = letter;
     selectedColor = "";
     drawTriangleMode = false;
 }
 
-// Activar el modo de dibujo de triángulo
 function drawTriangle() {
     drawTriangleMode = true;
     selectedLetter = "";
     selectedColor = "";
 }
 
-// Función para dibujar el tablero y elementos aleatorios
 function drawBoard() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -61,18 +57,22 @@ function drawBoard() {
 
     elements.forEach(element => {
         let position;
+        let row, col;
+
         do {
             position = Math.floor(Math.random() * rows * cols);
-        } while (usedPositions.has(position));
+            row = Math.floor(position / cols);
+            col = position % cols;
+        } while (
+            usedPositions.has(position) ||
+            !isValidPosition(element, row, col) // Verifica las reglas específicas
+        );
+
         usedPositions.add(position);
         initialElementsPositions.add(position);
 
-        const row = Math.floor(position / cols);
-        const col = position % cols;
-
-        if (element.type === 'star') {
-            starPosition = { row, col };
-        }
+        if (element.type === 'star') starPosition = { row, col };
+        if (element.type === 'black') blackPosition = { row, col };
 
         drawElement(row, col, element);
     });
@@ -84,7 +84,28 @@ function drawBoard() {
     }
 }
 
-// Función para dibujar un elemento en una celda específica
+function isValidPosition(element, row, col) {
+    // Restricciones para cada elemento
+    if (element.type === 'star') {
+        if (row === 0) return false; // No puede estar en la primera fila
+        if (initialElementsPositions.has((row - 1) * cols + col)) return false; // No puede tener un elemento aleatorio arriba
+    }
+
+    if (element.type === 'black') {
+        if (row === 0 || row === rows - 1) return false; // No puede estar en la primera ni última fila
+        if (initialElementsPositions.has((row - 1) * cols + col) || initialElementsPositions.has((row + 1) * cols + col)) return false; // No puede tener elementos arriba ni abajo
+    }
+
+    if (element.type === 'number') {
+        if (element.value === 15 && col < cols - 1 && initialElementsPositions.has(row * cols + col + 1)) return false; // No puede haber elemento a la derecha
+        if (element.value === 50 && ((col > 0 && initialElementsPositions.has(row * cols + col - 1)) || (col < cols - 1 && initialElementsPositions.has(row * cols + col + 1)))) return false; // No puede haber elementos a los lados
+        if (element.value === 21 && row > 0 && initialElementsPositions.has((row - 1) * cols + col)) return false; // No puede haber elemento encima
+        if (element.value === 48 && (row === 0 || col === 0 || initialElementsPositions.has((row - 1) * cols + col) || initialElementsPositions.has(row * cols + col - 1))) return false; // No en primera fila o columna, ni tener elementos a la izquierda ni arriba
+    }
+
+    return true;
+}
+
 function drawElement(row, col, element) {
     const x = col * cellSize;
     const y = row * cellSize;
@@ -102,7 +123,6 @@ function drawElement(row, col, element) {
     }
 }
 
-// Función para dibujar una estrella
 function drawStar(cx, cy, spikes, outerRadius, innerRadius) {
     let rot = Math.PI / 2 * 3;
     let x = cx;
@@ -127,7 +147,6 @@ function drawStar(cx, cy, spikes, outerRadius, innerRadius) {
     ctx.fill();
 }
 
-// Evento de clic en el canvas
 canvas.addEventListener("click", (event) => {
     const rect = canvas.getBoundingClientRect();
     const x = event.clientX - rect.left;
@@ -148,7 +167,6 @@ canvas.addEventListener("click", (event) => {
     }
 });
 
-// Función para colorear una celda específica
 function colorCell(row, col, color) {
     const x = col * cellSize;
     const y = row * cellSize;
@@ -157,7 +175,6 @@ function colorCell(row, col, color) {
     ctx.strokeRect(x, y, cellSize, cellSize);
 }
 
-// Función para escribir en una celda específica
 function writeOnCell(row, col, letter) {
     const x = col * cellSize + cellSize / 3;
     const y = row * cellSize + cellSize / 1.5;
@@ -166,7 +183,6 @@ function writeOnCell(row, col, letter) {
     ctx.fillText(letter, x, y);
 }
 
-// Función para borrar una celda específica
 function clearCell(row, col) {
     const position = row * cols + col;
     if (initialElementsPositions.has(position)) {
@@ -178,20 +194,6 @@ function clearCell(row, col) {
     ctx.strokeRect(x, y, cellSize, cellSize);
 }
 
-// Función para verificar que la casilla encima de la estrella sea negra
-function checkStarCondition(row, col, color) {
-    if (starPosition && row === starPosition.row - 1 && col === starPosition.col) {
-        if (color === "#FF0000") {
-            document.getElementById("notification").innerText = "¡Correcto! Has coloreado la casilla en rojo encima de la estrella.";
-        } else {
-            incorrectAttempts++;
-            document.getElementById("notification").innerText = "Incorrecto. Debes colorear la casilla encima de la estrella en rojo.";
-            document.getElementById("attemptCounter").innerText = `Intentos incorrectos: ${incorrectAttempts}`;
-        }
-    }
-}
-
-// Función para dibujar un triángulo en una celda específica
 function drawTriangleInCell(row, col) {
     const x = col * cellSize;
     const y = row * cellSize;
@@ -204,4 +206,16 @@ function drawTriangleInCell(row, col) {
     ctx.lineTo(x + 3 * cellSize / 4, y + 3 * cellSize / 4);
     ctx.closePath();
     ctx.fill();
+}
+
+function checkStarCondition(row, col, color) {
+    if (starPosition && row === starPosition.row - 1 && col === starPosition.col) {
+        if (color === "#FF0000") {
+            document.getElementById("notification").innerText = "¡Correcto!";
+        } else {
+            incorrectAttempts++;
+            document.getElementById("notification").innerText = "Incorrecto.";
+            document.getElementById("attemptCounter").innerText = `Intentos incorrectos: ${incorrectAttempts}`;
+        }
+    }
 }
