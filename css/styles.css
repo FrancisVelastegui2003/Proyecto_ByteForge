@@ -345,3 +345,19 @@ canvas {
     color: green;
     font-weight: bold;
 }
+
+.boton-salir {
+    background-color: #d9534f;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-top: 20px;
+    transition: background-color 0.3s ease;
+}
+
+.boton-salir:hover {
+    background-color: #c9302c;
+}
