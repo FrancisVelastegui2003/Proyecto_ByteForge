@@ -303,3 +303,27 @@ canvas {
     color: #FF0000; /* Destaca la instrucción activa en rojo */
 }
 
+.notification {
+    position: fixed;
+    top: 40px;
+    right: 40px;
+    padding: 20px 30px;
+    background-color: rgba(255, 0, 0, 0.9);
+    color: white;
+    font-size: 24px; /* Aumenta el tamaño de la fuente */
+    font-weight: bold; /* Añade negrita para mayor visibilidad */
+    border-radius: 8px;
+    z-index: 1000;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+
+@keyframes fadein {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes fadeout {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}

@@ -24,8 +24,16 @@ let selectedColor = "";
 let drawTriangleMode = false;
 let textInputMode = false;
 let incorrectAttempts = 0;
-let completedInstructions = 0;
-let startTime; 
+let completedInstructions = 0
+let startTime;
+
+let paintedCells = {
+    left: false,
+    right: false,
+    above: false,
+    below: false
+};
+
 
 // Posiciones estáticas de los elementos en el tablero
 const starPosition = { row: 1, col: 6 };
@@ -178,6 +186,11 @@ function colorCell(row, col, color) {
     ctx.fillStyle = color;
     ctx.fillRect(x, y, cellSize, cellSize);
     ctx.strokeRect(x, y, cellSize, cellSize);
+
+    // Si el color es blanco y el contador de intentos incorrectos es mayor que cero, restar un intento
+    if (color === "#FFFFFF" && incorrectAttempts > 0) {
+        incrementIncorrectAttempts(-1);  // Restar un intento
+    }
 }
 
 function drawTriangleInCell(row, col) {
@@ -207,7 +220,6 @@ function cargarPacientes() {
         .then(response => response.json())
         .then(data => {
             const selectPaciente = document.getElementById("select-paciente");
-            selectPaciente.innerHTML = ""; // Limpia el menú antes de cargar pacientes
             data.forEach(paciente => {
                 const option = document.createElement("option");
                 option.value = paciente.id;
@@ -215,119 +227,205 @@ function cargarPacientes() {
                 selectPaciente.appendChild(option);
             });
         })
-        .catch(error => console.error("Error cargando pacientes:", error));
+        .catch(error => console.error("Error al cargar pacientes:", error));
+}
+
+function showNotification(message) {
+    const notificationElement = document.createElement("div");
+    notificationElement.innerText = message;
+    notificationElement.className = "notification"; // Asegúrate de tener un estilo CSS para esta clase
+    document.body.appendChild(notificationElement);
+
+    // Ocultar notificación después de 3 segundos
+    setTimeout(() => {
+        notificationElement.remove();
+    }, 5000);
+}
+/*
+// Verificar si se cumplen las condiciones de las instrucciones en orden secuencial
+function checkConditions(row, col, action) {
+    const currentInstruction = instructions[completedInstructions];
+
+    if (currentInstruction && currentInstruction.check(row, col, action)) {
+        // La instrucción actual se ha cumplido correctamente
+        currentInstruction.fulfilled = true;
+        document.getElementById(`instruction-${completedInstructions}`).style.textDecoration = "line-through";
+        completedInstructions++;
+
+        // Mensaje de éxito
+        document.getElementById("notification").innerText = "¡Correcto!";
+    } else {
+        // Intento incorrecto
+        incrementIncorrectAttempts();
+        showNotification("La acción no corresponde a la instrucción actual.");
+        document.getElementById("notification").innerText = "La acción no corresponde a la instrucción actual.";
+    }
+
+    // Redirigir al completar todas las instrucciones
+    if (completedInstructions === instructions.length) {
+        redirectToEstadistica();
+    }
+}*/
+
+function checkConditions(row, col, action) {
+    const currentInstruction = instructions[completedInstructions];
+
+    // Si la instrucción ya está cumplida, no hacer nada
+    if (currentInstruction && currentInstruction.fulfilled) {
+        return;
+    }
+
+    if (currentInstruction && currentInstruction.check(row, col, action)) {
+        // La instrucción actual se ha cumplido correctamente
+        currentInstruction.fulfilled = true;
+        document.getElementById(`instruction-${completedInstructions}`).style.textDecoration = "line-through";
+        completedInstructions++;
+
+        // Mensaje de éxito
+        document.getElementById("notification").innerText = "¡Correcto!";
+    } else {
+        // Si no se ha completado la instrucción, no incrementar los intentos incorrectos.
+        if (!currentInstruction.fulfilled) {
+            showNotification("La acción no corresponde a la instrucción actual.");
+        }
+    }
+
+    // Redirigir al completar todas las instrucciones
+    if (completedInstructions === instructions.length) {
+        redirectToEstadistica();
+    }
 }
 
 
-// Funciones de verificación específicas para cada instrucción
-function checkAboveStar(row, col, action) {
-    return action === "#FF0000" && row === starPosition.row - 1 && col === starPosition.col;
-}
-
-function checkRightOfNumber(number) {
-    return (row, col, action) => {
-        const pos = numberPositions[number];
-        return action === "#8B4513" && row === pos.row && col === pos.col + 1;
-    };
-}
-
-function checkAboveBlack(row, col, action) {
-    return typeof action === "string" && action.length === 1 && row === blackPosition.row - 1 && col === blackPosition.col;
-}
-
-function checkSidesOfNumber(number) {
-    return (row, col, action) => {
-        const pos = numberPositions[number];
-        return action === "#008000" && ((row === pos.row && col === pos.col + 1) || (row === pos.row && col === pos.col - 1));
-    };
-}
-
-function checkFirstRowFourthCol(row, col, action) {
-    return action === "#FFC0CB" && row === 0 && col === 3;
-}
-
-function checkAboveAndBelowOfNumber(number) {
-    return (row, col, action) => {
-        const pos = numberPositions[number];
-        if (action === "#FFFF00" && row === pos.row - 1 && col === pos.col) return true;
-        if (action === "black" && row === pos.row + 1 && col === pos.col) return true;
-        return false;
-    };
-}
-
-function checkBelowBlack(row, col, action) {
-    return action === "#800080" && row === blackPosition.row + 1 && col === blackPosition.col;
-}
-
-function checkFourthRowEighthCol(row, col, action) {
-    return typeof action === "string" && !isNaN(action) && row === 3 && col === 7;
-}
-
-function checkAboveMultiplication(row, col, action) {
-    const multiplicationResult = 48; // Resultado de 16 * 3
-    const pos = numberPositions[multiplicationResult];
-    return action === "#ADD8E6" && row === pos.row - 1 && col === pos.col;
-}
-
-function checkLeftOfNumber(number) {
-    return (row, col, action) => {
-        const pos = numberPositions[number];
-        return action === "triangle" && row === pos.row && col === pos.col - 1;
-    };
-}
-
-function checkSecondRowSecondCol(row, col, action) {
-    return action === "G" && row === 1 && col === 1;
-}
-
-// Iniciar el temporizador cuando el usuario comienza la primera instrucción
-function startTimer() {
-    startTime = new Date();
-}
-
-// Calcular el tiempo transcurrido desde el inicio hasta la última instrucción completada
-function endTimer() {
-    const endTime = new Date();
-    const timeElapsed = Math.floor((endTime - startTime) / 1000); // Tiempo en segundos
-    localStorage.setItem("tiempo", timeElapsed); // Guardar en localStorage para uso en estadísticas
-}
-
-// Incrementar el contador de intentos incorrectos y guardarlo en localStorage
-function incrementIncorrectAttempts() {
-    incorrectAttempts++;
+// Función para incrementar el contador de intentos incorrectos
+function incrementIncorrectAttempts(amount = 1) {
+    incorrectAttempts += amount;
+    if (incorrectAttempts < 0) {
+        incorrectAttempts = 0;  // Evitar que el contador sea negativo
+    }
     document.getElementById("attemptCounter").innerText = `Intentos incorrectos: ${incorrectAttempts}`;
     localStorage.setItem("intentos", incorrectAttempts); // Guardar en localStorage para estadísticas
 }
 
-
-
-// Función para redirigir a `estadistica.html` al completar todas las instrucciones
-function redirectToEstadistica() {
-    endTimer(); // Calcula el tiempo final
-    window.location.href = "estadistica.html";
+// Funciones de revisión de condiciones para cada instrucción
+function checkAboveStar(row, col, color) {
+    return color === "#FF0000" && row === starPosition.row - 1 && col === starPosition.col;
 }
 
-// Verificar si se cumplen las condiciones de las instrucciones
-function checkConditions(row, col, action) {
-    let foundMatch = false;
+function checkRightOfNumber(number) {
+    return function (row, col, color) {
+        const pos = numberPositions[number];
+        return color === "#8B4513" && row === pos.row && col === pos.col + 1;
+    };
+}
 
-    instructions.forEach((instruction, index) => {
-        if (!instruction.fulfilled && instruction.check(row, col, action)) {
-            instruction.fulfilled = true;
-            document.getElementById(`instruction-${index}`).style.textDecoration = "line-through";
-            foundMatch = true;
-            completedInstructions++;
+function checkAboveBlack(row, col, text) {
+    return text && row === blackPosition.row - 1 && col === blackPosition.col;
+}
+/*
+function checkSidesOfNumber(number) {
+    return function (row, col, color) {
+        const pos = numberPositions[number];
+        return color === "#008000" && row === pos.row && (col === pos.col - 1 || col === pos.col + 1);
+    };
+}
+*/
+function checkSidesOfNumber(number) {
+    return function (row, col, color) {
+        const pos = numberPositions[number];
+
+        // Verificar si la casilla de la izquierda o la derecha se ha pintado
+        if (color === "#008000" && row === pos.row) {
+            // Casilla a la izquierda
+            if (col === pos.col - 1) {
+                paintedCells.left = true;
+            }
+            // Casilla a la derecha
+            if (col === pos.col + 1) {
+                paintedCells.right = true;
+            }
         }
-    });
 
-    if (!foundMatch) {
-        incrementIncorrectAttempts();
-        document.getElementById("notification").innerText = "Incorrecto, inténtalo de nuevo.";
-    } else {
-        document.getElementById("notification").innerText = "¡Correcto!";
-    }
+        // Verificar si ambas casillas han sido pintadas correctamente
+        if (paintedCells.left && paintedCells.right) {
+            // Si ambas casillas están pintadas correctamente, considera la instrucción cumplida
+            return true;
+        }
+        return false;
+    };
+}
 
-    if (completedInstructions === instructions.length) {
-        redirectToEstadistica(); // Redirige cuando se completan todas las instrucciones
-    }
+
+function checkFirstRowFourthCol(row, col, color) {
+    return color === "#FFC0CB" && row === 0 && col === 3;
+}
+/*
+function checkAboveAndBelowOfNumber(number) {
+    return function (row, col, color) {
+        const pos = numberPositions[number];
+        return (color === "#FFFF00" && row === pos.row - 1 && col === pos.col) ||
+               (color === "#000000" && row === pos.row + 1 && col === pos.col);
+    };
+}
+*/
+function checkAboveAndBelowOfNumber(number) {
+    return function (row, col, color) {
+        const pos = numberPositions[number];
+
+        // Verificar si la casilla de arriba o la de abajo se ha pintado
+        if (color === "#FFFF00" && row === pos.row - 1 && col === pos.col) {
+            paintedCells.above = true;
+        }
+
+        if (color === "#000000" && row === pos.row + 1 && col === pos.col) {
+            paintedCells.below = true;
+        }
+
+        // Verificar si ambas casillas han sido pintadas correctamente
+        if (paintedCells.above && paintedCells.below) {
+            return true;
+        }
+
+        return false;
+    };
+}
+
+
+
+function checkBelowBlack(row, col, color) {
+    return color === "#800080" && row === blackPosition.row + 1 && col === blackPosition.col;
+}
+
+function checkFourthRowEighthCol(row, col, text) {
+    return text && row === 3 && col === 7;
+}
+
+function checkAboveMultiplication(row, col, color) {
+    return color === "#ADD8E6" && row === numberPositions[48].row - 1 && col === numberPositions[48].col;
+}
+
+function checkLeftOfNumber(number) {
+    return function (row, col, value) {
+        const pos = numberPositions[number];
+        return value === "triangle" && row === pos.row && col === pos.col - 1;
+    };
+}
+
+function checkSecondRowSecondCol(row, col, text) {
+    return (text === "G" || text ==="g")  && row === 1 && col === 1;
+}
+
+// Temporizador
+function startTimer() {
+    startTime = Date.now();
+    updateTimer();
+}
+
+function updateTimer() {
+    const now = Date.now();
+    const elapsedTime = Math.floor((now - startTime) / 1000);
+    const minutes = Math.floor(elapsedTime / 60);
+    const seconds = elapsedTime % 60;
+    document.getElementById("timer").textContent = `${minutes}:${seconds.toString().padStart(2, "0")}`;
+    requestAnimationFrame(updateTimer);
 }
