@@ -3,7 +3,8 @@ CREATE TABLE PACIENTE (
     id VARCHAR(10) PRIMARY KEY,
     nombre VARCHAR(50) NOT NULL,
     apellido VARCHAR(50) NOT NULL,
-    edad INT NOT NULL
+    edad INT NOT NULL,
+    diagnostico VARCHAR(250) NOT NULL
 );
 
 -- Crear la tabla JUEGO

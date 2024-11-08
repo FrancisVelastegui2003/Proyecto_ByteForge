@@ -1,84 +1,66 @@
+// Evento de cambio en el menú desplegable para redirigir al tablero
 document.addEventListener("DOMContentLoaded", function () {
-    cargarPacientes();
-    drawBoard();
+    cargarPacientes(); // Cargar pacientes al cargar la página
+    drawBoard(); // Dibujar el tablero al cargar la página
+    startTimer(); // Iniciar el temporizador al cargar la página
+
+    // Agregar evento de cambio al selector de pacientes
+    const selectPaciente = document.getElementById("select-paciente");
+    selectPaciente.addEventListener("change", function () {
+        const pacienteId = this.value;
+        if (pacienteId) {
+            localStorage.setItem("pacienteId", pacienteId); // Guarda el ID del paciente en localStorage
+        }
+    });
 });
 
-// Configuración del canvas y contexto
 const canvas = document.getElementById("tablero");
 const ctx = canvas.getContext("2d");
-
-// Configuración del tablero
 const cellSize = 50;
 const rows = 5;
 const cols = 10;
+
 let selectedColor = "";
-let selectedLetter = "";
 let drawTriangleMode = false;
-
-// Variables de estado
-const initialElementsPositions = new Set();
-let starPosition = null;
+let textInputMode = false;
 let incorrectAttempts = 0;
+let completedInstructions = 0;
+let startTime; 
 
-// Funciones de configuración del juego
-function setColor(color) {
-    selectedColor = color;
-    selectedLetter = "";
-    drawTriangleMode = false;
-}
+// Posiciones estáticas de los elementos en el tablero
+const starPosition = { row: 1, col: 6 };
+const blackPosition = { row: 3, col: 0 };
+const numberPositions = {
+    15: { row: 4, col: 1 },
+    50: { row: 2, col: 3 },
+    21: { row: 2, col: 9 },
+    48: { row: 4, col: 5 }
+};
 
-function clearColor() {
-    selectedColor = "clear";
-    selectedLetter = "";
-    drawTriangleMode = false;
-}
-
-function writeLetter(letter) {
-    selectedLetter = letter;
-    selectedColor = "";
-    drawTriangleMode = false;
-}
-
-function drawTriangle() {
-    drawTriangleMode = true;
-    selectedLetter = "";
-    selectedColor = "";
-}
+// Lista de instrucciones
+const instructions = [
+    { text: "Colorea de rojo la casilla que está encima de la estrella.", fulfilled: false, color: "#FF0000", check: checkAboveStar },
+    { text: "Colorea de café la casilla que está a la derecha de la que tiene el número 15.", fulfilled: false, color: "#8B4513", check: checkRightOfNumber(15) },
+    { text: "Escribe la primera letra de tu nombre encima de la casilla negra.", fulfilled: false, textInput: true, check: checkAboveBlack },
+    { text: "Colorea de verde las casillas a los lados del número 50.", fulfilled: false, color: "#008000", check: checkSidesOfNumber(50) },
+    { text: "Colorea de rosado la casilla de la primera fila y cuarta columna.", fulfilled: false, color: "#FFC0CB", check: checkFirstRowFourthCol },
+    { text: "Colorea de amarillo la casilla encima de la que tiene el número 21 y de negro la de debajo.", fulfilled: false, color: "#FFFF00", check: checkAboveAndBelowOfNumber(21) },
+    { text: "Colorea de morado la casilla que está debajo de la negra.", fulfilled: false, color: "#800080", check: checkBelowBlack },
+    { text: "Escribe el número de hijos que tienes en la cuarta fila y octava columna.", fulfilled: false, textInput: true, check: checkFourthRowEighthCol },
+    { text: "Colorea de celeste la casilla encima de la que tiene el número igual a la multiplicación 16 x 3.", fulfilled: false, color: "#ADD8E6", check: checkAboveMultiplication },
+    { text: "Dibuja un triángulo en la casilla que está al lado izquierdo de 48.", fulfilled: false, check: checkLeftOfNumber(48) },
+    { text: "Escribe la séptima letra del abecedario en la segunda fila y segunda columna.", fulfilled: false, textInput: true, check: checkSecondRowSecondCol }
+];
 
 function drawBoard() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    const elements = [
-        { type: 'number', value: 15 },
-        { type: 'number', value: 50 },
-        { type: 'number', value: 21 },
-        { type: 'number', value: 48 },
-        { type: 'star' },
-        { type: 'black' }
-    ];
+    // Dibuja los elementos estáticos
+    drawElement(starPosition.row, starPosition.col, { type: 'star' });
+    drawElement(blackPosition.row, blackPosition.col, { type: 'black' });
 
-    const usedPositions = new Set();
-
-    elements.forEach(element => {
-        let position;
-        let row, col;
-
-        do {
-            position = Math.floor(Math.random() * rows * cols);
-            row = Math.floor(position / cols);
-            col = position % cols;
-        } while (
-            usedPositions.has(position) ||
-            !isValidPosition(element, row, col)
-        );
-
-        usedPositions.add(position);
-        initialElementsPositions.add(position);
-
-        if (element.type === 'star') starPosition = { row, col };
-        if (element.type === 'black') blackPosition = { row, col };
-
-        drawElement(row, col, element);
+    Object.entries(numberPositions).forEach(([number, position]) => {
+        drawElement(position.row, position.col, { type: 'number', value: Number(number) });
     });
 
     for (let row = 0; row < rows; row++) {
@@ -86,18 +68,25 @@ function drawBoard() {
             ctx.strokeRect(col * cellSize, row * cellSize, cellSize, cellSize);
         }
     }
+
+    // Solo mostrar instrucciones si no se han cargado previamente
+    if (!document.getElementById("instruction").hasChildNodes()) {
+        displayInstructions();
+    }
 }
 
-function isValidPosition(element, row, col) {
-    if (element.type === 'star') {
-        if (row === 0) return false;
-    }
-    if (element.type === 'black') {
-        if (row === 0 || row === rows - 1) return false;
-    }
-    return true;
+// Muestra todas las instrucciones en pantalla solo una vez
+function displayInstructions() {
+    const instructionContainer = document.getElementById("instruction");
+    instructions.forEach((instruction, index) => {
+        const instructionElement = document.createElement("p");
+        instructionElement.id = `instruction-${index}`;
+        instructionElement.innerText = instruction.text;
+        instructionContainer.appendChild(instructionElement);
+    });
 }
 
+// Funciones para dibujar los elementos en el tablero
 function drawElement(row, col, element) {
     const x = col * cellSize;
     const y = row * cellSize;
@@ -139,6 +128,26 @@ function drawStar(cx, cy, spikes, outerRadius, innerRadius) {
     ctx.fill();
 }
 
+// Función para seleccionar color y modo de interacción
+function setColor(color) {
+    selectedColor = color;
+    drawTriangleMode = false;
+    textInputMode = false;
+}
+
+function drawTriangle() {
+    drawTriangleMode = true;
+    selectedColor = "";
+    textInputMode = false;
+}
+
+function enableTextInput() {
+    textInputMode = true;
+    selectedColor = "";
+    drawTriangleMode = false;
+}
+
+// Evento de clic en el tablero
 canvas.addEventListener("click", (event) => {
     const rect = canvas.getBoundingClientRect();
     const x = event.clientX - rect.left;
@@ -147,19 +156,22 @@ canvas.addEventListener("click", (event) => {
     const col = Math.floor(x / cellSize);
     const row = Math.floor(y / cellSize);
 
-    if (drawTriangleMode) {
-        drawTriangleInCell(row, col);
-    } else if (selectedColor === "clear") {
-        clearCell(row, col);
-    } else if (selectedColor) {
+    if (selectedColor) {
         colorCell(row, col, selectedColor);
         checkConditions(row, col, selectedColor);
-    } else if (selectedLetter) {
-        writeOnCell(row, col, selectedLetter);
-        checkConditions(row, col, selectedLetter);
+    } else if (drawTriangleMode) {
+        drawTriangleInCell(row, col);
+        checkConditions(row, col, "triangle");
+    } else if (textInputMode) {
+        const text = prompt("Escribe el texto que deseas agregar:");
+        if (text) {
+            writeOnCell(row, col, text);
+            checkConditions(row, col, text);
+        }
     }
 });
 
+// Funciones auxiliares para dibujar en las celdas
 function colorCell(row, col, color) {
     const x = col * cellSize;
     const y = row * cellSize;
@@ -168,40 +180,9 @@ function colorCell(row, col, color) {
     ctx.strokeRect(x, y, cellSize, cellSize);
 }
 
-function writeOnCell(row, col, letter) {
-    const x = col * cellSize + cellSize / 3;
-    const y = row * cellSize + cellSize / 1.5;
-    ctx.font = "24px Arial";
-    ctx.fillStyle = "black";
-    ctx.fillText(letter, x, y);
-}
-
-function clearCell(row, col) {
-    const position = row * cols + col;
-    if (initialElementsPositions.has(position)) return;
-    const x = col * cellSize;
-    const y = row * cellSize;
-    ctx.clearRect(x, y, cellSize, cellSize);
-    ctx.strokeRect(x, y, cellSize, cellSize);
-}
-
-function checkStarCondition(row, col, color) {
-    if (starPosition && row === starPosition.row - 1 && col === starPosition.col) {
-        if (color === "#FF0000") {
-            document.getElementById("notification").innerText = "¡Correcto! Has coloreado la casilla en rojo encima de la estrella.";
-        } else {
-            incorrectAttempts++;
-            document.getElementById("notification").innerText = "Incorrecto. Debes colorear la casilla encima de la estrella en rojo.";
-            document.getElementById("attemptCounter").innerText = `Intentos incorrectos: ${incorrectAttempts}`;
-        }
-    }
-}
-
-// Función para dibujar un triángulo en una celda específica
 function drawTriangleInCell(row, col) {
     const x = col * cellSize;
     const y = row * cellSize;
-    const triangleSize = cellSize / 2;
 
     ctx.fillStyle = "black";
     ctx.beginPath();
@@ -212,12 +193,21 @@ function drawTriangleInCell(row, col) {
     ctx.fill();
 }
 
-// Función para cargar los pacientes en el menú desplegable
+function writeOnCell(row, col, text) {
+    const x = col * cellSize + cellSize / 3;
+    const y = row * cellSize + cellSize / 1.5;
+    ctx.font = "24px Arial";
+    ctx.fillStyle = "black";
+    ctx.fillText(text, x, y);
+}
+
+// Función para cargar pacientes
 function cargarPacientes() {
     fetch('obtener_pacientes.php')
         .then(response => response.json())
         .then(data => {
             const selectPaciente = document.getElementById("select-paciente");
+            selectPaciente.innerHTML = ""; // Limpia el menú antes de cargar pacientes
             data.forEach(paciente => {
                 const option = document.createElement("option");
                 option.value = paciente.id;
@@ -228,11 +218,116 @@ function cargarPacientes() {
         .catch(error => console.error("Error cargando pacientes:", error));
 }
 
-// Manejar la selección del paciente y redirigir al tablero
-document.getElementById("select-paciente").addEventListener("change", function() {
-    const pacienteId = this.value;
-    if (pacienteId) {
-        localStorage.setItem("pacienteId", pacienteId);
-        window.location.href = "tablero.html";
+
+// Funciones de verificación específicas para cada instrucción
+function checkAboveStar(row, col, action) {
+    return action === "#FF0000" && row === starPosition.row - 1 && col === starPosition.col;
+}
+
+function checkRightOfNumber(number) {
+    return (row, col, action) => {
+        const pos = numberPositions[number];
+        return action === "#8B4513" && row === pos.row && col === pos.col + 1;
+    };
+}
+
+function checkAboveBlack(row, col, action) {
+    return typeof action === "string" && action.length === 1 && row === blackPosition.row - 1 && col === blackPosition.col;
+}
+
+function checkSidesOfNumber(number) {
+    return (row, col, action) => {
+        const pos = numberPositions[number];
+        return action === "#008000" && ((row === pos.row && col === pos.col + 1) || (row === pos.row && col === pos.col - 1));
+    };
+}
+
+function checkFirstRowFourthCol(row, col, action) {
+    return action === "#FFC0CB" && row === 0 && col === 3;
+}
+
+function checkAboveAndBelowOfNumber(number) {
+    return (row, col, action) => {
+        const pos = numberPositions[number];
+        if (action === "#FFFF00" && row === pos.row - 1 && col === pos.col) return true;
+        if (action === "black" && row === pos.row + 1 && col === pos.col) return true;
+        return false;
+    };
+}
+
+function checkBelowBlack(row, col, action) {
+    return action === "#800080" && row === blackPosition.row + 1 && col === blackPosition.col;
+}
+
+function checkFourthRowEighthCol(row, col, action) {
+    return typeof action === "string" && !isNaN(action) && row === 3 && col === 7;
+}
+
+function checkAboveMultiplication(row, col, action) {
+    const multiplicationResult = 48; // Resultado de 16 * 3
+    const pos = numberPositions[multiplicationResult];
+    return action === "#ADD8E6" && row === pos.row - 1 && col === pos.col;
+}
+
+function checkLeftOfNumber(number) {
+    return (row, col, action) => {
+        const pos = numberPositions[number];
+        return action === "triangle" && row === pos.row && col === pos.col - 1;
+    };
+}
+
+function checkSecondRowSecondCol(row, col, action) {
+    return action === "G" && row === 1 && col === 1;
+}
+
+// Iniciar el temporizador cuando el usuario comienza la primera instrucción
+function startTimer() {
+    startTime = new Date();
+}
+
+// Calcular el tiempo transcurrido desde el inicio hasta la última instrucción completada
+function endTimer() {
+    const endTime = new Date();
+    const timeElapsed = Math.floor((endTime - startTime) / 1000); // Tiempo en segundos
+    localStorage.setItem("tiempo", timeElapsed); // Guardar en localStorage para uso en estadísticas
+}
+
+// Incrementar el contador de intentos incorrectos y guardarlo en localStorage
+function incrementIncorrectAttempts() {
+    incorrectAttempts++;
+    document.getElementById("attemptCounter").innerText = `Intentos incorrectos: ${incorrectAttempts}`;
+    localStorage.setItem("intentos", incorrectAttempts); // Guardar en localStorage para estadísticas
+}
+
+
+
+// Función para redirigir a `estadistica.html` al completar todas las instrucciones
+function redirectToEstadistica() {
+    endTimer(); // Calcula el tiempo final
+    window.location.href = "estadistica.html";
+}
+
+// Verificar si se cumplen las condiciones de las instrucciones
+function checkConditions(row, col, action) {
+    let foundMatch = false;
+
+    instructions.forEach((instruction, index) => {
+        if (!instruction.fulfilled && instruction.check(row, col, action)) {
+            instruction.fulfilled = true;
+            document.getElementById(`instruction-${index}`).style.textDecoration = "line-through";
+            foundMatch = true;
+            completedInstructions++;
+        }
+    });
+
+    if (!foundMatch) {
+        incrementIncorrectAttempts();
+        document.getElementById("notification").innerText = "Incorrecto, inténtalo de nuevo.";
+    } else {
+        document.getElementById("notification").innerText = "¡Correcto!";
     }
-});
+
+    if (completedInstructions === instructions.length) {
+        redirectToEstadistica(); // Redirige cuando se completan todas las instrucciones
+    }
+}

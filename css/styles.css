@@ -17,33 +17,55 @@ h1 {
     text-align: center;
 }
 
+h2 {
+    font-size: 2.8rem;
+}
+
+h3 {
+    font-size: 2.4rem;
+}
+
+/* Styles for the game elements */
 .container {
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    gap: 20px; /* Espacio entre el menú y el tablero */
+    gap: 20px;
 }
 
-.menu {
-    width: 250px;
-    text-align: left; 
-}
-
-.menu h3 {
-    font-size: 2.2rem;
-    margin-bottom: 2px;
-}
-
+/* Estilos de los botones */
 .menu ul {
-    list-style-type: disc;
+    list-style-type: none;
     padding: 0;
 }
 
 .menu li {
-    margin: 8px 0;
-    padding: 5px 10px;
+    margin: 10px 0;
+    padding: 10px;
     cursor: pointer;
     font-size: 2rem;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+/* Efecto hover */
+.menu li:hover {
+    background-color: #f0f0f0;
+    color: #007BFF;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    transform: scale(1.05);
+}
+
+/* Estilo del input de texto */
+#textInput {
+    margin-top: 15px;
+    padding: 8px;
+    font-size: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    width: 100%;
+    max-width: 200px;
 }
 
 .canvas-container {
@@ -53,20 +75,18 @@ h1 {
 }
 
 canvas {
-    border: 2px solid #000000;
+    border: 2px solid #000;
 }
 
-.instruction-box {
-    width: 200px;
-    height: 50px;
-    border: 2px solid red;
-    margin-top: 20px;
-    font-size: 1.6rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
+.instruction {
+    font-size: 1.5rem;
+    color: #333;
 }
+
+.instruction.active {
+    color: #FF0000;
+}
+
 
 .registro-container {
     max-width: 400px;
