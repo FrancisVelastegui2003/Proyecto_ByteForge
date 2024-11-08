@@ -45,7 +45,6 @@ function drawTriangle() {
     selectedColor = "";
 }
 
-// Función para dibujar el tablero y elementos aleatorios
 function drawBoard() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -62,18 +61,22 @@ function drawBoard() {
 
     elements.forEach(element => {
         let position;
+        let row, col;
+
         do {
             position = Math.floor(Math.random() * rows * cols);
-        } while (usedPositions.has(position));
+            row = Math.floor(position / cols);
+            col = position % cols;
+        } while (
+            usedPositions.has(position) ||
+            !isValidPosition(element, row, col)
+        );
+
         usedPositions.add(position);
         initialElementsPositions.add(position);
 
-        const row = Math.floor(position / cols);
-        const col = position % cols;
-
-        if (element.type === 'star') {
-            starPosition = { row, col };
-        }
+        if (element.type === 'star') starPosition = { row, col };
+        if (element.type === 'black') blackPosition = { row, col };
 
         drawElement(row, col, element);
     });
@@ -85,7 +88,16 @@ function drawBoard() {
     }
 }
 
-// Función para dibujar un elemento en una celda específica
+function isValidPosition(element, row, col) {
+    if (element.type === 'star') {
+        if (row === 0) return false;
+    }
+    if (element.type === 'black') {
+        if (row === 0 || row === rows - 1) return false;
+    }
+    return true;
+}
+
 function drawElement(row, col, element) {
     const x = col * cellSize;
     const y = row * cellSize;
@@ -103,7 +115,6 @@ function drawElement(row, col, element) {
     }
 }
 
-// Función para dibujar una estrella
 function drawStar(cx, cy, spikes, outerRadius, innerRadius) {
     let rot = Math.PI / 2 * 3;
     let x = cx;
@@ -128,7 +139,6 @@ function drawStar(cx, cy, spikes, outerRadius, innerRadius) {
     ctx.fill();
 }
 
-// Evento de clic en el canvas
 canvas.addEventListener("click", (event) => {
     const rect = canvas.getBoundingClientRect();
     const x = event.clientX - rect.left;
@@ -143,13 +153,13 @@ canvas.addEventListener("click", (event) => {
         clearCell(row, col);
     } else if (selectedColor) {
         colorCell(row, col, selectedColor);
-        checkStarCondition(row, col, selectedColor);
+        checkConditions(row, col, selectedColor);
     } else if (selectedLetter) {
         writeOnCell(row, col, selectedLetter);
+        checkConditions(row, col, selectedLetter);
     }
 });
 
-// Función para colorear una celda específica
 function colorCell(row, col, color) {
     const x = col * cellSize;
     const y = row * cellSize;
