@@ -81,6 +81,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 */
 
+
 document.addEventListener("DOMContentLoaded", function () {
     let secondsElapsed = 0;
     let domContentLoadedTime = 0;
@@ -98,7 +99,7 @@ document.addEventListener("DOMContentLoaded", function () {
         // Registra el tiempo transcurrido cuando el DOM se carga completamente
         domContentLoadedTime = secondsElapsed;
 
-        // Función para detener el temporizador y mostrar el tiempo de carga del DOM
+        // Función para detener el temporizador y mostrar el tiempo de carga del DOM y los intentos incorrectos
         window.showCompletionTime = function() {
             clearInterval(timerInterval);
             const totalMinutes = Math.floor(secondsElapsed / 60);
@@ -106,11 +107,14 @@ document.addEventListener("DOMContentLoaded", function () {
             const domLoadedMinutes = Math.floor(domContentLoadedTime / 60);
             const domLoadedSeconds = domContentLoadedTime % 60;
 
+            // Muestra la alerta con los intentos incorrectos
             alert(`¡Felicidades! Completaste el test en ${totalMinutes}:${totalSeconds < 10 ? '0' : ''}${totalSeconds}.\n` +
-                  `Tiempo desde que se cargaron las instrucciones: ${domLoadedMinutes}:${domLoadedSeconds < 10 ? '0' : ''}${domLoadedSeconds}`);
+                  `Intentos incorrectos: ${incorrectAttempts}`);
             
-            // Redirige a la página de estadísticas
-            window.location.href = 'estadistica.html';
+            // Retraso antes de redirigir
+            setTimeout(() => {
+                window.location.href = 'estadistica.html';
+            }, 2000); // Retraso de 2 segundos
         };
 
     } else {
