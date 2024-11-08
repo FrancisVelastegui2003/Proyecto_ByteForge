@@ -1,1 +1,2 @@
 # Proyecto_ByteForge
+El código fuente y la documentación solicitada se encuentra en la rama “master”. El juego fue implementado como una aplicación web con la utilización de HTML, CSS, PHP y JavaScript, además, para visualizar la aplicación en la web es necesario la descarga de Xammp para obtener un servidor local, o a su vez mediante la extensión Live Server en el editor de texto Visual Studio Code. 
