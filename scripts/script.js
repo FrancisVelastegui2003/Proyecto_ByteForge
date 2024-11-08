@@ -26,6 +26,9 @@ let textInputMode = false;
 let incorrectAttempts = 0;
 let completedInstructions = 0
 let startTime;
+// Variables para el temporizador
+let elapsedTime = 0;
+let timerInterval;
 
 let paintedCells = {
     left: false,
@@ -59,6 +62,22 @@ const instructions = [
     { text: "Dibuja un triángulo en la casilla que está al lado izquierdo de 48.", fulfilled: false, check: checkLeftOfNumber(48) },
     { text: "Escribe la séptima letra del abecedario en la segunda fila y segunda columna.", fulfilled: false, textInput: true, check: checkSecondRowSecondCol }
 ];
+
+document.addEventListener("DOMContentLoaded", function () {
+    let secondsElapsed = 0;
+    const timeCounter = document.getElementById('timeCounter');
+
+    if (timeCounter) {
+        setInterval(() => {
+            secondsElapsed++;
+            const minutes = Math.floor(secondsElapsed / 60);
+            const seconds = secondsElapsed % 60;
+            timeCounter.textContent = `Tiempo transcurrido: ${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+        }, 1000);
+    } else {
+        console.error("Elemento 'timeCounter' no encontrado");
+    }
+});
 
 function drawBoard() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
