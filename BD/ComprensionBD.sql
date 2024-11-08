@@ -1,7 +1,3 @@
--- Crear la base de datos
-CREATE DATABASE IF NOT EXISTS JuegoDB;
-USE JuegoDB;
-
 -- Crear la tabla PACIENTE
 CREATE TABLE PACIENTE (
     id VARCHAR(10) PRIMARY KEY,
@@ -17,5 +13,5 @@ CREATE TABLE JUEGO (
     errores INT NOT NULL,
     tiempo TIME NOT NULL,
     paciente_id VARCHAR(10),
-    FOREIGN KEY (paciente_id) REFERENCES PACIENTE(id),
+    FOREIGN KEY (paciente_id) REFERENCES PACIENTE(id)
 );

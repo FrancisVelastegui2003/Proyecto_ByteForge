@@ -1,10 +1,13 @@
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
+    cargarPacientes();
     drawBoard();
 });
 
+// Configuración del canvas y contexto
 const canvas = document.getElementById("tablero");
 const ctx = canvas.getContext("2d");
 
+// Configuración del tablero
 const cellSize = 50;
 const rows = 5;
 const cols = 10;
@@ -12,32 +15,30 @@ let selectedColor = "";
 let selectedLetter = "";
 let drawTriangleMode = false;
 
-const initialElementsPositions = new Set(); // Guardará las posiciones iniciales
-let starPosition = null; // Guardará la posición de la estrella
-let incorrectAttempts = 0; // Variable para contar intentos incorrectos
+// Variables de estado
+const initialElementsPositions = new Set();
+let starPosition = null;
+let incorrectAttempts = 0;
 
-// Función para establecer el color seleccionado
+// Funciones de configuración del juego
 function setColor(color) {
     selectedColor = color;
     selectedLetter = "";
     drawTriangleMode = false;
 }
 
-// Función para limpiar el color seleccionado
 function clearColor() {
     selectedColor = "clear";
     selectedLetter = "";
     drawTriangleMode = false;
 }
 
-// Función para seleccionar una letra específica
 function writeLetter(letter) {
     selectedLetter = letter;
     selectedColor = "";
     drawTriangleMode = false;
 }
 
-// Activar el modo de dibujo de triángulo
 function drawTriangle() {
     drawTriangleMode = true;
     selectedLetter = "";
@@ -157,7 +158,6 @@ function colorCell(row, col, color) {
     ctx.strokeRect(x, y, cellSize, cellSize);
 }
 
-// Función para escribir en una celda específica
 function writeOnCell(row, col, letter) {
     const x = col * cellSize + cellSize / 3;
     const y = row * cellSize + cellSize / 1.5;
@@ -166,19 +166,15 @@ function writeOnCell(row, col, letter) {
     ctx.fillText(letter, x, y);
 }
 
-// Función para borrar una celda específica
 function clearCell(row, col) {
     const position = row * cols + col;
-    if (initialElementsPositions.has(position)) {
-        return;
-    }
+    if (initialElementsPositions.has(position)) return;
     const x = col * cellSize;
     const y = row * cellSize;
     ctx.clearRect(x, y, cellSize, cellSize);
     ctx.strokeRect(x, y, cellSize, cellSize);
 }
 
-// Función para verificar que la casilla encima de la estrella sea negra
 function checkStarCondition(row, col, color) {
     if (starPosition && row === starPosition.row - 1 && col === starPosition.col) {
         if (color === "#FF0000") {
@@ -205,3 +201,28 @@ function drawTriangleInCell(row, col) {
     ctx.closePath();
     ctx.fill();
 }
+
+// Función para cargar los pacientes en el menú desplegable
+function cargarPacientes() {
+    fetch('obtener_pacientes.php')
+        .then(response => response.json())
+        .then(data => {
+            const selectPaciente = document.getElementById("select-paciente");
+            data.forEach(paciente => {
+                const option = document.createElement("option");
+                option.value = paciente.id;
+                option.textContent = paciente.nombre;
+                selectPaciente.appendChild(option);
+            });
+        })
+        .catch(error => console.error("Error cargando pacientes:", error));
+}
+
+// Manejar la selección del paciente y redirigir al tablero
+document.getElementById("select-paciente").addEventListener("change", function() {
+    const pacienteId = this.value;
+    if (pacienteId) {
+        localStorage.setItem("pacienteId", pacienteId);
+        window.location.href = "tablero.html";
+    }
+});
