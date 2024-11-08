@@ -50,9 +50,9 @@ const instructions = [
     { text: "Colorea de rojo la casilla que está encima de la estrella.", fulfilled: false, color: "#FF0000", check: checkAboveStar },
     { text: "Colorea de café la casilla que está a la derecha de la que tiene el número 15.", fulfilled: false, color: "#8B4513", check: checkRightOfNumber(15) },
     { text: "Escribe la primera letra de tu nombre encima de la casilla negra.", fulfilled: false, textInput: true, check: checkAboveBlack },
-    { text: "Colorea de verde las casillas a los lados del número 50.", fulfilled: false, color: "#008000", check: checkSidesOfNumber(50) },
+    { text: "Colorea de verde la casilla derecha al lado del número 50.", fulfilled: false, color: "#008000", check: checkSidesOfNumber(50) },
     { text: "Colorea de rosado la casilla de la primera fila y cuarta columna.", fulfilled: false, color: "#FFC0CB", check: checkFirstRowFourthCol },
-    { text: "Colorea de amarillo la casilla encima de la que tiene el número 21 y de negro la de debajo.", fulfilled: false, color: "#FFFF00", check: checkAboveAndBelowOfNumber(21) },
+    { text: "Colorea de amarillo la casilla encima de la que tiene el número 21.", fulfilled: false, color: "#FFFF00", check: checkAboveAndBelowOfNumber(21) },
     { text: "Colorea de morado la casilla que está debajo de la negra.", fulfilled: false, color: "#800080", check: checkBelowBlack },
     { text: "Escribe el número de hijos que tienes en la cuarta fila y octava columna.", fulfilled: false, textInput: true, check: checkFourthRowEighthCol },
     { text: "Colorea de celeste la casilla encima de la que tiene el número igual a la multiplicación 16 x 3.", fulfilled: false, color: "#ADD8E6", check: checkAboveMultiplication },
@@ -241,7 +241,7 @@ function showNotification(message) {
         notificationElement.remove();
     }, 5000);
 }
-/*
+
 // Verificar si se cumplen las condiciones de las instrucciones en orden secuencial
 function checkConditions(row, col, action) {
     const currentInstruction = instructions[completedInstructions];
@@ -265,37 +265,7 @@ function checkConditions(row, col, action) {
     if (completedInstructions === instructions.length) {
         redirectToEstadistica();
     }
-}*/
-
-function checkConditions(row, col, action) {
-    const currentInstruction = instructions[completedInstructions];
-
-    // Si la instrucción ya está cumplida, no hacer nada
-    if (currentInstruction && currentInstruction.fulfilled) {
-        return;
-    }
-
-    if (currentInstruction && currentInstruction.check(row, col, action)) {
-        // La instrucción actual se ha cumplido correctamente
-        currentInstruction.fulfilled = true;
-        document.getElementById(`instruction-${completedInstructions}`).style.textDecoration = "line-through";
-        completedInstructions++;
-
-        // Mensaje de éxito
-        document.getElementById("notification").innerText = "¡Correcto!";
-    } else {
-        // Si no se ha completado la instrucción, no incrementar los intentos incorrectos.
-        if (!currentInstruction.fulfilled) {
-            showNotification("La acción no corresponde a la instrucción actual.");
-        }
-    }
-
-    // Redirigir al completar todas las instrucciones
-    if (completedInstructions === instructions.length) {
-        redirectToEstadistica();
-    }
 }
-
 
 // Función para incrementar el contador de intentos incorrectos
 function incrementIncorrectAttempts(amount = 1) {
@@ -322,75 +292,24 @@ function checkRightOfNumber(number) {
 function checkAboveBlack(row, col, text) {
     return text && row === blackPosition.row - 1 && col === blackPosition.col;
 }
-/*
+
 function checkSidesOfNumber(number) {
     return function (row, col, color) {
         const pos = numberPositions[number];
-        return color === "#008000" && row === pos.row && (col === pos.col - 1 || col === pos.col + 1);
+        return color === "#008000" && row === pos.row && (col === pos.col + 1);
     };
 }
-*/
-function checkSidesOfNumber(number) {
-    return function (row, col, color) {
-        const pos = numberPositions[number];
-
-        // Verificar si la casilla de la izquierda o la derecha se ha pintado
-        if (color === "#008000" && row === pos.row) {
-            // Casilla a la izquierda
-            if (col === pos.col - 1) {
-                paintedCells.left = true;
-            }
-            // Casilla a la derecha
-            if (col === pos.col + 1) {
-                paintedCells.right = true;
-            }
-        }
-
-        // Verificar si ambas casillas han sido pintadas correctamente
-        if (paintedCells.left && paintedCells.right) {
-            // Si ambas casillas están pintadas correctamente, considera la instrucción cumplida
-            return true;
-        }
-        return false;
-    };
-}
-
 
 function checkFirstRowFourthCol(row, col, color) {
     return color === "#FFC0CB" && row === 0 && col === 3;
 }
-/*
+
 function checkAboveAndBelowOfNumber(number) {
     return function (row, col, color) {
         const pos = numberPositions[number];
-        return (color === "#FFFF00" && row === pos.row - 1 && col === pos.col) ||
-               (color === "#000000" && row === pos.row + 1 && col === pos.col);
+        return (color === "#FFFF00" && row === pos.row - 1 && col === pos.col);
     };
 }
-*/
-function checkAboveAndBelowOfNumber(number) {
-    return function (row, col, color) {
-        const pos = numberPositions[number];
-
-        // Verificar si la casilla de arriba o la de abajo se ha pintado
-        if (color === "#FFFF00" && row === pos.row - 1 && col === pos.col) {
-            paintedCells.above = true;
-        }
-
-        if (color === "#000000" && row === pos.row + 1 && col === pos.col) {
-            paintedCells.below = true;
-        }
-
-        // Verificar si ambas casillas han sido pintadas correctamente
-        if (paintedCells.above && paintedCells.below) {
-            return true;
-        }
-
-        return false;
-    };
-}
-
-
 
 function checkBelowBlack(row, col, color) {
     return color === "#800080" && row === blackPosition.row + 1 && col === blackPosition.col;
@@ -412,7 +331,7 @@ function checkLeftOfNumber(number) {
 }
 
 function checkSecondRowSecondCol(row, col, text) {
-    return (text === "G" || text ==="g")  && row === 1 && col === 1;
+    return (text === "G" || text === "g") && row === 1 && col === 1;
 }
 
 // Temporizador
@@ -428,4 +347,9 @@ function updateTimer() {
     const seconds = elapsedTime % 60;
     document.getElementById("timer").textContent = `${minutes}:${seconds.toString().padStart(2, "0")}`;
     requestAnimationFrame(updateTimer);
+}
+
+// Función para redirigir a la página de estadísticas
+function redirectToEstadistica() {
+    window.location.href = "estadistica.html";
 }
