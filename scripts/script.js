@@ -63,6 +63,7 @@ const instructions = [
     { text: "Escribe la séptima letra del abecedario en la segunda fila y segunda columna.", fulfilled: false, textInput: true, check: checkSecondRowSecondCol }
 ];
 
+/*
 document.addEventListener("DOMContentLoaded", function () {
     let secondsElapsed = 0;
     const timeCounter = document.getElementById('timeCounter');
@@ -78,6 +79,48 @@ document.addEventListener("DOMContentLoaded", function () {
         console.error("Elemento 'timeCounter' no encontrado");
     }
 });
+*/
+
+document.addEventListener("DOMContentLoaded", function () {
+    let secondsElapsed = 0;
+    let domContentLoadedTime = 0;
+    const timeCounter = document.getElementById('timeCounter');
+
+    if (timeCounter) {
+        // Inicia el temporizador
+        const timerInterval = setInterval(() => {
+            secondsElapsed++;
+            const minutes = Math.floor(secondsElapsed / 60);
+            const seconds = secondsElapsed % 60;
+            timeCounter.textContent = `Tiempo transcurrido: ${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+        }, 1000);
+
+        // Registra el tiempo transcurrido cuando el DOM se carga completamente
+        domContentLoadedTime = secondsElapsed;
+
+        // Función para detener el temporizador y mostrar el tiempo de carga del DOM
+        window.showCompletionTime = function() {
+            clearInterval(timerInterval);
+            const totalMinutes = Math.floor(secondsElapsed / 60);
+            const totalSeconds = secondsElapsed % 60;
+            const domLoadedMinutes = Math.floor(domContentLoadedTime / 60);
+            const domLoadedSeconds = domContentLoadedTime % 60;
+
+            alert(`¡Felicidades! Completaste el test en ${totalMinutes}:${totalSeconds < 10 ? '0' : ''}${totalSeconds}.\n` +
+                  `Tiempo desde que se cargaron las instrucciones: ${domLoadedMinutes}:${domLoadedSeconds < 10 ? '0' : ''}${domLoadedSeconds}`);
+            
+            // Redirige a la página de estadísticas
+            window.location.href = 'estadistica.html';
+        };
+
+    } else {
+        console.error("Elemento 'timeCounter' no encontrado");
+    }
+});
+
+
+
+
 
 function drawBoard() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -368,7 +411,9 @@ function updateTimer() {
     requestAnimationFrame(updateTimer);
 }
 
+/*
 // Función para redirigir a la página de estadísticas
 function redirectToEstadistica() {
     window.location.href = "estadistica.html";
 }
+    */

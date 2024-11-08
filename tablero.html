@@ -30,7 +30,7 @@
                 <li onclick="setColor('#000000')" class="color-option" style="color: #000000;">Negro</li>
                 <li onclick="setColor('#FFFFFF')" class="color-option" style="color: #000000;">Borrar</li>
                 <li onclick="drawTriangle()">Dibujar Triángulo</li>
-                <li onclick="enableTextInput()" class="color-option" style="color: #000000;">Escribir</li> <!-- Nueva opción -->
+                <li onclick="enableTextInput()" class="color-option" style="color: #000000;">Escribir</li>
             </ul></b>
         </div>
         <div class="canvas-container">
@@ -40,6 +40,13 @@
         </div>
     </div>
 
+    <!-- Botón de Finalizar Test -->
+    <div style="text-align: center; margin-top: 20px;">
+        <button onclick="showCompletionTime()" style="font-size: 1.5rem; padding: 10px 20px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer;">
+            Finalizar Test
+        </button>
+    </div>
+
     <script src="scripts/script.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
@@ -47,7 +54,6 @@
         });
 
         function enableTextInput() {
-            // Activa el modo de escritura sin mostrar un campo de entrada
             textInputMode = true;
             selectedColor = "";
             drawTriangleMode = false;
