@@ -1,49 +1,133 @@
+* {
+    margin: 5px;
+    padding: 0;
+}
+
 html {
     font-size: 70.5%;
     box-sizing: border-box;
 }
 
-*, *:before, *:after {
+*,
+*:before,
+*:after {
     box-sizing: inherit;
 }
 
 body {
     font-size: 16px;
     font-family: 'Krub', sans-serif;
+    background: rgb(238, 174, 202);
+    background: radial-gradient(circle, rgba(238, 174, 202, 1) 0%, rgba(148, 187, 233, 1) 100%);
+}
+
+/* From Uiverse.io by gharsh11032000 */
+.button {
+    position: relative;
+    padding: 5px 30px;
+    font-family: inherit;
+    background-color: var(--color-primary);
+    border: 2px solid;
+    font-size: 30px;
+    font-weight: 600;
+    color: white;
+    cursor: pointer;
+    text-transform: uppercase;
+    overflow: hidden;
+    transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.button:hover span {
+    background: linear-gradient(135deg, #3645d4 0%, #0b6d65 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.button::before {
+    position: absolute;
+    content: '';
+    width: 100%;
+    height: 100%;
+    left: -110%;
+    top: -0%;
+    background: #5735d1;
+    pointer-events: none;
+    margin: auto;
+    transition: all 0.6s cubic-bezier(0.23, 1, 0.320, 1);
+}
+
+.button:hover {
+    letter-spacing: 2px;
+    border-image: linear-gradient(135deg, #aefb2a 0%, #57ebde 100%);
+    border-image-slice: 1;
+}
+
+.button:hover::before {
+    left: 110%;
+}
+
+.button:active {
+    scale: 0.95;
 }
 
 h1 {
-    font-size: 3.8rem;
+    text-align: center;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+
+h2 {
+    font-size: 2.8rem;
     text-align: center;
 }
 
+h3 {
+    font-size: 2.4rem;
+}
+
+/* Styles for the game elements */
 .container {
     display: flex;
-    justify-content: center;
+    justify-content:space-around;
     align-items: flex-start;
-    gap: 20px; /* Espacio entre el menú y el tablero */
+    gap: 10px;
 }
 
-.menu {
-    width: 250px;
-    text-align: left; 
-}
+/* Estilos de los botones */
 
-.menu h3 {
-    font-size: 2.2rem;
-    margin-bottom: 2px;
-}
 
 .menu ul {
-    list-style-type: disc;
+    list-style-type: none;
     padding: 0;
 }
 
 .menu li {
-    margin: 8px 0;
-    padding: 5px 10px;
+    margin: 0;
+    padding: 5px;
     cursor: pointer;
     font-size: 2rem;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+/* Efecto hover */
+.menu li:hover {
+    background-color: #f0f0f0;
+    color: #007BFF;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    transform: scale(1.05);
+}
+
+/* Estilo del input de texto */
+#textInput {
+    margin-top: 15px;
+    padding: 8px;
+    font-size: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    width: 100%;
+    max-width: 200px;
 }
 
 .canvas-container {
@@ -53,20 +137,18 @@ h1 {
 }
 
 canvas {
-    border: 2px solid #000000;
+    border: 2px solid #000;
 }
 
-.instruction-box {
-    width: 200px;
-    height: 50px;
-    border: 2px solid red;
-    margin-top: 20px;
-    font-size: 1.6rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
+.instruction {
+    font-size: 1.5rem;
+    color: #333;
 }
+
+.instruction.active {
+    color: #FF0000;
+}
+
 
 .registro-container {
     max-width: 400px;
@@ -129,33 +211,45 @@ canvas {
     grid-template-columns: 1fr auto;
     gap: 20px;
     padding: 10px;
-    max-width: 900px; /* Ancho máximo del contenedor principal */
-    margin: auto; /* Centra el contenido */
+    margin: 0;
+    /* Centra el contenido */
 }
 
 .info-juego {
     grid-column: span 2;
-    background-color: #4A90E2;
-    padding: 15px;
+    background-color: #7090b9;
+    padding: 5px;
     text-align: center;
-    font-size: 1.6rem;
+    font-size: 15px;
     color: #FFFFFF;
     border-radius: 8px;
 }
 
+.imagenYopciones {
+    display: flex;
+    gap: 70px;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    margin: 0;
+}
+
 .material-audiovisual {
     background-color: #FFFFFF;
-    padding: 10px;
+    padding: 5px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     text-align: center;
 }
 
 .audiovisual-img {
-    width: 300px; /* Ajusta el ancho de la imagen al contenedor */
-    max-width: 300px; /* Ancho máximo de la imagen para evitar que sea demasiado grande */
-    height: auto; /* Mantiene la proporción de la imagen */
-    border-radius: 8px;
+    width: 350px;
+    /* Ajusta el ancho de la imagen al contenedor */
+    max-width: 350px;
+    /* Ancho máximo de la imagen para evitar que sea demasiado grande */
+    height: auto;
+    /* Mantiene la proporción de la imagen */
+    border-radius: 15px;
 }
 
 .menu-opciones {
@@ -169,7 +263,8 @@ canvas {
     color: #333;
 }
 
-.menu-opciones select, .menu-opciones button {
+.menu-opciones select,
+.menu-opciones button {
     font-size: 1.4rem;
     padding: 8px 12px;
     background-color: #34495E;
@@ -179,10 +274,12 @@ canvas {
     cursor: pointer;
     text-align: center;
     transition: background-color 0.3s ease;
-    width: 100%; /* Alinea los botones y el selector a lo ancho del contenedor */
+    width: 100%;
+    /* Alinea los botones y el selector a lo ancho del contenedor */
 }
 
-.menu-opciones select:hover, .menu-opciones button:hover {
+.menu-opciones select:hover,
+.menu-opciones button:hover {
     background-color: #2C3E50;
 }
 
@@ -267,4 +364,91 @@ canvas {
 #grafico {
     width: 100%;
     height: 100%;
+}
+
+.instruction {
+    font-size: 1.5rem;
+    color: #333;
+}
+
+.instruction.completed {
+    color: #888;
+    /* Color para indicar que la instrucción ha sido completada */
+    text-decoration: line-through;
+}
+
+.instruction.active {
+    color: #FF0000;
+    /* Destaca la instrucción activa en rojo */
+}
+
+.notification {
+    position: fixed;
+    top: 40px;
+    right: 40px;
+    padding: 20px 30px;
+    background-color: rgba(255, 0, 0, 0.9);
+    color: white;
+    font-size: 24px;
+    /* Aumenta el tamaño de la fuente */
+    font-weight: bold;
+    /* Añade negrita para mayor visibilidad */
+    border-radius: 8px;
+    z-index: 1000;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+
+@keyframes fadein {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeout {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+    }
+}
+
+#attemptCounter {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    font-size: 1.5rem;
+    color: red;
+    font-weight: bold;
+}
+
+#timeCounter {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 1.5rem;
+    color: green;
+    font-weight: bold;
+}
+
+.boton-salir {
+    background-color: #d9534f;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-top: 20px;
+    transition: background-color 0.3s ease;
+}
+
+.boton-salir:hover {
+    background-color: #c9302c;
 }

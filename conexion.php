@@ -1,35 +1,13 @@
 <?php
-// Configuración de conexión a la base de datos
-$servername = "localhost";
-$username = "root";
-$password = ""; 
-$dbname = "JuegoDB";
+$host = "localhost";
+$usuario = "root"; // Usuario por defecto de XAMPP
+$contrasena = ""; // Sin contraseña por defecto
+$base_de_datos = "ComprensionDB";
+$puerto = 3307; 
 
-// Crear conexión
-$conn = new mysqli($servername, $username, $password, $dbname);
+$conexion = new mysqli($host, $usuario, $contrasena, $base_de_datos, $puerto);
 
-// Verificar conexión
-if ($conn->connect_error) {
-    die("Conexión fallida: " . $conn->connect_error);
+if ($conexion->connect_error) {
+    die("Error de conexión: " . $conexion->connect_error);
 }
-
-// Verificar si se enviaron datos por POST
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $id = $_POST["id"];
-    $nombre = $_POST["nombre"];
-    $apellido = $_POST["apellido"];
-    $edad = $_POST["edad"];
-
-    // Insertar datos en la tabla PACIENTE
-    $sql = "INSERT INTO PACIENTE (id, nombre, apellido, edad) VALUES ('$id', '$nombre', '$apellido', $edad)";
-
-    if ($conn->query($sql) === TRUE) {
-        echo "Paciente agregado exitosamente";
-    } else {
-        echo "Error al agregar paciente: " . $conn->error;
-    }
-}
-
-// Cerrar conexión
-$conn->close();
 ?>
