@@ -21,13 +21,20 @@ body {
     background: radial-gradient(circle, rgba(238, 174, 202, 1) 0%, rgba(148, 187, 233, 1) 100%);
 }
 
+/*****************************************************************************/
+
+.encabezado {
+    display: flex;
+    justify-content: space-between;
+}
+
 /* From Uiverse.io by gharsh11032000 */
-.button {
+.BytePrensión {
     position: relative;
     padding: 5px 30px;
     font-family: inherit;
     background-color: var(--color-primary);
-    border: 2px solid;
+    border: 3px solid;
     font-size: 30px;
     font-weight: 600;
     color: white;
@@ -37,14 +44,14 @@ body {
     transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
-.button:hover span {
+.BytePrensión:hover span {
     background: linear-gradient(135deg, #3645d4 0%, #0b6d65 100%);
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
-.button::before {
+.BytePrensión::before {
     position: absolute;
     content: '';
     width: 100%;
@@ -57,17 +64,17 @@ body {
     transition: all 0.6s cubic-bezier(0.23, 1, 0.320, 1);
 }
 
-.button:hover {
+.BytePrensión:hover {
     letter-spacing: 2px;
-    border-image: linear-gradient(135deg, #aefb2a 0%, #57ebde 100%);
+    border-image: linear-gradient(135deg, #3125d4 0%, #57ebde 100%);
     border-image-slice: 1;
 }
 
-.button:hover::before {
+.BytePrensión:hover::before {
     left: 110%;
 }
 
-.button:active {
+.BytePrensión:active {
     scale: 0.95;
 }
 
@@ -88,12 +95,71 @@ h3 {
 /* Styles for the game elements */
 .container {
     display: flex;
-    justify-content:space-around;
+    justify-content: space-around;
     align-items: flex-start;
     gap: 10px;
 }
 
 /* Estilos de los botones */
+
+/* From Uiverse.io by BHARGAVPATEL1244 */
+.regresar {
+    outline: none;
+    cursor: pointer;
+    border: none;
+    padding: 0.9rem 2rem;
+    margin: 0;
+    font-family: inherit;
+    font-size: inherit;
+    position: relative;
+    display: inline-block;
+    letter-spacing: 0.05rem;
+    font-weight: 700;
+    font-size: 17px;
+    border-radius: 500px;
+    overflow: hidden;
+    background: #3645d4;
+    color: ghostwhite;
+    text-decoration: none;
+}
+
+.regresar span {
+    position: relative;
+    z-index: 10;
+    transition: color 0.4s;
+}
+
+.regresar:hover span {
+    color: black;
+}
+
+.regresar::before,
+.regresar::after {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+}
+
+.regresar::before {
+    content: "";
+    background: #000;
+    width: 120%;
+    left: -10%;
+    transform: skew(30deg);
+    transition: transform 0.4s cubic-bezier(0.3, 1, 0.8, 1);
+}
+
+.regresar:hover::before {
+    transform: translate3d(100%, 0, 0);
+}
+
+
+
+
+
 
 
 .menu ul {
