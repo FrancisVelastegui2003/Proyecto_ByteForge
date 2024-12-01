@@ -38,7 +38,6 @@ body {
     font-size: 30px;
     font-weight: 600;
     color: white;
-    cursor: pointer;
     text-transform: uppercase;
     overflow: hidden;
     transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
@@ -80,7 +79,6 @@ body {
 
 h1 {
     text-align: center;
-    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
 }
 
 h2 {
@@ -91,6 +89,69 @@ h2 {
 h3 {
     font-size: 2.4rem;
 }
+
+
+/* From Uiverse.io by adamgiebl */
+.cssbuttons-io-button {
+    background: #7090b9;
+    color: white;
+    font-family: inherit;
+    padding: 0.35em;
+    padding-left: 1.2em;
+    font-size: 17px;
+    font-weight: 500;
+    border-radius: 0.9em;
+    border: none;
+    letter-spacing: 0.05em;
+    display: flex;
+    align-items: center;
+    box-shadow: inset 0 0 1.6em -0.6em #714da6;
+    overflow: hidden;
+    position: relative;
+    height: 2.8em;
+    padding-right: 3.3em;
+    cursor: pointer;
+    margin: 25px;
+}
+
+.cssbuttons-io-button .icon {
+    background: white;
+    margin-left: 1em;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 2.2em;
+    width: 2.2em;
+    border-radius: 0.7em;
+    box-shadow: 0.1em 0.1em 0.6em 0.2em #7b52b9;
+    right: 0.3em;
+    transition: all 0.3s;
+}
+
+.cssbuttons-io-button:hover .icon {
+    width: calc(100% - 0.6em);
+}
+
+.cssbuttons-io-button .icon svg {
+    width: 1.1em;
+    transition: transform 0.3s;
+    color: #7b52b9;
+}
+
+.cssbuttons-io-button:hover .icon svg {
+    transform: translateX(0.1em);
+}
+
+.cssbuttons-io-button:active .icon {
+    transform: scale(0.95);
+}
+
+
+
+
+
+
 
 /* Styles for the game elements */
 .container {
@@ -118,8 +179,13 @@ h3 {
     font-size: 17px;
     border-radius: 500px;
     overflow: hidden;
-    background: #3645d4;
+    background: #5735d1;
     color: ghostwhite;
+    text-decoration: none;
+}
+
+.regresar a {
+    color: white;
     text-decoration: none;
 }
 
@@ -130,7 +196,7 @@ h3 {
 }
 
 .regresar:hover span {
-    color: black;
+    color: white;
 }
 
 .regresar::before,
@@ -225,6 +291,7 @@ canvas {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     background-color: #f9f9f9;
     text-align: center;
+    margin-top: 30px;
 }
 
 .registro-container h2 {
@@ -251,6 +318,22 @@ canvas {
     border-radius: 4px;
 }
 
+
+
+.botones {
+    display: flex;
+    justify-content: space-around;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+
+
+
+
+
+
+
 .button-group {
     display: flex;
     justify-content: space-around;
@@ -264,7 +347,7 @@ canvas {
     background-color: #6c757d;
     color: #fff;
     border: none;
-    border-radius: 4px;
+    border-radius: 10px;
     cursor: pointer;
 }
 
@@ -324,47 +407,11 @@ canvas {
     gap: 8px;
 }
 
-.menu-opciones label {
-    font-size: 1.4rem;
-    color: #333;
-}
-
-.menu-opciones select,
-.menu-opciones button {
-    font-size: 1.4rem;
-    padding: 8px 12px;
-    background-color: #34495E;
-    color: #FFFFFF;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    text-align: center;
-    transition: background-color 0.3s ease;
-    width: 100%;
-    /* Alinea los botones y el selector a lo ancho del contenedor */
-}
-
-.menu-opciones select:hover,
-.menu-opciones button:hover {
-    background-color: #2C3E50;
-}
-
 .estadistica-container {
-    padding: 20px;
-    background-color: #FFFFFF;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
+    padding: 10px;
     display: grid;
     grid-template-columns: 1fr 2fr;
     gap: 20px;
-}
-
-.estadistica-container h1 {
-    grid-column: span 2;
-    text-align: center;
-    font-size: 3.6rem;
-    color: #4A90E2;
-    margin-bottom: 20px;
 }
 
 .info-paciente {
