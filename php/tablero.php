@@ -1,4 +1,3 @@
-@@ -1,7 +1,3 @@
 <?php
 include 'auth_check.php';
 ?>

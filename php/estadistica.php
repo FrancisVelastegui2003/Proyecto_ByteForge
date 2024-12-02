@@ -30,8 +30,12 @@ include 'auth_check.php';
 
         <!-- Información del Paciente -->
         <div class="info-paciente">
-            <label for="paciente-id">ID:</label>
-            <input type="text" id="paciente-id" placeholder="Ingrese ID del paciente">
+            <div class="form-group">
+                <p>Selecciona un paciente: </p>
+                <select id="select-paciente" name="select-paciente">
+                    <option value="" disabled selected>Seleccione un paciente</option>
+                </select>
+            </div>
             <div class="datos-paciente" id="datos-paciente">
                 <!-- Aquí se cargarán los datos del paciente desde la base de datos -->
                 <p>Datos del paciente</p>
@@ -51,7 +55,7 @@ include 'auth_check.php';
         </div>
     </div>
 
-    <script src="../scripts/estadistica.js"></script>
+    <script src="../scripts/pacientes.js"></script>
 </body>
 
 </html>
