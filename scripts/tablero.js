@@ -39,13 +39,21 @@ const instructions = [
     { text: "Escribe la séptima letra del abecedario en la segunda fila y segunda columna.", textInput: true, check: checkSecondRowSecondCol }
 ];
 
+// Función para barajar las instrucciones de forma aleatoria
+function shuffleInstructions() {
+    for (let i = instructions.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [instructions[i], instructions[j]] = [instructions[j], instructions[i]]; // Intercambiar elementos
+    }
+}
+
 // Inicializa el juego: dibuja tablero, carga instrucciones y temporizador
 function initializeGame() {
+    shuffleInstructions(); // Aleatoriza las instrucciones
     drawBoard();
     displayInstructions();
     startTimer();
 }
-
 // Dibuja el tablero y los elementos estáticos
 function drawBoard() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
