@@ -9,7 +9,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $query = "INSERT INTO paciente (nombre, edad, id, diagnostico) VALUES ('$nombre', $edad, '$id', '$diagnostico')";
     if ($conexion->query($query) === TRUE) {
-        header("Location: index.html");
+        header("Location: ../index.html");
     } else {
         echo "Error: " . $query . "<br>" . $conexion->error;
     }

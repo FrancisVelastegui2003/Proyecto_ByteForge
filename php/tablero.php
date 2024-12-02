@@ -1,3 +1,7 @@
+<?php
+include 'auth_check.php';
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 
@@ -5,13 +9,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Comprensión</title>
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="../css/styles.css">
 </head>
 
 <body>
     <div class="encabezado">
         <div>
-            <a href="configuracion.html" class="regresar">
+            <a href="configuracion.php" class="regresar">
                 <span>Regresar</span>
             </a>
         </div>
@@ -25,7 +29,7 @@
             </button>
 
             <button class="regresar" onclick="showCompletionTime()">
-                <a href="estadistica.html">
+                <a href="estadistica.php">
                 <span>Finalizar</span>
             </a>
             </button>
@@ -64,7 +68,7 @@
     </div>
     -->
 
-    <script src="scripts/tablero.js"></script>
+    <script src="../scripts/tablero.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             drawBoard();

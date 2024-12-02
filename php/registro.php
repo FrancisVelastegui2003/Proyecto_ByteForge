@@ -1,11 +1,17 @@
+<?php
+include 'auth_check.php';
+?>
+
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro de Paciente</title>
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="../css/styles.css">
 </head>
+
 <body>
     <h2>
         <button class="BytePrensión">
@@ -43,12 +49,12 @@
                 <button class="regresar" type="submit" class="btn">
                     <span>Guardar</span>
                 </button>
-                <button class= "regresar" type="button" class="btn" onclick="window.location.href='configuracion.html'">
+                <button class="regresar" type="button" class="btn" onclick="window.location.href='configuracion.php'">
                     <span>Salir</span>
                 </button>
             </div>
         </form>
     </div>
-    <script src="scripts/script.js"></script>
 </body>
+
 </html>

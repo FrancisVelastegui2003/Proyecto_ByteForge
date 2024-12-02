@@ -1,3 +1,7 @@
+<?php
+include 'auth_check.php';
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 
@@ -5,14 +9,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Configuracion del juego</title>
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="../css/styles.css">
 </head>
 
 <body>
 
     <div class="configuracion-container">
         <div>
-            <a href="index.html" class="regresar">
+            <a href="../index.html" class="regresar">
                 <span>Regresar</span>
             </a>
         </div>
@@ -27,7 +31,7 @@
         <!-- Información del Paciente -->
         <div class="opciones-configuracion">
 
-            <button class="opciones-btn" onclick="window.location.href='registro.html'">
+            <button class="opciones-btn" onclick="window.location.href='registro.php'">
                 <span class="shadow"></span>
                 <span class="edge"></span>
                 <span class="front"> Registrar nuevo paciente </span>
@@ -39,7 +43,7 @@
                 <span class="front"> Seleccionar paciente </span>
             </button>
 
-            <button class="opciones-btn" onclick="window.location.href='estadistica.html'">
+            <button class="opciones-btn" onclick="window.location.href='estadistica.php'">
                 <span class="shadow"></span>
                 <span class="edge"></span>
                 <span class="front"> Ver Estadísticas </span>
@@ -72,14 +76,14 @@
                     </select>
                 </div>
                 
-                <button class= "regresar" type="button" class="btn" onclick="window.location.href='tablero.html'">
+                <button class= "regresar" type="button" class="btn" onclick="window.location.href='tablero.php'">
                     <span>JUGAR!</span>
                 </button>
             </div>
         </div>
     </div>
 
-    <script src="scripts/script.js"></script>
+    <script src="../scripts/paciente.js"></script>
 </body>
 
 </html>

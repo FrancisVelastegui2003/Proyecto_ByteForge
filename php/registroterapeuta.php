@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro Terapeuta</title>
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="../css/styles.css">
 </head>
 
 <body>
@@ -17,8 +17,11 @@
     <div class="registro-container">
         <h2>Registro Terapeuta</h2>
 
-        <!-- MEJORAR PHP -->
-        <form action="guardar_paciente.php" method="POST">
+        <form action="guardar_terapeuta.php" method="POST">
+            <div class="form-group">
+                <label for="cedula">Cédula</label>
+                <input type="text" id="cedula" name="cedula" required>
+            </div>
             <div class="form-group">
                 <label for="nombre">Nombre</label>
                 <input type="text" id="nombre" name="nombre" required>
@@ -28,24 +31,19 @@
                 <input type="text" id="apellido" name="apellido" required>
             </div>
             <div class="form-group">
-                <label for="id">Cedula</label>
-                <input type="text" id="id" name="id" required>
-            </div>
-            <div class="form-group">
-                <label for="id">Contraseña</label>
-                <input type="password" id="id" name="id" required>
+                <label for="contrasena">Contraseña</label>
+                <input type="password" id="contrasena" name="contrasena" required>
             </div>
             <div class="botones">
                 <button class="regresar" type="submit" class="btn">
                     <span>Guardar</span>
                 </button>
-                <button class="regresar" type="button" class="btn" onclick="window.location.href='index.html'">
+                <button class="regresar" type="button" class="btn" onclick="window.location.href='../index.html'">
                     <span>Salir</span>
                 </button>
             </div>
         </form>
     </div>
-    <script src="scripts/script.js"></script>
 </body>
 
 </html>

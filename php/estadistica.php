@@ -1,3 +1,7 @@
+<?php
+include 'auth_check.php';
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 
@@ -5,14 +9,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Estadísticas del Paciente</title>
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="../css/styles.css">
 </head>
 
 <body>
 
     <div class="estadistica-container">
         <div>
-            <a href="configuracion.html" class="regresar">
+            <a href="configuracion.php" class="regresar">
                 <span>Regresar</span>
             </a>
         </div>
@@ -47,7 +51,7 @@
         </div>
     </div>
 
-    <script src="scripts/script.js"></script>
+    <script src="../scripts/estadistica.js"></script>
 </body>
 
 </html>
