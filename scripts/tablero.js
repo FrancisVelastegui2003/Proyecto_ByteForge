@@ -51,8 +51,8 @@ function shuffleInstructions() {
 function initializeGame() {
     shuffleInstructions(); // Aleatoriza las instrucciones
     drawBoard();
-    displayInstructions();
     startTimer();
+    displayCurrentInstruction();
 }
 // Dibuja el tablero y los elementos estáticos
 function drawBoard() {
@@ -71,15 +71,14 @@ function drawBoard() {
     }
 }
 
-// Muestra las instrucciones
-function displayInstructions() {
+// Muestra la instrucción actual (una a la vez)
+function displayCurrentInstruction() {
     const instructionContainer = document.getElementById("instruction");
-    instructions.forEach((instruction, index) => {
-        const instructionElement = document.createElement("p");
-        instructionElement.id = `instruction-${index}`;
-        instructionElement.innerText = instruction.text;
-        instructionContainer.appendChild(instructionElement);
-    });
+    if (completedInstructions < instructions.length) {
+        instructionContainer.innerText = instructions[completedInstructions].text;
+    } else {
+        instructionContainer.innerText = "¡Has completado todas las instrucciones!";
+    }
 }
 
 // Dibuja elementos en el tablero
@@ -190,26 +189,29 @@ function writeOnCell(row, col, text) {
     ctx.fillText(text, col * cellSize + cellSize / 3, row * cellSize + cellSize / 1.5);
 }
 
-// Verifica si la acción realizada cumple la condición de la instrucción actual
+// Verifica si la acción cumple con la condición de la instrucción actual
 function checkConditions(row, col, action) {
     const currentInstruction = instructions[completedInstructions];
 
     if (currentInstruction && currentInstruction.check(row, col, action)) {
         currentInstruction.fulfilled = true;
-        document.getElementById(`instruction-${completedInstructions}`).style.textDecoration = "line-through";
         completedInstructions++;
 
+        // Mostrar notificación de éxito
         showNotification("¡Correcto!");
+        
+        // Mostrar la siguiente instrucción
+        displayCurrentInstruction();
     } else {
+        // Incrementar intentos incorrectos
         incrementIncorrectAttempts();
-        showNotification("La acción no corresponde a la instrucción actual.");
     }
 
+    // Comprobar si todas las instrucciones se han completado
     if (completedInstructions === instructions.length) {
         showCompletionTime();
     }
 }
-
 // Incrementa el contador de intentos incorrectos
 function incrementIncorrectAttempts() {
     incorrectAttempts++;

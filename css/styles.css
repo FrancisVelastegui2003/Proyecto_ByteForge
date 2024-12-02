@@ -666,3 +666,6 @@ canvas {
 .boton-salir:hover {
     background-color: #c9302c;
 }
+.hidden {
+    display: none;
+}
