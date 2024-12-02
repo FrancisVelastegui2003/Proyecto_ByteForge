@@ -36,14 +36,14 @@
         </form>
 
         <!-- Mensaje de error dinámico mediante JavaScript -->
-        <p id="errorMessage" style="color: red; display: none;">Usuario o contraseña incorrectos. Inténtelo de nuevo.</p>
+        <p id="errorMessage" style="color: red; display: none; font-weight: bold;"><br>Usuario o contraseña incorrectos. Inténtelo de nuevo.</p>
     </div>
 
     <script>
-        // Mostrar mensaje de error si la URL contiene el parámetro error=true
         const urlParams = new URLSearchParams(window.location.search);
-        if (urlParams.get('error') === 'true') {
-            document.getElementById('errorMessage').style.display = 'block';
+        if (urlParams.get('error') === '1') {
+            const errorMessage = document.getElementById('errorMessage');
+            errorMessage.style.display = 'block';
         }
     </script>
 </body>

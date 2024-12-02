@@ -2,16 +2,20 @@
 include 'conexion.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $nombre = $_POST['nombre'];
-    $edad = $_POST['edad'];
-    $diagnostico = $_POST['diagnostico'];
-    $id = $_POST['id'];
+    $nombre = $conexion->real_escape_string($_POST['nombre']);
+    $apellido = $conexion->real_escape_string($_POST['apellido']);
+    $edad = (int)$_POST['edad'];
+    $diagnostico = $conexion->real_escape_string($_POST['diagnostico']);
+    $cedula = $conexion->real_escape_string($_POST['id']);
+    $cedula_terapeuta = $conexion->real_escape_string($_POST['id_terapeuta']);
 
-    $query = "INSERT INTO paciente (nombre, edad, id, diagnostico) VALUES ('$nombre', $edad, '$id', '$diagnostico')";
+    $query = "INSERT INTO Paciente (cedula, nombre, apellido, edad, diagnostico, cedula_terapeuta) 
+              VALUES ('$cedula', '$nombre', '$apellido', $edad, '$diagnostico', '$cedula_terapeuta')";
+
     if ($conexion->query($query) === TRUE) {
         header("Location: ../index.html");
     } else {
-        echo "Error: " . $query . "<br>" . $conexion->error;
+        echo "Error al guardar paciente: " . $conexion->error;
     }
 }
 

@@ -25,18 +25,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             header("Location: configuracion.php");
             exit();
         } else {
-            header("Location: ../index.html?error=invalid_credentials");
+            // Contraseña incorrecta
+            header("Location: iniciarsesion.php?error=1");
             exit();
         }
     } else {
-        header("Location: ../index.html?error=invalid_credentials");
+        // Usuario no encontrado
+        header("Location: iniciarsesion.php?error=1");
         exit();
     }
 
     $stmt->close();
     $conexion->close();
 } else {
-    header("Location: ../index.html");
+    header("Location: iniciarsesion.php");
     exit();
 }
 ?>

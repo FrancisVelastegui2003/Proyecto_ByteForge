@@ -58,15 +58,6 @@ include 'auth_check.php';
             <p id="notification" style="font-size: 1.5rem; color: green; font-weight: bold;"></p>
         </div>
     </div>
-    <!-- Botón de Finalizar Test -->
-    <!--
-    <div style="text-align: center; margin-top: 20px;">
-        <button onclick="showCompletionTime()"
-            style="font-size: 1.5rem; padding: 10px 20px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer;">
-            Finalizar Test
-        </button>
-    </div>
-    -->
 
     <script src="../scripts/tablero.js"></script>
     <script>

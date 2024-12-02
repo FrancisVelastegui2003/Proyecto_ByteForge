@@ -42,8 +42,8 @@ include 'auth_check.php';
                 <input type="text" id="id" name="id" required>
             </div>
             <div class="form-group">
-                <label for="id">Cedula Terapeuta a cargo</label>
-                <input type="text" id="id" name="id" required>
+                <label for="id_terapeuta">Cedula Terapeuta a cargo</label>
+                <input type="text" id="id" name="id_terapeuta" required>
             </div>
             <div class="botones">
                 <button class="regresar" type="submit" class="btn">

@@ -1,14 +1,24 @@
 <?php
-include 'conexion.php'; // Asegúrate de que este archivo esté configurado correctamente para la conexión
+include 'conexion.php';
 
-$query = "SELECT id, nombre FROM paciente";
+header('Content-Type: application/json');
+
+$query = "SELECT cedula, CONCAT(nombre, ' ', apellido) AS nombre_completo FROM Paciente";
 $resultado = $conexion->query($query);
+
+if (!$resultado) {
+    echo json_encode(['error' => 'Error en la consulta']);
+    exit;
+}
 
 $pacientes = array();
 while ($fila = $resultado->fetch_assoc()) {
-    $pacientes[] = $fila;
+    $pacientes[] = [
+        'id' => $fila['cedula'],
+        'nombre' => $fila['nombre_completo']
+    ];
 }
 
-echo json_encode($pacientes); // Devolver los datos en formato JSON
+echo json_encode($pacientes);
 $conexion->close();
 ?>

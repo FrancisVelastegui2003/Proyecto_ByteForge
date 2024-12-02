@@ -37,21 +37,17 @@ include 'auth_check.php';
                 <span class="front"> Registrar nuevo paciente </span>
             </button>
 
-            <button class="opciones-btn">
-                <span class="shadow"></span>
-                <span class="edge"></span>
-                <span class="front"> Seleccionar paciente </span>
-            </button>
-
             <button class="opciones-btn" onclick="window.location.href='estadistica.php'">
                 <span class="shadow"></span>
                 <span class="edge"></span>
                 <span class="front"> Ver Estadísticas </span>
             </button>
 
-            <div class="datos-paciente" id="datos-paciente">
-                <!-- Aquí se cargarán los datos del paciente desde la base de datos -->
-                <p>Lista de pacientes cuando haga click en "seleccionar paciente" </p>
+            <div class="form-group">
+                <p>Selecciona un paciente: </p>
+                <select id="select-paciente" name="select-paciente">
+                    <option value="" disabled selected>Seleccione un paciente</option>
+                </select>
             </div>
         </div>
 
@@ -75,15 +71,15 @@ include 'auth_check.php';
                         <option value="no">No</option>
                     </select>
                 </div>
-                
-                <button class= "regresar" type="button" class="btn" onclick="window.location.href='tablero.php'">
+
+                <button class="regresar" type="button" class="btn" onclick="window.location.href='tablero.php'">
                     <span>JUGAR!</span>
                 </button>
             </div>
         </div>
     </div>
 
-    <script src="../scripts/paciente.js"></script>
+    <script src="../scripts/pacientes.js"></script>
 </body>
 
 </html>
