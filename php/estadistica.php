@@ -39,15 +39,20 @@ include 'auth_check.php';
 
         <!-- Información del Paciente -->
         <div class="info-paciente">
-            <div class="form-group">
-                <p>Selecciona un paciente: </p>
-                <select id="select-paciente" name="select-paciente">
-                    <option value="" disabled selected>Seleccione un paciente</option>
-                </select>
+            <div>
+                <button class="opciones-btn">
+                    <span class="shadow"></span>
+                    <span class="edge"></span>
+                    <span class="front">
+                        <select id="select-paciente" name="select-paciente">
+                            <option value="" disabled selected>Seleccione un paciente</option>
+                        </select>
+                    </span>
+                </button>
             </div>
             <div class="datos-paciente" id="datos-paciente">
                 <!-- Aquí se cargarán los datos del paciente desde la base de datos -->
-                <p>Datos del paciente</p>
+                <p class="titulo-datos">Datos del paciente</p>
                 <div class="form-group">
                     <label class="estilo-opciones">Paciente seleccionado:</label>
                     <span id="pacienteSeleccionado"></span>
@@ -71,18 +76,30 @@ include 'auth_check.php';
 
         <!-- Sección de Estadísticas -->
         <div class="estadisticas-detalle">
+            <!-- 
             <p>Tiempo:</p>
             <p id="tiempo">0</p>
             <p>Intentos:</p>
             <p id="intentos">0</p>
+-->
+
+            <!-- OBTENER EL NUMEOR DE INSTRUCCIONES QUE EL JUGADOR HA TENIDO EN SUS JUEGOS  -->
+            <div class="container-instrucciones">
+                <h4 class="estilo-opciones">Seleccione el numero de intrucciones </h4>
+                <select id="select-intrucciones" name="select-instrucciones">
+                    <option value="" disabled selected></option>
+                </select>
+            </div>
+
+
             <div class="grafico-container">
                 <!-- Aquí se cargará el gráfico -->
                 <canvas id="grafico"></canvas>
             </div>
+            </>
         </div>
-    </div>
 
-    <script src="../scripts/pacientes.js"></script>
+        <script src="../scripts/pacientes.js"></script>
 </body>
 
 </html>

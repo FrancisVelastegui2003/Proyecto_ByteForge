@@ -528,6 +528,20 @@ canvas {
     font-weight: 600;
 }
 
+.titulo-datos {
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 10px;
+}
+
+
+/* container de las estadisticvas y graficos */
+
+.container-instrucciones {
+    display: flex;
+    justify-content: center;
+}
 
 
 

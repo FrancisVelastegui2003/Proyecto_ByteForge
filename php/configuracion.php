@@ -41,7 +41,6 @@ include 'auth_check.php';
                         </select>
                     </span>
                 </button>
-
             </div>
 
             <button class="opciones-btn" onclick="window.location.href='registro.php'">

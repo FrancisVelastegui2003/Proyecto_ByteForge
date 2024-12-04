@@ -46,7 +46,7 @@ include 'auth_check.php';
                 <input type="text" id="id" name="id_terapeuta" required>
             </div>
             <div class="botones">
-                <button class="regresar" type="submit" class="btn">
+                <button class="regresar" type="submit" class="btn" onclick="window.location.href='configuracion.php'">
                     <span>Guardar</span>
                 </button>
                 <button class="regresar" type="button" class="btn" onclick="window.location.href='configuracion.php'">

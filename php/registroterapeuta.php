@@ -35,7 +35,7 @@
                 <input type="password" id="contrasena" name="contrasena" required>
             </div>
             <div class="botones">
-                <button class="regresar" type="submit" class="btn">
+                <button class="regresar" type="submit" class="btn" onclick="window.location.href='configuracion.php'">
                     <span>Guardar</span>
                 </button>
                 <button class="regresar" type="button" class="btn" onclick="window.location.href='../index.html'">
