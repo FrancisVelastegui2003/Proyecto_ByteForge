@@ -13,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
               VALUES ('$cedula', '$nombre', '$apellido', $edad, '$diagnostico', '$cedula_terapeuta')";
 
     if ($conexion->query($query) === TRUE) {
-        header("Location: ../index.html");
+        header("Location: ../php/configuracion.php");
     } else {
         echo "Error al guardar paciente: " . $conexion->error;
     }
