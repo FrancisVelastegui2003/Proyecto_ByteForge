@@ -20,8 +20,10 @@ if (isset($_SESSION['ultimo_acceso'])) {
 $_SESSION['ultimo_acceso'] = time(); // Actualizar tiempo de acceso
 
 // Verificar si el usuario está autenticado
-if (!isset($_SESSION['usuario'])) {
+if (!isset($_SESSION['terapeuta_id'])) {
     header("Location: ../index.html"); // Redirigir al inicio
     exit();
 }
+
+// Ahora $_SESSION['terapeuta_id'] contiene la cédula del terapeuta loggeado
 ?>
