@@ -386,6 +386,22 @@ canvas {
     gap: 8px;
 }
 
+
+
+
+
+
+
+
+/************ESTADISTICASSSS **************/
+
+.header-estadisticas {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+}
+
+
 .estadistica-container {
     padding: 10px;
     display: grid;
@@ -561,6 +577,7 @@ canvas {
 .image-selector img:hover {
     transform: scale(1.05);
 }
+
 
 
 

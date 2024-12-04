@@ -14,7 +14,8 @@ include 'auth_check.php';
 
 <body>
 
-    <div class="estadistica-container">
+
+    <div class="header-estadisticas">
         <div>
             <a href="configuracion.php" class="regresar">
                 <span>Regresar</span>
@@ -27,6 +28,14 @@ include 'auth_check.php';
                 </button>
             </h1>
         </div>
+        <div>
+            <a href="../index.html" class="regresar">
+                <span>Salir</span>
+            </a>
+        </div>
+    </div>
+
+    <div class="estadistica-container">
 
         <!-- Información del Paciente -->
         <div class="info-paciente">
@@ -39,6 +48,24 @@ include 'auth_check.php';
             <div class="datos-paciente" id="datos-paciente">
                 <!-- Aquí se cargarán los datos del paciente desde la base de datos -->
                 <p>Datos del paciente</p>
+                <div class="form-group">
+                    <label class="estilo-opciones">Paciente seleccionado:</label>
+                    <span id="pacienteSeleccionado"></span>
+                </div>
+
+
+                <div class="form-group">
+                    <label class="estilo-opciones">Cédula:</label>
+                    <span id="cedula"></span>
+                </div>
+                <div class="form-group">
+                    <label class="estilo-opciones">Edad:</label>
+                    <span id="edad"></span>
+                </div>
+                <div class="form-group">
+                    <label class="estilo-opciones">Diagnóstico:</label>
+                    <span id="diagnostico"></span>
+                </div>
             </div>
         </div>
 

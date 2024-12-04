@@ -56,6 +56,7 @@ function initializeGame() {
 }
 // Dibuja el tablero y los elementos estáticos
 function drawBoard() {
+
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     drawElement(starPosition.row, starPosition.col, { type: 'star' });
     drawElement(blackPosition.row, blackPosition.col, { type: 'black' });

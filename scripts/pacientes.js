@@ -9,6 +9,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 localStorage.setItem("pacienteId", pacienteId);
                 document.getElementById("pacienteSeleccionado").innerText =
                     selectPaciente.options[selectPaciente.selectedIndex].text;
+
+                    //Cargar datos del paciente seleccionado
+                    cargarDatosPaciente(pacienteId);
             }
         });
     }
@@ -40,4 +43,28 @@ function cargarPacientes() {
             }
         })
         .catch(error => console.error("Error al cargar pacientes:", error));
+}
+
+// Carga de pacientes
+
+function cargarDatosPaciente(pacienteId) {
+    fetch(`obtener_datos_paciente.php?cedula=${pacienteId}`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("Error al obtener los datos del paciente");
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.error) {
+                console.error(data.error);
+                return;
+            }
+
+            // Mostrar los datos del paciente
+            document.getElementById("cedula").innerText = data.cedula;
+            document.getElementById("edad").innerText = data.edad;
+            document.getElementById("diagnostico").innerText = data.diagnostico;
+        })
+        .catch(error => console.error("Error al cargar los datos del paciente:", error));
 }
