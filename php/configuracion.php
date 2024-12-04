@@ -68,12 +68,12 @@ include 'auth_check.php';
                 </div>
                 <div class="form-group">
                     <label class="estilo-opciones">Numero de instrucciones (3-11): </label>
-                    <input type="number" id="instrucciones" name="instrucciones" min="3" max="11" required>
+                    <input type="number" id="numInstrucciones" name="numInstrucciones" min="3" max="11" required>
                 </div>
 
                 <div class="form-group">
                     <label class="estilo-opciones">¿Instrucciones aleatorias?: </label>
-                    <select required>
+                    <select id="instruccionesAleatorias" name="instruccionesAleatorias" required>
                         <option value="" disabled selected>Seleccione una opción</option>
                         <option value="si">Sí</option>
                         <option value="no">No</option>
@@ -110,15 +110,13 @@ include 'auth_check.php';
                 </button>
                 <p id="result"></p>
 
-
-
-
             </div>
         </div>
     </div>
 
     <script src="../scripts/pacientes.js"></script>
     <script src="../scripts/configuracion.js"></script>
+    
 </body>
 
 </html>

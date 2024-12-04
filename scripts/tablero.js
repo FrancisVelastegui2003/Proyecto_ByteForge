@@ -1,7 +1,3 @@
-document.addEventListener("DOMContentLoaded", function () {
-    initializeGame(); // Inicializa el tablero y temporizador
-});
-
 const canvas = document.getElementById("tablero");
 const ctx = canvas.getContext("2d");
 const cellSize = 50;
@@ -14,6 +10,9 @@ let textInputMode = false;
 let incorrectAttempts = 0;
 let completedInstructions = 0;
 let startTime;
+let activeInstructions = []; 
+let numInstrucciones=1;
+let instruccionesAleatorias=false;
 
 // Posiciones estáticas de elementos
 const starPosition = { row: 1, col: 6 };
@@ -39,20 +38,85 @@ const instructions = [
     { text: "Escribe la séptima letra del abecedario en la segunda fila y segunda columna.", textInput: true, check: checkSecondRowSecondCol }
 ];
 
+// Cargar configuración desde localStorage
+function cargarConfiguracion() {
+    const configuracion = JSON.parse(localStorage.getItem("configuracion"));
+
+    if (!configuracion) {
+        alert("No se encontraron configuraciones. Redirigiendo a la configuración...");
+        window.location.href = "configuracion.php";
+        return;
+    }
+
+    numInstrucciones = configuracion.numInstrucciones;
+    instruccionesAleatorias = configuracion.instruccionesAleatorias;
+
+    // Configura las instrucciones con los valores cargados
+    configureInstructions(numInstrucciones, instruccionesAleatorias);
+}
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    initializeGame();
+    cargarConfiguracion();
+    setupReglasForm();
+    configureInstructions();
+    //initializeGame();
+    displayCurrentInstruction();
+     
+
+});
+
+function setupReglasForm() {
+    const reglasForm = document.getElementById("reglasForm");
+    reglasForm.addEventListener("submit", function (event) {
+        event.preventDefault(); // Evita el envío tradicional del formulario
+        
+        // Obtén los valores del formulario
+        numInstrucciones = parseInt(document.getElementById("numInstrucciones").value, 10);
+        instruccionesAleatorias = document.getElementById("instruccionesAleatorias").value === "si";
+
+        // Configura las instrucciones según el formulario
+        configureInstructions(numInstrucciones, instruccionesAleatorias);
+
+        alert("¡Configuración guardada! Puedes comenzar a jugar.");
+    });
+}
+
+// Configura el número de instrucciones y si son aleatorias
+function configureInstructions(num = 1, aleatorias = false) {
+    console.log("Configurando instrucciones con:", { num, aleatorias });
+    activeInstructions = [...instructions];
+
+    if (aleatorias) {
+        shuffleInstructions(activeInstructions); // Baraja las instrucciones si es necesario
+    }
+
+    activeInstructions = activeInstructions.slice(0, Math.min(num, activeInstructions.length)); // Recorta al número solicitado
+    completedInstructions = 0;
+    incorrectAttempts = 0;
+
+    if (activeInstructions.length > 0) {
+        console.log("Instrucciones configuradas:", activeInstructions);
+        displayCurrentInstruction(); // Muestra la primera instrucción
+    } else {
+        alert("No hay instrucciones configuradas. Por favor, configura las reglas del juego.");
+    }
+}
+
 // Función para barajar las instrucciones de forma aleatoria
-function shuffleInstructions() {
-    for (let i = instructions.length - 1; i > 0; i--) {
+function shuffleInstructions(array) {
+    for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
-        [instructions[i], instructions[j]] = [instructions[j], instructions[i]]; // Intercambiar elementos
+        [array[i], array[j]] = [array[j], array[i]]; // Intercambiar elementos
     }
 }
 
 // Inicializa el juego: dibuja tablero, carga instrucciones y temporizador
 function initializeGame() {
-    shuffleInstructions(); // Aleatoriza las instrucciones
     drawBoard();
     startTimer();
-    displayCurrentInstruction();
+    
 }
 // Dibuja el tablero y los elementos estáticos
 function drawBoard() {
@@ -75,8 +139,8 @@ function drawBoard() {
 // Muestra la instrucción actual (una a la vez)
 function displayCurrentInstruction() {
     const instructionContainer = document.getElementById("instruction");
-    if (completedInstructions < instructions.length) {
-        instructionContainer.innerText = instructions[completedInstructions].text;
+    if (completedInstructions < activeInstructions.length) {
+        instructionContainer.innerText = activeInstructions[completedInstructions].text;
     } else {
         instructionContainer.innerText = "¡Has completado todas las instrucciones!";
     }
@@ -192,7 +256,7 @@ function writeOnCell(row, col, text) {
 
 // Verifica si la acción cumple con la condición de la instrucción actual
 function checkConditions(row, col, action) {
-    const currentInstruction = instructions[completedInstructions];
+    const currentInstruction = activeInstructions[completedInstructions];
 
     if (currentInstruction && currentInstruction.check(row, col, action)) {
         currentInstruction.fulfilled = true;
@@ -209,7 +273,7 @@ function checkConditions(row, col, action) {
     }
 
     // Comprobar si todas las instrucciones se han completado
-    if (completedInstructions === instructions.length) {
+    if (completedInstructions === activeInstructions.length) {
         showCompletionTime();
     }
 }
