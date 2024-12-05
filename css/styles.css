@@ -1,3 +1,4 @@
+/*Configuracion general*/
 * {
     margin: 5px;
     padding: 0;
@@ -21,14 +22,7 @@ body {
     background: radial-gradient(circle, rgba(238, 174, 202, 1) 0%, rgba(148, 187, 233, 1) 100%);
 }
 
-/*****************************************************************************/
-
-.encabezado {
-    display: flex;
-    justify-content: space-between;
-}
-
-/* From Uiverse.io by gharsh11032000 */
+/*Titulo dinamico de paginas*/
 .BytePrensión {
     position: relative;
     padding: 5px 30px;
@@ -77,6 +71,7 @@ body {
     scale: 0.95;
 }
 
+/*Mas titulos*/
 h1 {
     text-align: center;
 }
@@ -90,74 +85,7 @@ h3 {
     font-size: 2.4rem;
 }
 
-
-/* From Uiverse.io by adamgiebl */
-.cssbuttons-io-button {
-    background: #7090b9;
-    color: white;
-    font-family: inherit;
-    padding: 0.35em;
-    padding-left: 1.2em;
-    font-size: 17px;
-    font-weight: 500;
-    border-radius: 0.9em;
-    border: none;
-    letter-spacing: 0.05em;
-    display: flex;
-    align-items: center;
-    box-shadow: inset 0 0 1.6em -0.6em #714da6;
-    overflow: hidden;
-    position: relative;
-    height: 2.8em;
-    padding-right: 3.3em;
-    cursor: pointer;
-    margin: 25px;
-}
-
-.cssbuttons-io-button .icon {
-    background: white;
-    margin-left: 1em;
-    position: absolute;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 2.2em;
-    width: 2.2em;
-    border-radius: 0.7em;
-    box-shadow: 0.1em 0.1em 0.6em 0.2em #7b52b9;
-    right: 0.3em;
-    transition: all 0.3s;
-}
-
-.cssbuttons-io-button:hover .icon {
-    width: calc(100% - 0.6em);
-}
-
-.cssbuttons-io-button .icon svg {
-    width: 1.1em;
-    transition: transform 0.3s;
-    color: #7b52b9;
-}
-
-.cssbuttons-io-button:hover .icon svg {
-    transform: translateX(0.1em);
-}
-
-.cssbuttons-io-button:active .icon {
-    transform: scale(0.95);
-}
-
-/* Styles for the game elements */
-.container {
-    display: flex;
-    justify-content: space-around;
-    align-items: flex-start;
-    gap: 10px;
-}
-
-/* Estilos de los botones */
-
-/* From Uiverse.io by BHARGAVPATEL1244 */
+/*Botones dinamicos para todas las pantallas*/
 .regresar {
     outline: none;
     cursor: pointer;
@@ -216,395 +144,7 @@ h3 {
     transform: translate3d(100%, 0, 0);
 }
 
-.menu ul {
-    list-style-type: none;
-    padding: 0;
-}
-
-.menu li {
-    margin: 0;
-    padding: 5px;
-    cursor: pointer;
-    font-size: 2rem;
-    border-radius: 5px;
-    transition: all 0.3s ease;
-    text-align: center;
-}
-
-/* Efecto hover */
-.menu li:hover {
-    background-color: #f0f0f0;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-    transform: scale(1.05);
-}
-
-/* Estilo del input de texto */
-#textInput {
-    margin-top: 15px;
-    padding: 8px;
-    font-size: 1rem;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    width: 100%;
-    max-width: 200px;
-}
-
-.canvas-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-canvas {
-    border: 2px solid #000;
-}
-
-.instruction {
-    font-size: 1.5rem;
-    color: #333;
-}
-
-.instruction.active {
-    color: #FF0000;
-}
-
-
-.registro-container {
-    max-width: 400px;
-    margin: auto;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    background-color: #f9f9f9;
-    text-align: center;
-    margin-top: 30px;
-}
-
-.registro-container h2 {
-    font-size: 2.4rem;
-    margin-bottom: 20px;
-}
-
-.form-group {
-    margin-bottom: 15px;
-    text-align: left;
-}
-
-.form-group label {
-    font-size: 1.6rem;
-    display: block;
-    margin-bottom: 5px;
-}
-
-.form-group input {
-    width: 100%;
-    padding: 8px;
-    font-size: 1.6rem;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-
-.botones {
-    display: flex;
-    justify-content: space-around;
-    gap: 10px;
-    margin-top: 20px;
-}
-
-.button-group {
-    display: flex;
-    justify-content: space-around;
-    gap: 10px;
-    margin-top: 20px;
-}
-
-.button-group .btn {
-    font-size: 1.4rem;
-    padding: 10px;
-    background-color: #6c757d;
-    color: #fff;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-}
-
-.button-group .btn:hover {
-    background-color: #5a6268;
-}
-
-.index-container {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    gap: 20px;
-    padding: 10px;
-    margin: 0;
-    /* Centra el contenido */
-}
-
-.info-juego {
-    grid-column: span 2;
-    background-color: #7090b9;
-    padding: 5px;
-    text-align: center;
-    font-size: 15px;
-    color: #FFFFFF;
-    border-radius: 8px;
-}
-
-.imagenYopciones {
-    display: flex;
-    gap: 70px;
-    align-items: center;
-    justify-content: center;
-    padding: 0;
-    margin: 0;
-}
-
-.material-audiovisual {
-    background-color: #FFFFFF;
-    padding: 5px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    text-align: center;
-}
-
-.audiovisual-img {
-    width: 350px;
-    /* Ajusta el ancho de la imagen al contenedor */
-    max-width: 350px;
-    /* Ancho máximo de la imagen para evitar que sea demasiado grande */
-    height: auto;
-    /* Mantiene la proporción de la imagen */
-    border-radius: 15px;
-}
-
-.menu-opciones {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-}
-
-
-
-
-
-
-
-
-/************ESTADISTICASSSS **************/
-
-.header-estadisticas {
-    display: flex;
-    justify-content: space-between;
-    padding: 10px;
-}
-
-
-.estadistica-container {
-    padding: 10px;
-    display: grid;
-    grid-template-columns: 1fr 2fr;
-    gap: 20px;
-}
-
-.info-paciente {
-    background-color: #E0E7ED;
-    padding: 15px;
-    border-radius: 8px;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: center;
-}
-
-.info-paciente label {
-    font-size: 1.2rem;
-    color: #333;
-}
-
-#paciente-id {
-    margin-top: 5px;
-    padding: 8px;
-    font-size: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    width: 100%;
-}
-
-.datos-paciente {
-    background-color: #C8D6E5;
-    padding: 10px;
-    border-radius: 4px;
-    margin-top: 10px;
-    font-size: 1.2rem;
-    color: #333;
-    width: 100%;
-}
-
-.estadisticas-detalle {
-    background-color: #EAF0F7;
-    padding: 20px;
-    border-radius: 8px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.estadisticas-detalle p {
-    font-size: 1.4rem;
-    color: #34495E;
-    margin: 5px 0;
-}
-
-.grafico-container {
-    margin-top: 20px;
-    background-color: #FFFFFF;
-    padding: 10px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    width: 100%;
-    height: 300px;
-}
-
-#grafico {
-    width: 100%;
-    height: 100%;
-}
-
-.configuracion-container {
-    padding: 10px;
-    display: grid;
-    grid-template-columns: 1fr 2fr;
-    gap: 20px;
-}
-
-.opciones-configuracion {
-    background-color: #E0E7ED;
-    padding: 15px;
-    border-radius: 8px;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: center;
-}
-
-.configuracion-reglas {
-    background-color: #EAF0F7;
-    padding: 20px;
-    border-radius: 8px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.reglas {
-    margin-top: 10px;
-    background-color: #FFFFFF;
-    padding: 10px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    text-align: left;
-    width: 100%;
-}
-
-/**********************************************/
-/* SELCCIONE UN PACIENTE */
-
-#select-paciente {
-    background-color: transparent;
-    text-transform: uppercase;
-    color: white;
-    font-weight: 600;
-    letter-spacing: 1.5px;
-    font-size: 1.2rem;
-}
-
-#select-paciente option {
-    background-color: #7090b9;
-    color: black;
-    font-weight: 600;
-}
-
-.titulo-datos {
-    text-align: center;
-    font-size: 20px;
-    font-weight: bold;
-    padding: 10px;
-}
-
-
-/* container de las estadisticvas y graficos */
-
-.container-instrucciones {
-    display: flex;
-    justify-content: center;
-}
-
-
-
-.estilo-opciones {
-    font-weight: bold;
-}
-
-
-
-#instrucciones {
-    width: 80px;
-}
-
-
-/* ***************************** tableros *********************************/
-.image-selector {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    justify-content: center;
-}
-
-.image-selector label {
-    flex: 0 0 calc(50% - 20px);
-    box-sizing: border-box;
-    text-align: center;
-    cursor: pointer;
-}
-
-.image-selector img {
-    width: 300px;
-    height: auto;
-    border: 2px solid transparent;
-    border-radius: 5px;
-    transition: transform 0.2s ease, border 0.2s ease;
-}
-
-.image-selector input[type="radio"] {
-    display: none;
-}
-
-.image-selector input[type="radio"]:checked + img {
-    border: 2px solid #4CAF50;
-    transform: scale(1.1);
-}
-
-.image-selector img:hover {
-    transform: scale(1.05);
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* From Uiverse.io by PriyanshuGupta28 */
+/*botones para opciones*/
 .opciones-btn {
     position: relative;
     background: transparent;
@@ -688,12 +228,432 @@ canvas {
     outline: none;
 }
 
+/*grupo de opciones y botones para pantallas*/
+.form-group {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.form-group label {
+    font-size: 1.6rem;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 8px;
+    font-size: 1.6rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.botones {
+    display: flex;
+    justify-content: space-around;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.button-group {
+    display: flex;
+    justify-content: space-around;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.button-group .btn {
+    font-size: 1.4rem;
+    padding: 10px;
+    background-color: #6c757d;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.button-group .btn:hover {
+    background-color: #5a6268;
+}
 
 
+/************************************* index.html ****************************************/
+/*Botones de iniciar sesion y registrarse*/
+.cssbuttons-io-button {
+    background: #7090b9;
+    color: white;
+    font-family: inherit;
+    padding: 0.35em;
+    padding-left: 1.2em;
+    font-size: 17px;
+    font-weight: 500;
+    border-radius: 0.9em;
+    border: none;
+    letter-spacing: 0.05em;
+    display: flex;
+    align-items: center;
+    box-shadow: inset 0 0 1.6em -0.6em #714da6;
+    overflow: hidden;
+    position: relative;
+    height: 2.8em;
+    padding-right: 3.3em;
+    cursor: pointer;
+    margin: 25px;
+}
 
+.cssbuttons-io-button .icon {
+    background: white;
+    margin-left: 1em;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 2.2em;
+    width: 2.2em;
+    border-radius: 0.7em;
+    box-shadow: 0.1em 0.1em 0.6em 0.2em #7b52b9;
+    right: 0.3em;
+    transition: all 0.3s;
+}
 
+.cssbuttons-io-button:hover .icon {
+    width: calc(100% - 0.6em);
+}
 
+.cssbuttons-io-button .icon svg {
+    width: 1.1em;
+    transition: transform 0.3s;
+    color: #7b52b9;
+}
 
+.cssbuttons-io-button:hover .icon svg {
+    transform: translateX(0.1em);
+}
+
+.cssbuttons-io-button:active .icon {
+    transform: scale(0.95);
+}
+
+/*contenedores index*/
+.index-container {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 20px;
+    padding: 10px;
+    margin: 0;
+}
+
+.info-juego {
+    grid-column: span 2;
+    background-color: #7090b9;
+    padding: 5px;
+    text-align: center;
+    font-size: 15px;
+    color: #FFFFFF;
+    border-radius: 8px;
+}
+
+.imagenYopciones {
+    display: flex;
+    gap: 70px;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    margin: 0;
+}
+
+.material-audiovisual {
+    background-color: #FFFFFF;
+    padding: 5px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.audiovisual-img {
+    width: 350px;
+    max-width: 350px;
+    height: auto;
+    border-radius: 15px;
+}
+
+/* Estilo del input de texto */
+#textInput {
+    margin-top: 15px;
+    padding: 8px;
+    font-size: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    width: 100%;
+    max-width: 200px;
+}
+
+/************************************* registros.php ****************************************/
+.registro-container {
+    max-width: 400px;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #f9f9f9;
+    text-align: center;
+    margin-top: 30px;
+}
+
+.registro-container h2 {
+    font-size: 2.4rem;
+    margin-bottom: 20px;
+}
+
+.menu-opciones {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+/************************************* estadistica.php ****************************************/
+.header-estadisticas {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+}
+
+.estadistica-container {
+    padding: 10px;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 20px;
+}
+
+.info-paciente {
+    background-color: #E0E7ED;
+    padding: 15px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+.info-paciente label {
+    font-size: 1.2rem;
+    color: #333;
+}
+
+#paciente-id {
+    margin-top: 5px;
+    padding: 8px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 100%;
+}
+
+.datos-paciente {
+    background-color: #C8D6E5;
+    padding: 10px;
+    border-radius: 4px;
+    margin-top: 10px;
+    font-size: 1.2rem;
+    color: #333;
+    width: 100%;
+}
+
+.estadisticas-detalle {
+    background-color: #EAF0F7;
+    padding: 20px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.estadisticas-detalle p {
+    font-size: 1.4rem;
+    color: #34495E;
+    margin: 5px 0;
+}
+
+.grafico-container {
+    margin-top: 20px;
+    background-color: #FFFFFF;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 100%;
+    height: 300px;
+}
+
+#grafico {
+    width: 100%;
+    height: 100%;
+}
+
+/* container de las estadisticas y graficos */
+.container-instrucciones {
+    display: flex;
+    justify-content: center;
+}
+
+.estilo-opciones {
+    font-weight: bold;
+}
+
+#numInstrucciones {
+    width: 80px;
+}
+
+/************************************* configuracion.php ****************************************/
+.configuracion-container {
+    padding: 10px;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 20px;
+}
+
+.opciones-configuracion {
+    background-color: #E0E7ED;
+    padding: 15px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+.configuracion-reglas {
+    background-color: #EAF0F7;
+    padding: 20px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.reglas {
+    margin-top: 10px;
+    background-color: #FFFFFF;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: left;
+    width: 100%;
+}
+
+/*Seleccionar paciente*/
+#select-paciente {
+    background-color: transparent;
+    text-transform: uppercase;
+    color: white;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    font-size: 1.2rem;
+}
+
+#select-paciente option {
+    background-color: #7090b9;
+    color: black;
+    font-weight: 600;
+}
+
+.titulo-datos {
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 10px;
+}
+
+.image-selector {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+.image-selector label {
+    flex: 0 0 calc(50% - 20px);
+    box-sizing: border-box;
+    text-align: center;
+    cursor: pointer;
+}
+
+.image-selector img {
+    width: 300px;
+    height: auto;
+    border: 2px solid transparent;
+    border-radius: 5px;
+    transition: transform 0.2s ease, border 0.2s ease;
+}
+
+.image-selector input[type="radio"] {
+    display: none;
+}
+
+.image-selector input[type="radio"]:checked + img {
+    border: 2px solid #4CAF50;
+    transform: scale(1.1);
+}
+
+.image-selector img:hover {
+    transform: scale(1.05);
+}
+
+/************************************* tablero.php ****************************************/
+.encabezado {
+    display: flex;
+    justify-content: space-between;
+}
+
+.container {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.menu ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.menu li {
+    margin: 0;
+    padding: 5px;
+    cursor: pointer;
+    font-size: 2rem;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+.menu li:hover {
+    background-color: #f0f0f0;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    transform: scale(1.05);
+}
+
+.canvas-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+canvas {
+    border: 2px solid #000;
+}
+
+.instruction {
+    font-size: 1.5rem;
+    color: #333;
+}
+
+.instruction.active {
+    color: #FF0000;
+}
+
+/*instrucciones del tablero*/
 .instruction {
     font-size: 1.5rem;
     color: #333;
