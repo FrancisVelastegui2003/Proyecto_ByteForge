@@ -1,9 +1,65 @@
+// Posiciones estáticas de elementos
+const tablero = {
+
+    tablero1: {
+        // Posiciones estáticas de elementos
+        starPosition: { row: 1, col: 6 },
+        blackPosition: { row: 3, col: 0 },
+        numberPositions:{
+            15: { row: 4, col: 1 },
+            50: { row: 2, col: 3 },
+            21: { row: 2, col: 9 },
+            48: { row: 4, col: 5 }
+        }
+    },
+
+    tablero2: {
+        // Posiciones estáticas de elementos
+        starPosition: { row: 2, col: 0 },
+        blackPosition: { row: 3, col: 2 },
+        numberPositions:{
+            15: { row: 4, col: 5 },
+            50: { row: 0, col: 8 },
+            21: { row: 1, col: 4 },
+            48: { row: 3, col: 9 }
+        }
+    },
+    
+    tablero3: {
+        // Posiciones estáticas de elementos
+        starPosition: { row: 3, col: 1 },
+        blackPosition: { row: 3, col: 6 },
+        numberPositions:{
+            15: { row: 3, col: 2 },
+            50: { row: 1, col: 7 },
+            21: { row: 3, col: 8 },
+            48: { row: 2, col: 4 }
+        }
+    },
+
+    tablero4: {
+        // Posiciones estáticas de elementos
+        starPosition: { row: 4, col: 8 },
+        blackPosition: { row: 1, col: 2 },
+        numberPositions:{
+            15: { row: 1, col: 8 },
+            50: { row: 1, col: 4 },
+            21: { row: 1, col: 0 },
+            48: { row: 4, col: 2 }
+        }
+    },
+};
+
 const canvas = document.getElementById("tablero");
 const ctx = canvas.getContext("2d");
 const cellSize = 50;
 const rows = 5;
 const cols = 10;
 
+// Selecciona las posiciones desde el tablero
+let { starPosition, blackPosition, numberPositions } = tablero.tablero1;
+
+let tableroSeleccionado;
 let selectedColor = "";
 let drawTriangleMode = false;
 let textInputMode = false;
@@ -14,15 +70,6 @@ let activeInstructions = [];
 let numInstrucciones=1;
 let instruccionesAleatorias=false;
 
-// Posiciones estáticas de elementos
-const starPosition = { row: 1, col: 6 };
-const blackPosition = { row: 3, col: 0 };
-const numberPositions = {
-    15: { row: 4, col: 1 },
-    50: { row: 2, col: 3 },
-    21: { row: 2, col: 9 },
-    48: { row: 4, col: 5 }
-};
 
 const instructions = [
     { text: "Colorea de rojo la casilla que está encima de la estrella.", color: "#FF0000", check: checkAboveStar },
@@ -48,9 +95,24 @@ function cargarConfiguracion() {
         return;
     }
 
+    tableroSeleccionado = tablero[configuracion.selectedOption]
     numInstrucciones = configuracion.numInstrucciones;
     instruccionesAleatorias = configuracion.instruccionesAleatorias;
 
+
+    starPosition.row = tableroSeleccionado.starPosition.row
+    starPosition.col = tableroSeleccionado.starPosition.col
+    blackPosition.row = tableroSeleccionado.blackPosition.row
+    blackPosition.col = tableroSeleccionado.blackPosition.col
+    numberPositions[15].row = tableroSeleccionado.numberPositions[15].row
+    numberPositions[15].col = tableroSeleccionado.numberPositions[15].col
+    numberPositions[50].row = tableroSeleccionado.numberPositions[50].row
+    numberPositions[50].col = tableroSeleccionado.numberPositions[50].col
+    numberPositions[21].row = tableroSeleccionado.numberPositions[21].row
+    numberPositions[21].col = tableroSeleccionado.numberPositions[21].col
+    numberPositions[48].row = tableroSeleccionado.numberPositions[48].row
+    numberPositions[48].col = tableroSeleccionado.numberPositions[48].col
+    drawBoard();
     // Configura las instrucciones con los valores cargados
     configureInstructions(numInstrucciones, instruccionesAleatorias);
 }

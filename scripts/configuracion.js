@@ -3,7 +3,7 @@ function handleSelection() {
     //const selectedPatient = document.getElementById("select-paciente").value;
     const numInstrucciones = document.getElementById("numInstrucciones").value;
     const instruccionesAleatorias = document.getElementById("instruccionesAleatorias").value;
-    //const selectedOption = document.querySelector('input[name="option"]:checked');
+    const selectedOption = document.querySelector('input[name="option"]:checked').value;
 
     // Validar cada campo
     /*if (!selectedPatient) {
@@ -18,16 +18,17 @@ function handleSelection() {
         alert("Por favor, selecciona si las instrucciones serán aleatorias o no.");
         return;
     }
-    /*
+    
     if (!selectedOption) {
         alert("Por favor, selecciona un tablero antes de continuar.");
         return;
     }
-        */
+
 
     const configuracion = {
         numInstrucciones,
-        instruccionesAleatorias: instruccionesAleatorias === "si"
+        instruccionesAleatorias: instruccionesAleatorias === "si",
+        selectedOption
     };
 
     // Guardar en localStorage

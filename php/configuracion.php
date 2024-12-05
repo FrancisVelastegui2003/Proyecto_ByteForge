@@ -88,19 +88,19 @@ include 'auth_check.php';
 
                 <div class="image-selector">
                     <label>
-                        <input type="radio" name="option" value="option1" required>
+                        <input type="radio" name="option" value="tablero1" required>
                         <img src="../img/tablero1.jpg" alt="Opción 1">
                     </label>
                     <label>
-                        <input type="radio" name="option" value="option2">
+                        <input type="radio" name="option" value="tablero2">
                         <img src="../img/tablero2.jpg" alt="Opción 2">
                     </label>
                     <label>
-                        <input type="radio" name="option" value="option3">
+                        <input type="radio" name="option" value="tablero3">
                         <img src="../img/tablero3.jpg" alt="Opción 3">
                     </label>
                     <label>
-                        <input type="radio" name="option" value="option4">
+                        <input type="radio" name="option" value="tablero4">
                         <img src="../img/tablero4.jpg" alt="Opción 4">
                     </label>
                 </div>
