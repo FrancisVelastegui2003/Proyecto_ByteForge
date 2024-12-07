@@ -382,6 +382,10 @@ h3 {font-size: 2.4rem;}
     gap: 8px;
 }
 
+.editar-eliminar {
+    display: flex;
+}
+
 /************************************* estadistica.php ****************************************/
 .header-estadisticas {
     display: flex;
