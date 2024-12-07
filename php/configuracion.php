@@ -30,7 +30,6 @@ include 'auth_check.php';
 
         <!-- Información del Paciente -->
         <div class="opciones-configuracion">
-
             <div>
                 <button class="opciones-btn">
                     <span class="shadow"></span>
@@ -41,7 +40,6 @@ include 'auth_check.php';
                         </select>
                     </span>
                 </button>
-
             </div>
 
             <button class="opciones-btn" onclick="window.location.href='registro.php'">
@@ -55,8 +53,6 @@ include 'auth_check.php';
                 <span class="edge"></span>
                 <span class="front"> Ver Estadísticas </span>
             </button>
-
-
         </div>
 
         <div class="configuracion-reglas">
@@ -83,8 +79,6 @@ include 'auth_check.php';
                 <div class="form-group">
                     <label class="estilo-opciones">Seleccione el tablero:</label>
                 </div>
-
-
 
                 <div class="image-selector">
                     <label>
@@ -114,9 +108,15 @@ include 'auth_check.php';
         </div>
     </div>
 
+    <script>
+        // Eliminar el localStorage al cargar la página
+        window.onload = function () {
+            localStorage.clear(); // Borra todos los datos del localStorage
+            console.log("LocalStorage limpiado al iniciar el juego.");
+        };
+    </script>
     <script src="../scripts/pacientes.js"></script>
     <script src="../scripts/configuracion.js"></script>
-    
 </body>
 
 </html>

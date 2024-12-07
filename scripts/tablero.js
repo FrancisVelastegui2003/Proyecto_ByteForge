@@ -1,11 +1,10 @@
 // Posiciones estáticas de elementos
 const tablero = {
-
     tablero1: {
         // Posiciones estáticas de elementos
         starPosition: { row: 1, col: 6 },
         blackPosition: { row: 3, col: 0 },
-        numberPositions:{
+        numberPositions: {
             15: { row: 4, col: 1 },
             50: { row: 2, col: 3 },
             21: { row: 2, col: 9 },
@@ -17,19 +16,19 @@ const tablero = {
         // Posiciones estáticas de elementos
         starPosition: { row: 2, col: 0 },
         blackPosition: { row: 3, col: 2 },
-        numberPositions:{
+        numberPositions: {
             15: { row: 4, col: 5 },
             50: { row: 0, col: 8 },
             21: { row: 1, col: 4 },
             48: { row: 3, col: 9 }
         }
     },
-    
+
     tablero3: {
         // Posiciones estáticas de elementos
         starPosition: { row: 3, col: 1 },
         blackPosition: { row: 3, col: 6 },
-        numberPositions:{
+        numberPositions: {
             15: { row: 3, col: 2 },
             50: { row: 1, col: 7 },
             21: { row: 3, col: 8 },
@@ -41,7 +40,7 @@ const tablero = {
         // Posiciones estáticas de elementos
         starPosition: { row: 4, col: 8 },
         blackPosition: { row: 1, col: 2 },
-        numberPositions:{
+        numberPositions: {
             15: { row: 1, col: 8 },
             50: { row: 1, col: 4 },
             21: { row: 1, col: 0 },
@@ -66,9 +65,9 @@ let textInputMode = false;
 let incorrectAttempts = 0;
 let completedInstructions = 0;
 let startTime;
-let activeInstructions = []; 
-let numInstrucciones=1;
-let instruccionesAleatorias=false;
+let activeInstructions = [];
+let numInstrucciones = 1;
+let instruccionesAleatorias = false;
 
 
 const instructions = [
@@ -85,35 +84,34 @@ const instructions = [
     { text: "Escribe la séptima letra del abecedario en la segunda fila y segunda columna.", textInput: true, check: checkSecondRowSecondCol }
 ];
 
-// Cargar configuración desde localStorage
 function cargarConfiguracion() {
-    const configuracion = JSON.parse(localStorage.getItem("configuracion"));
+    // Usar la misma clave que se utiliza en handleSelection()
+    const configuracion = JSON.parse(localStorage.getItem("configuracionJuego"));
 
-    if (!configuracion) {
+    if (!configuracion || !configuracion.tablero) {
         alert("No se encontraron configuraciones. Redirigiendo a la configuración...");
-        window.location.href = "configuracion.php";
+        window.location.href = "../php/configuracion.php";
         return;
     }
 
-    tableroSeleccionado = tablero[configuracion.selectedOption]
+    // Seleccionar el tablero adecuado basado en la configuración
+    tableroSeleccionado = tablero[configuracion.tablero];
+
+    if (!tableroSeleccionado) {
+        alert("Error al cargar el tablero. Selección inválida.");
+        return;
+    }
+
+    // Actualizar referencias directamente
+    starPosition = { ...tableroSeleccionado.starPosition };
+    blackPosition = { ...tableroSeleccionado.blackPosition };
+    numberPositions = { ...tableroSeleccionado.numberPositions };
+
     numInstrucciones = configuracion.numInstrucciones;
     instruccionesAleatorias = configuracion.instruccionesAleatorias;
 
-
-    starPosition.row = tableroSeleccionado.starPosition.row
-    starPosition.col = tableroSeleccionado.starPosition.col
-    blackPosition.row = tableroSeleccionado.blackPosition.row
-    blackPosition.col = tableroSeleccionado.blackPosition.col
-    numberPositions[15].row = tableroSeleccionado.numberPositions[15].row
-    numberPositions[15].col = tableroSeleccionado.numberPositions[15].col
-    numberPositions[50].row = tableroSeleccionado.numberPositions[50].row
-    numberPositions[50].col = tableroSeleccionado.numberPositions[50].col
-    numberPositions[21].row = tableroSeleccionado.numberPositions[21].row
-    numberPositions[21].col = tableroSeleccionado.numberPositions[21].col
-    numberPositions[48].row = tableroSeleccionado.numberPositions[48].row
-    numberPositions[48].col = tableroSeleccionado.numberPositions[48].col
+    // Dibujar el tablero y configurar instrucciones
     drawBoard();
-    // Configura las instrucciones con los valores cargados
     configureInstructions(numInstrucciones, instruccionesAleatorias);
 }
 
@@ -125,15 +123,13 @@ document.addEventListener("DOMContentLoaded", function () {
     configureInstructions();
     //initializeGame();
     displayCurrentInstruction();
-     
-
 });
 
 function setupReglasForm() {
     const reglasForm = document.getElementById("reglasForm");
     reglasForm.addEventListener("submit", function (event) {
         event.preventDefault(); // Evita el envío tradicional del formulario
-        
+
         // Obtén los valores del formulario
         numInstrucciones = parseInt(document.getElementById("numInstrucciones").value, 10);
         instruccionesAleatorias = document.getElementById("instruccionesAleatorias").value === "si";
@@ -178,7 +174,7 @@ function shuffleInstructions(array) {
 function initializeGame() {
     drawBoard();
     startTimer();
-    
+
 }
 // Dibuja el tablero y los elementos estáticos
 function drawBoard() {
@@ -271,7 +267,9 @@ function enableTextInput() {
 canvas.addEventListener("click", (event) => {
     const { row, col } = getCellFromEvent(event);
 
-    if (selectedColor) {
+    if (selectedColor === "clear") {
+        clearCell(row, col); // Limpia la celda seleccionada
+    } else if (selectedColor) {
         colorCell(row, col, selectedColor);
         checkConditions(row, col, selectedColor);
     } else if (drawTriangleMode) {
@@ -285,6 +283,7 @@ canvas.addEventListener("click", (event) => {
         }
     }
 });
+
 
 // Determina la celda del clic
 function getCellFromEvent(event) {
@@ -316,29 +315,59 @@ function writeOnCell(row, col, text) {
     ctx.fillText(text, col * cellSize + cellSize / 3, row * cellSize + cellSize / 1.5);
 }
 
+function clearCell(row, col) {
+    const x = col * cellSize;
+    const y = row * cellSize;
+
+    // Limpiar el contenido de la celda específica
+    ctx.clearRect(x, y, cellSize, cellSize);
+
+    // Redibujar los bordes de la celda para mantener el aspecto del tablero
+    ctx.strokeRect(x, y, cellSize, cellSize);
+}
+
+
 // Verifica si la acción cumple con la condición de la instrucción actual
 function checkConditions(row, col, action) {
     const currentInstruction = activeInstructions[completedInstructions];
 
     if (currentInstruction && currentInstruction.check(row, col, action)) {
-        currentInstruction.fulfilled = true;
         completedInstructions++;
 
-        // Mostrar notificación de éxito
-        showNotification("¡Correcto!");
-        
-        // Mostrar la siguiente instrucción
-        displayCurrentInstruction();
+        // Mostrar mensaje de éxito
+        displaySuccessMessage(`¡Instrucción completada correctamente! (${completedInstructions}/${activeInstructions.length})`);
+
+        if (completedInstructions === activeInstructions.length) {
+            stopTimer();
+            alert("¡Has completado todas las instrucciones!");
+            document.getElementById("timer").textContent = "Juego completado";
+        } else {
+            displayCurrentInstruction();
+        }
     } else {
-        // Incrementar intentos incorrectos
         incrementIncorrectAttempts();
     }
-
-    // Comprobar si todas las instrucciones se han completado
-    if (completedInstructions === activeInstructions.length) {
-        showCompletionTime();
-    }
 }
+
+// Nueva función para mostrar el mensaje de éxito
+function displaySuccessMessage(message) {
+    const successMessage = document.getElementById("successMessage");
+    successMessage.textContent = message;
+
+    // Efecto visual de resaltado temporal
+    successMessage.style.transition = "all 0.5s ease";
+    successMessage.style.transform = "scale(1.1)";
+    setTimeout(() => {
+        successMessage.style.transform = "scale(1)";
+    }, 500);
+}
+
+
+function stopTimer() {
+    cancelAnimationFrame(timerRequest);
+    document.getElementById("timer").classList.remove("hidden");
+}
+
 // Incrementa el contador de intentos incorrectos
 function incrementIncorrectAttempts() {
     incorrectAttempts++;
@@ -349,7 +378,6 @@ function incrementIncorrectAttempts() {
 function showNotification(message) {
     const notificationElement = document.getElementById("notification");
     notificationElement.innerText = message;
-
     setTimeout(() => {
         notificationElement.innerText = "";
     }, 3000);
@@ -435,4 +463,3 @@ function showCompletionTime() {
 
     alert(`¡Felicidades! Completaste el test en ${minutes}:${seconds.toString().padStart(2, "0")}.\nIntentos incorrectos: ${incorrectAttempts}`);
 }
-

@@ -1,48 +1,41 @@
 function handleSelection() {
-    // Obtener los valores de los campos
-    //const selectedPatient = document.getElementById("select-paciente").value;
+    const pacienteId = localStorage.getItem("pacienteId");
     const numInstrucciones = document.getElementById("numInstrucciones").value;
     const instruccionesAleatorias = document.getElementById("instruccionesAleatorias").value;
-    const selectedOption = document.querySelector('input[name="option"]:checked').value;
+    const tableroSeleccionado = document.querySelector('input[name="option"]:checked'); // Selección del tablero
 
-    // Validar cada campo
-    /*if (!selectedPatient) {
-        alert("Por favor, selecciona un paciente.");
-        return;
-    }*/
-    if (!instruccionesAleatorias || instruccionesAleatorias < 3 || instruccionesAleatorias > 11) {
-        alert("Por favor, ingresa un número de instrucciones válido (entre 3 y 11).");
-        return;
-    }
-    if (!instruccionesAleatorias) {
-        alert("Por favor, selecciona si las instrucciones serán aleatorias o no.");
+    // Validaciones
+    if (!pacienteId || pacienteId.trim() === "") {
+        alert("Por favor, seleccione un paciente.");
         return;
     }
     
-    if (!selectedOption) {
-        alert("Por favor, selecciona un tablero antes de continuar.");
+    if (!numInstrucciones || numInstrucciones < 3 || numInstrucciones > 11) {
+        alert("Por favor, ingrese un número válido de instrucciones (entre 3 y 11).");
+        return;
+    }
+    if (!instruccionesAleatorias) {
+        alert("Por favor, seleccione si las instrucciones serán aleatorias.");
+        return;
+    }
+    if (!tableroSeleccionado) {
+        alert("Por favor, seleccione un tablero.");
         return;
     }
 
-
+    // Guardar configuración en localStorage
     const configuracion = {
+        pacienteId,
+        pacienteNombre: localStorage.getItem("pacienteNombre"),
         numInstrucciones,
         instruccionesAleatorias: instruccionesAleatorias === "si",
-        selectedOption
+        tablero: tableroSeleccionado.value
     };
 
-    // Guardar en localStorage
-    localStorage.setItem("configuracion", JSON.stringify(configuracion));
-    alert("¡Configuración guardada correctamente!");
+    console.log("Configuración guardada:", configuracion); // Depuración
+    localStorage.setItem("configuracionJuego", JSON.stringify(configuracion));
+    alert(`¡Configuración guardada! Tablero seleccionado: ${tableroSeleccionado.value}`);
 
-    /* Si todos los campos están completos, guardar la selección y redirigir
-    const selectedValue = selectedOption.value; // Valor del tablero seleccionado
-    localStorage.setItem("selectedOption", selectedValue);
-    localStorage.setItem("selectedPatient", selectedPatient);
-    localStorage.setItem("instrucciones", instrucciones);
-    localStorage.setItem("instruccionesAleatorias", instruccionesAleatorias);
-    */
-
-    // Redirigir al usuario a la página de juego
-    window.location.href = "tablero.php";
+    // Redirigir al tablero
+    window.location.href = "../php/tablero.php";
 }

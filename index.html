@@ -60,6 +60,14 @@
             </div>
         </div>
     </div>
+
+    <script>
+        // Eliminar el localStorage al cargar la página
+        window.onload = function () {
+            localStorage.clear(); // Borra todos los datos del localStorage
+            console.log("LocalStorage limpiado al iniciar el juego.");
+        };
+    </script>
 </body>
 
 </html>

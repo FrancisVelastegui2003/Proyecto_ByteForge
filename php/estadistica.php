@@ -13,8 +13,6 @@ include 'auth_check.php';
 </head>
 
 <body>
-
-
     <div class="header-estadisticas">
         <div>
             <a href="configuracion.php" class="regresar">
@@ -100,6 +98,7 @@ include 'auth_check.php';
         </div>
 
         <script src="../scripts/pacientes.js"></script>
+        <script src="../scripts/estadistica.js"></script>
 </body>
 
 </html>

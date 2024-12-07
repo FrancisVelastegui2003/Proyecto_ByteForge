@@ -28,10 +28,8 @@ include 'auth_check.php';
                 <span>Pausar</span>
             </button>
 
-            <button class="regresar" onclick="showCompletionTime()">
-                <a href="estadistica.php">
+            <button class="regresar" onclick="window.location.href='estadistica.php'">
                 <span>Finalizar</span>
-            </a>
             </button>
         </div>
     </div>
@@ -47,7 +45,7 @@ include 'auth_check.php';
                     <li onclick="setColor('#008000')" class="color-option" style="color: #008000;">Verde</li>
                     <li onclick="setColor('#ADD8E6')" class="color-option" style="color: #ADD8E6;">Celeste</li>
                     <li onclick="setColor('#000000')" class="color-option" style="color: #000000;">Negro</li>
-                    <li onclick="setColor('#FFFFFF')" class="color-option" style="color: #000000;">Borrar</li>
+                    <li onclick="setColor('clear')" class="color-option" style="color: #000000;">Borrar</li>
                     <li onclick="drawTriangle()">Dibujar Triángulo</li>
                     <li onclick="enableTextInput()" class="color-option" style="color: #000000;">Escribir</li>
             </ul></b>
@@ -59,16 +57,15 @@ include 'auth_check.php';
             <p id="attemptCounter" class="hidden">Intentos incorrectos: 0</p> <!-- Contador oculto -->
             <p id="timer" class="hidden">0:00</p> <!-- Temporizador oculto -->
         </div>
-        
-        
-        
+        <p id="successMessage" style="font-size: 1.2rem; color: green; font-weight: bold; text-align: center;"></p>
     </div>
 
     <script src="../scripts/tablero.js"></script>
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
+        document.addEventListener("DOMContentLoaded", function() {
             drawBoard();
         });
+
         function enableTextInput() {
             textInputMode = true;
             selectedColor = "";
