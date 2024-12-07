@@ -37,68 +37,44 @@ include 'auth_check.php';
 
         <!-- Información del Paciente -->
         <div class="info-paciente">
-            <div>
-                <button class="opciones-btn">
-                    <span class="shadow"></span>
-                    <span class="edge"></span>
-                    <span class="front">
-                        <select id="select-paciente" name="select-paciente">
-                            <option value="" disabled selected>Seleccione un paciente</option>
-                        </select>
-                    </span>
-                </button>
+            <h3 class="titulo-datos">Datos del Paciente</h3>
+            <div class="form-group">
+                <label class="estilo-opciones">Paciente seleccionado:</label>
+                <span id="pacienteSeleccionado">No disponible</span>
             </div>
-            <div class="datos-paciente" id="datos-paciente">
-                <!-- Aquí se cargarán los datos del paciente desde la base de datos -->
-                <p class="titulo-datos">Datos del paciente</p>
-                <div class="form-group">
-                    <label class="estilo-opciones">Paciente seleccionado:</label>
-                    <span id="pacienteSeleccionado"></span>
-                </div>
-
-
-                <div class="form-group">
-                    <label class="estilo-opciones">Cédula:</label>
-                    <span id="cedula"></span>
-                </div>
-                <div class="form-group">
-                    <label class="estilo-opciones">Edad:</label>
-                    <span id="edad"></span>
-                </div>
-                <div class="form-group">
-                    <label class="estilo-opciones">Diagnóstico:</label>
-                    <span id="diagnostico"></span>
-                </div>
+            <div class="form-group">
+                <label class="estilo-opciones">Cédula:</label>
+                <span id="cedula">No disponible</span>
+            </div>
+            <div class="form-group">
+                <label class="estilo-opciones">Edad:</label>
+                <span id="edad">No disponible</span>
+            </div>
+            <div class="form-group">
+                <label class="estilo-opciones">Diagnóstico:</label>
+                <span id="diagnostico">No disponible</span>
             </div>
         </div>
 
         <!-- Sección de Estadísticas -->
         <div class="estadisticas-detalle">
-            <!-- 
-            <p>Tiempo:</p>
-            <p id="tiempo">0</p>
-            <p>Intentos:</p>
-            <p id="intentos">0</p>
--->
-
-            <!-- OBTENER EL NUMEOR DE INSTRUCCIONES QUE EL JUGADOR HA TENIDO EN SUS JUEGOS  -->
-            <div class="container-instrucciones">
-                <h4 class="estilo-opciones">Seleccione el numero de intrucciones </h4>
-                <select id="select-intrucciones" name="select-instrucciones">
-                    <option value="" disabled selected></option>
-                </select>
+            <h3 class="titulo-datos">Resultados del Juego</h3>
+            <div class="form-group">
+                <label class="estilo-opciones">Tiempo total:</label>
+                <span id="tiempo">0</span>
+            </div>
+            <div class="form-group">
+                <label class="estilo-opciones">Intentos incorrectos:</label>
+                <span id="intentos">0</span>
             </div>
 
-
-            <div class="grafico-container">
-                <!-- Aquí se cargará el gráfico -->
-                <canvas id="grafico"></canvas>
-            </div>
-            </>
+            <!-- Botón para guardar las estadísticas -->
+            <button class="regresar" id="btnGuardar">Guardar Estadísticas</button>
         </div>
+    </div>
 
-        <script src="../scripts/pacientes.js"></script>
-        <script src="../scripts/estadistica.js"></script>
+    <!-- Scripts -->
+    <script src="../scripts/estadistica.js"></script>
 </body>
 
 </html>

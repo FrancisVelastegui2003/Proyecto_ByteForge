@@ -14,10 +14,27 @@ document.addEventListener("DOMContentLoaded", function () {
                 localStorage.setItem("pacienteId", pacienteId);
                 pacienteSeleccionado.innerText = nombreSeleccionado;
 
-                // Opcional: Guardar todos los datos del paciente en localStorage
-                const pacientes = JSON.parse(localStorage.getItem("pacientesData"));
-                const paciente = pacientes.find(p => p.cedula === pacienteId);
-                localStorage.setItem("datosPaciente", JSON.stringify(paciente));
+                // Obtener todos los pacientes guardados
+                const pacientesData = localStorage.getItem("pacientesData");
+                if (pacientesData) {
+                    try {
+                        const pacientes = JSON.parse(pacientesData);
+                        const paciente = pacientes.find(p => p.cedula === pacienteId);
+
+                        if (paciente) {
+                            localStorage.setItem("datosPaciente", JSON.stringify(paciente));
+                            console.log("Paciente guardado en localStorage:", paciente);
+                        } else {
+                            console.error("Paciente no encontrado en pacientesData.");
+                            alert("No se pudo encontrar el paciente seleccionado.");
+                        }
+                    } catch (error) {
+                        console.error("Error al parsear pacientesData:", error);
+                    }
+                } else {
+                    console.error("No se encontraron datos de pacientes en localStorage.");
+                    alert("No hay datos de pacientes disponibles. Recargue la página.");
+                }
             }
         });
     }
@@ -31,9 +48,8 @@ function cargarPacientes() {
             return response.json();
         })
         .then(data => {
-            if (data.error) {
-                console.error(data.error);
-                return;
+            if (!data || data.length === 0) {
+                throw new Error('No se recibieron datos de pacientes.');
             }
 
             // Guardar todos los datos en localStorage para usarlos posteriormente
@@ -50,5 +66,8 @@ function cargarPacientes() {
                 selectPaciente.appendChild(option);
             });
         })
-        .catch(error => console.error("Error:", error.message));
+        .catch(error => {
+            console.error("Error:", error.message);
+            alert("No se pudieron cargar los pacientes. Verifica la conexión con el servidor.");
+        });
 }

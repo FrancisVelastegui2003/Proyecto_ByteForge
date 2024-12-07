@@ -24,11 +24,11 @@ include 'auth_check.php';
             <span>BytePrensión</span>
         </button>
         <div>
-            <button class="regresar">
+            <button class="pausar" onclick="togglePause()">
                 <span>Pausar</span>
             </button>
 
-            <button class="regresar" onclick="window.location.href='estadistica.php'">
+            <button id="finalizar" class="regresar" onclick="window.location.href='estadistica.php'">
                 <span>Finalizar</span>
             </button>
         </div>

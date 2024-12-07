@@ -141,7 +141,6 @@ function setupReglasForm() {
     });
 }
 
-// Configura el número de instrucciones y si son aleatorias
 function configureInstructions(num = 1, aleatorias = false) {
     console.log("Configurando instrucciones con:", { num, aleatorias });
     activeInstructions = [...instructions];
@@ -154,6 +153,9 @@ function configureInstructions(num = 1, aleatorias = false) {
     completedInstructions = 0;
     incorrectAttempts = 0;
 
+    // Guardar el número de instrucciones en localStorage
+    localStorage.setItem("numeroInstrucciones", num);
+
     if (activeInstructions.length > 0) {
         console.log("Instrucciones configuradas:", activeInstructions);
         displayCurrentInstruction(); // Muestra la primera instrucción
@@ -161,6 +163,7 @@ function configureInstructions(num = 1, aleatorias = false) {
         alert("No hay instrucciones configuradas. Por favor, configura las reglas del juego.");
     }
 }
+
 
 // Función para barajar las instrucciones de forma aleatoria
 function shuffleInstructions(array) {
@@ -284,7 +287,6 @@ canvas.addEventListener("click", (event) => {
     }
 });
 
-
 // Determina la celda del clic
 function getCellFromEvent(event) {
     const rect = canvas.getBoundingClientRect();
@@ -361,7 +363,6 @@ function displaySuccessMessage(message) {
         successMessage.style.transform = "scale(1)";
     }, 500);
 }
-
 
 function stopTimer() {
     cancelAnimationFrame(timerRequest);
@@ -440,6 +441,32 @@ function checkSecondRowSecondCol(row, col, text) {
     return (text === "G" || text === "g") && row === 1 && col === 1;
 }
 
+let isPaused = false; // Variable para controlar si el juego está pausado
+let pauseTime = 0;    // Tiempo acumulado cuando se pausa
+
+// Función para pausar y reanudar el tiempo
+function togglePause() {
+    const notificationElement = document.getElementById("notification");
+    const pauseButton = document.querySelector(".pausar span");
+
+    if (!isPaused) {
+        // Pausar el temporizador
+        isPaused = true;
+        pauseTime = Date.now(); // Guardar el momento de pausa
+        cancelAnimationFrame(timerRequest); // Detener el temporizador
+        notificationElement.textContent = "¡Tranquilo! Tómate tu tiempo."; // Mostrar mensaje
+        pauseButton.textContent = "Reanudar";
+    } else {
+        // Reanudar el temporizador
+        isPaused = false;
+        const pausedDuration = Date.now() - pauseTime; // Calcular cuánto tiempo estuvo pausado
+        startTime += pausedDuration; // Ajustar el tiempo de inicio
+        updateTimer(); // Reiniciar el temporizador
+        notificationElement.textContent = ""; // Eliminar el mensaje
+        pauseButton.textContent = "Pausar";
+    }
+}
+
 // Temporizador
 function startTimer() {
     startTime = Date.now();
@@ -447,19 +474,39 @@ function startTimer() {
 }
 
 function updateTimer() {
+    if (isPaused) return; // No hacer nada si el temporizador está pausado
+
     const elapsedTime = Math.floor((Date.now() - startTime) / 1000);
     const minutes = Math.floor(elapsedTime / 60);
     const seconds = elapsedTime % 60;
 
     document.getElementById("timer").textContent = `${minutes}:${seconds.toString().padStart(2, "0")}`;
-    requestAnimationFrame(updateTimer);
+    timerRequest = requestAnimationFrame(updateTimer);
 }
 
-// Muestra el tiempo final y los intentos al completar el juego
-function showCompletionTime() {
+// Botón "Finalizar" guarda tiempo e intentos y redirige a estadistica.php
+document.querySelector('#finalizar').addEventListener("click", () => {
+    stopGameAndSaveStats();
+});
+
+function stopGameAndSaveStats() {
     const totalTime = Math.floor((Date.now() - startTime) / 1000);
     const minutes = Math.floor(totalTime / 60);
     const seconds = totalTime % 60;
 
-    alert(`¡Felicidades! Completaste el test en ${minutes}:${seconds.toString().padStart(2, "0")}.\nIntentos incorrectos: ${incorrectAttempts}`);
+    // Guardar tiempo e intentos en localStorage
+    localStorage.setItem("finalTime", `${minutes}:${seconds.toString().padStart(2, "0")}`);
+    localStorage.setItem("incorrectAttempts", incorrectAttempts);
+
+    // Guardar ID del paciente si existe
+    const pacienteId = localStorage.getItem("pacienteId");
+    if (pacienteId) {
+        localStorage.setItem("selectedPacienteId", pacienteId);
+    }
+
+    // Redirigir a estadistica.php
+    window.location.href = "../php/estadistica.php";
 }
+
+
+
