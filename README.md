@@ -51,6 +51,7 @@ Los terapeutas pueden personalizar los juegos, monitorear el progreso y analizar
 ## Instalación 
 1. **Instalación y configuración XAMPP:**
   Una vez descargado e instalado XAMPP desde cualquier navegador web, se necesita cambiar el puerto para la base de datos, en el archivo que se visualiza en la imagen, es necesario reemplazar todos los puertos 3306 por 3307, esto se logra abriendo el documento con bloc de notas, en la opción de editar, se elige la opcion de reemplazar, aqui se hace el cambio de puertos mencionados y por último se guarda de nuevo el archivo.
+
 ![Reemplazo de puertos](img/xampp1.jpg)
 
   Una vez realizado el reemplazo de puertos, dentro del directorio de la computadora, es necesario dirigirse a la siguiente ruta y alli dentro reemplazar el archivo "config.inc.php" con el archivo que se encuentra en la carpeta de "recursos" de este repositorio.
@@ -58,6 +59,7 @@ Los terapeutas pueden personalizar los juegos, monitorear el progreso y analizar
    C:\xampp\phpMyAdmin
    ```
   Al finalizar esta configuración se puede levantar los servicios de Apache y MySQL que proporciona el programa XAMPP, como se muestra a continuación. 
+  
   ![Levantamiento de xampp](img/xampp2.jpg)
 
 2. **Clonar el repositorio:**
@@ -101,8 +103,6 @@ Los terapeutas pueden personalizar los juegos, monitorear el progreso y analizar
 ### Análisis de resultados:
 - Visualiza el progreso en el gráfico de barras.
 - Ajusta configuraciones según el rendimiento del paciente.
-
----
 
 ## Tecnologías
 
