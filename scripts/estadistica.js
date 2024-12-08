@@ -12,6 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     document.getElementById("tiempo").innerText = totalTime || "No disponible";
     document.getElementById("intentos").innerText = incorrectAttempts || "0";
+    document.getElementById("instrucciones").innerText = numeroInstrucciones || "0";
     document.getElementById("pacienteSeleccionado").innerText =
         `${pacienteData.nombre} ${pacienteData.apellido}`;
     document.getElementById("cedula").innerText = pacienteData.cedula;

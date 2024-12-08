@@ -11,6 +11,7 @@ if ($conexion->connect_error) {
     exit;
 }
 
+// Leer y decodificar el JSON de la solicitud
 $input = file_get_contents('php://input');
 $data = json_decode($input, true);
 
@@ -19,29 +20,42 @@ if (json_last_error() !== JSON_ERROR_NONE) {
     exit;
 }
 
+// Asignar valores con comprobación y valores por defecto
+$cedula_paciente = $data['cedula_paciente'] ?? null;
+$tiempo = $data['tiempo'] ?? null;
+$numero_instrucciones = isset($data['numero_instrucciones']) ? intval($data['numero_instrucciones']) : null;
+
+// Si 'numero_intentos_fallidos' no está presente o es inválido, asigna 0
+$numero_intentos_fallidos = isset($data['numero_intentos_fallidos']) && is_numeric($data['numero_intentos_fallidos']) 
+    ? intval($data['numero_intentos_fallidos']) 
+    : 0;
+
+$fecha = $data['fecha'] ?? null;
+
+// Validar si los campos obligatorios están presentes
 if (
-    empty($data['cedula_paciente']) ||
-    empty($data['tiempo']) ||
-    empty($data['numero_instrucciones']) ||
-    empty($data['numero_intentos_fallidos']) ||
-    empty($data['fecha'])
+    empty($cedula_paciente) ||
+    empty($tiempo) ||
+    empty($numero_instrucciones) ||
+    empty($fecha)
 ) {
     echo json_encode(['success' => false, 'error' => 'Datos incompletos']);
     exit;
 }
 
 try {
+    // Preparar la consulta
     $stmt = $conexion->prepare("
         INSERT INTO Juego (tiempo, numero_instrucciones, numero_intentos_fallidos, fecha, cedula_paciente)
         VALUES (?, ?, ?, ?, ?)
     ");
     $stmt->bind_param(
         "siiss",
-        $data['tiempo'],
-        $data['numero_instrucciones'],
-        $data['numero_intentos_fallidos'],
-        $data['fecha'],
-        $data['cedula_paciente']
+        $tiempo,
+        $numero_instrucciones,
+        $numero_intentos_fallidos, // Aquí '0' será el valor por defecto si no existe
+        $fecha,
+        $cedula_paciente
     );
 
     if ($stmt->execute()) {

@@ -39,7 +39,7 @@ include 'auth_check.php';
         <div class="info-paciente">
             <h3 class="titulo-datos">Datos del Paciente</h3>
             <div class="form-group">
-                <label class="estilo-opciones">Paciente seleccionado:</label>
+                <label class="estilo-opciones">Nombre:</label>
                 <span id="pacienteSeleccionado">No disponible</span>
             </div>
             <div class="form-group">
@@ -60,21 +60,26 @@ include 'auth_check.php';
         <div class="estadisticas-detalle">
             <h3 class="titulo-datos">Resultados del Juego</h3>
             <div class="form-group">
-                <label class="estilo-opciones">Tiempo total:</label>
-                <span id="tiempo">0</span>
+                <label class="estilo-opciones">Tiempo total: <span id="tiempo">0</span></label>
             </div>
+
             <div class="form-group">
-                <label class="estilo-opciones">Intentos incorrectos:</label>
-                <span id="intentos">0</span>
+                <label class="estilo-opciones">Intentos incorrectos: <span id="intentos">0</span></label>
             </div>
 
-            <!-- Botón para guardar las estadísticas -->
-            <button class="regresar" id="btnGuardar">Guardar Estadísticas</button>
-        </div>
-    </div>
+            <div class="form-group">
+                <label class="estilo-opciones">Numero de Instrucciones: <span id="instrucciones">0</span></label>
+            </div>
 
-    <!-- Scripts -->
-    <script src="../scripts/estadistica.js"></script>
+            <div>
+                <a href="#" class="regresar">
+                    <span id="btnGuardar">Guardar Estadísticas</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Scripts -->
+        <script src="../scripts/estadistica.js"></script>
 </body>
 
 </html>
