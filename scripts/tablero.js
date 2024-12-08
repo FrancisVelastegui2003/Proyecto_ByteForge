@@ -126,19 +126,12 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 function setupReglasForm() {
-    const reglasForm = document.getElementById("reglasForm");
-    reglasForm.addEventListener("submit", function (event) {
-        event.preventDefault(); // Evita el envío tradicional del formulario
+    // Obtén los valores del formulario
+    numInstrucciones = parseInt(document.getElementById("numInstrucciones").value, 10);
+    instruccionesAleatorias = document.getElementById("instruccionesAleatorias").value === "si";
 
-        // Obtén los valores del formulario
-        numInstrucciones = parseInt(document.getElementById("numInstrucciones").value, 10);
-        instruccionesAleatorias = document.getElementById("instruccionesAleatorias").value === "si";
-
-        // Configura las instrucciones según el formulario
-        configureInstructions(numInstrucciones, instruccionesAleatorias);
-
-        alert("¡Configuración guardada! Puedes comenzar a jugar.");
-    });
+    // Configura las instrucciones según el formulario
+    configureInstructions(numInstrucciones, instruccionesAleatorias);
 }
 
 function configureInstructions(num = 1, aleatorias = false) {
@@ -163,7 +156,6 @@ function configureInstructions(num = 1, aleatorias = false) {
         alert("No hay instrucciones configuradas. Por favor, configura las reglas del juego.");
     }
 }
-
 
 // Función para barajar las instrucciones de forma aleatoria
 function shuffleInstructions(array) {

@@ -1,10 +1,13 @@
 <?php
-include 'conexion.php';
-header('Content-Type: application/json');
+include 'conexion.php'; // Archivo de conexión a la base de datos
+header('Content-Type: application/json'); // Asegura que la salida sea JSON
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+ob_clean(); // Limpia cualquier salida anterior
 
-// Verificar conexión
+// Verificar conexión a la base de datos
 if ($conexion->connect_error) {
-    echo json_encode(['error' => 'Error en la conexión a la base de datos']);
+    echo json_encode(['error' => 'Error en la conexión a la base de datos: ' . $conexion->connect_error]);
     exit();
 }
 
@@ -12,14 +15,22 @@ if ($conexion->connect_error) {
 $query = "SELECT cedula, nombre, apellido, edad, diagnostico FROM Paciente";
 $resultado = $conexion->query($query);
 
+// Verificar si la consulta tuvo éxito
 if (!$resultado) {
-    echo json_encode(['error' => 'Error en la consulta']);
+    echo json_encode(['error' => 'Error en la consulta: ' . $conexion->error]);
     $conexion->close();
     exit();
 }
 
-// Convertir resultados en un array
-$pacientes = array();
+// Verificar si hay resultados
+if ($resultado->num_rows === 0) {
+    echo json_encode(['error' => 'No se encontraron pacientes en la base de datos']);
+    $conexion->close();
+    exit();
+}
+
+// Convertir los resultados en un array asociativo
+$pacientes = [];
 while ($fila = $resultado->fetch_assoc()) {
     $pacientes[] = [
         'cedula' => $fila['cedula'],
@@ -30,6 +41,9 @@ while ($fila = $resultado->fetch_assoc()) {
     ];
 }
 
-echo json_encode($pacientes);
+// Devolver resultados en formato JSON
+echo json_encode($pacientes, JSON_PRETTY_PRINT);
+
+// Cerrar conexión
 $conexion->close();
 ?>
