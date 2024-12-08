@@ -9,6 +9,7 @@ include 'auth_check.php';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Comprensión</title>
+    <link rel="icon" href="../img/logo.png" type="image/png">
     <link rel="stylesheet" href="../css/styles.css">
 </head>
 
@@ -56,9 +57,12 @@ include 'auth_check.php';
             <p id="notification" style="font-size: 1.5rem; color: green; font-weight: bold;"></p>
             <p id="attemptCounter" class="hidden">Intentos incorrectos: 0</p> <!-- Contador oculto -->
             <p id="timer" class="hidden">0:00</p> <!-- Temporizador oculto -->
+            <p id="successMessage" style="font-size: 1.2rem; color: green; font-weight: bold; text-align: center;"></p>
         </div>
-        <p id="successMessage" style="font-size: 1.2rem; color: green; font-weight: bold; text-align: center;"></p>
+        
+        
     </div>
+    
 
     <script src="../scripts/tablero.js"></script>
     <script>

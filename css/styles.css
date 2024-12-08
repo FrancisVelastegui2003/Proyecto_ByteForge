@@ -407,6 +407,20 @@ h3 {font-size: 2.4rem;}
     max-width: 200px;
 }
 
+.footer {
+    display: flex;
+    align-items: center;
+    background-color: #7090b9;
+    color: #FFFFFF;
+    border-radius: 8px;
+    justify-content: center;
+}
+
+.footer img {
+    width: 55px;
+    height: 55px;
+}
+
 /************************************* registros.php ****************************************/
 .registro-container {
     max-width: 400px;
@@ -720,10 +734,6 @@ canvas {
     border: 2px solid #000;
 }
 
-.instruction {
-    font-size: 1.5rem;
-    color: #333;
-}
 
 .instruction.active {
     color: #FF0000;
@@ -731,8 +741,9 @@ canvas {
 
 /*instrucciones del tablero*/
 .instruction {
-    font-size: 1.5rem;
+    font-size: 22px;
     color: #333;
+    font-weight: bold;
 }
 
 .instruction.completed {

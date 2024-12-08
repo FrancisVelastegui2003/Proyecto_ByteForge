@@ -455,7 +455,7 @@ function togglePause() {
         }));
         console.log("Estado guardado en pausa:", localStorage.getItem("pauseState"));
 
-        notificationElement.textContent = "¡Tranquilo! Tómate tu tiempo.";
+        notificationElement.textContent = "¡Tranquilo/a! Tómate tu tiempo.";
         pauseButton.textContent = "Reanudar";
     } else {
         // Reanudar el temporizador
