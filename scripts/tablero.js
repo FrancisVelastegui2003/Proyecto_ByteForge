@@ -444,20 +444,38 @@ function togglePause() {
     if (!isPaused) {
         // Pausar el temporizador
         isPaused = true;
-        pauseTime = Date.now(); // Guardar el momento de pausa
-        cancelAnimationFrame(timerRequest); // Detener el temporizador
-        notificationElement.textContent = "¡Tranquilo! Tómate tu tiempo."; // Mostrar mensaje
+        pauseTime = Date.now();
+        cancelAnimationFrame(timerRequest);
+
+        // Guardar el estado actual en localStorage
+        localStorage.setItem("pauseState", JSON.stringify({
+            startTime: startTime,
+            incorrectAttempts: incorrectAttempts,
+            completedInstructions: completedInstructions
+        }));
+        console.log("Estado guardado en pausa:", localStorage.getItem("pauseState"));
+
+        notificationElement.textContent = "¡Tranquilo! Tómate tu tiempo.";
         pauseButton.textContent = "Reanudar";
     } else {
         // Reanudar el temporizador
         isPaused = false;
-        const pausedDuration = Date.now() - pauseTime; // Calcular cuánto tiempo estuvo pausado
-        startTime += pausedDuration; // Ajustar el tiempo de inicio
-        updateTimer(); // Reiniciar el temporizador
-        notificationElement.textContent = ""; // Eliminar el mensaje
+        const pausedDuration = Date.now() - pauseTime;
+        startTime += pausedDuration;
+
+        // Recuperar el estado guardado
+        const pauseState = JSON.parse(localStorage.getItem("pauseState"));
+        if (pauseState) {
+            incorrectAttempts = pauseState.incorrectAttempts;
+            completedInstructions = pauseState.completedInstructions;
+        }
+
+        updateTimer();
+        notificationElement.textContent = "";
         pauseButton.textContent = "Pausar";
     }
 }
+
 
 // Temporizador
 function startTimer() {
@@ -486,19 +504,23 @@ function stopGameAndSaveStats() {
     const minutes = Math.floor(totalTime / 60);
     const seconds = totalTime % 60;
 
+    // Recuperar o validar los datos del paciente
+    let pacienteId = localStorage.getItem("pacienteId");
+    if (!pacienteId) {
+        alert("Error: No se encuentra el ID del paciente. Por favor, reinicia el juego.");
+        return;
+    }
+
     // Guardar tiempo e intentos en localStorage
     localStorage.setItem("finalTime", `${minutes}:${seconds.toString().padStart(2, "0")}`);
     localStorage.setItem("incorrectAttempts", incorrectAttempts);
 
-    // Guardar ID del paciente si existe
-    const pacienteId = localStorage.getItem("pacienteId");
-    if (pacienteId) {
-        localStorage.setItem("selectedPacienteId", pacienteId);
-    }
+    console.log("Datos guardados antes de finalizar:", {
+        finalTime: localStorage.getItem("finalTime"),
+        incorrectAttempts: localStorage.getItem("incorrectAttempts"),
+        pacienteId: pacienteId
+    });
 
     // Redirigir a estadistica.php
     window.location.href = "../php/estadistica.php";
 }
-
-
-
