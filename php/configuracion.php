@@ -60,7 +60,7 @@ include 'auth_check.php';
                 <span class="front"> Editar / Eliminar Terapeuta </span>
             </button>
 
-            <button class="opciones-btn" onclick="window.location.href='estadistica.php'">
+            <button class="opciones-btn" onclick="window.location.href='graficoestadisticos.php'">
                 <span class="shadow"></span>
                 <span class="edge"></span>
                 <span class="front"> Ver Estadísticas </span>
