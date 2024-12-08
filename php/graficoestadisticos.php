@@ -53,7 +53,7 @@ include 'auth_check.php';
                 </select>
             </div>
             <div>
-                <label class="letras-importantes" for="fecha">Fecha específica (opcional):</label>
+                <label class="letras-importantes" for="fecha">Fecha específica:</label>
                 <input class="estilo-select" type="date" id="fecha">
             </div>
         </div>

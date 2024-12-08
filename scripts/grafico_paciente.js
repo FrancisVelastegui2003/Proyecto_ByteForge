@@ -52,14 +52,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (chartInstance) chartInstance.destroy(); // Eliminar gráfico anterior si existe
 
+        // Convertir tiempo a formato minutos:segundos
+        const tiemposFormato = datos.map(item => {
+            const minutos = Math.floor(item.tiempo_total / 60); // Parte entera de minutos
+            const segundos = item.tiempo_total % 60; // Resto en segundos
+            return `${minutos}:${segundos.toString().padStart(2, '0')}`; // Formato "mm:ss"
+        });
+
         chartInstance = new Chart(ctx, {
             type: "bar",
             data: {
                 labels: datos.map(item => item.fecha), // Fechas como etiquetas
                 datasets: [
                     {
-                        label: "Tiempo (segundos)",
-                        data: datos.map(item => item.tiempo_total),
+                        label: "Tiempo (minutos:segundos)",
+                        data: datos.map(item => item.tiempo_total), // Tiempo total en segundos (para escala)
                         backgroundColor: "rgba(54, 162, 235, 0.6)", // Azul
                         borderColor: "rgba(54, 162, 235, 1)",
                         yAxisID: 'y',
@@ -89,7 +96,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         position: 'left',
                         title: {
                             display: true,
-                            text: 'Tiempo e Instrucciones'
+                            text: 'Tiempo (segundos) e Instrucciones'
                         }
                     },
                     y1: {
@@ -107,6 +114,25 @@ document.addEventListener("DOMContentLoaded", () => {
                     title: {
                         display: true,
                         text: "Progreso del Paciente"
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                let label = context.dataset.label || '';
+                                if (label) {
+                                    label += ': ';
+                                }
+                                if (context.dataset.label === "Tiempo (minutos:segundos)") {
+                                    const totalSegundos = context.raw; // Tiempo en segundos
+                                    const minutos = Math.floor(totalSegundos / 60);
+                                    const segundos = totalSegundos % 60;
+                                    label += `${minutos}:${segundos.toString().padStart(2, '0')}`;
+                                } else {
+                                    label += context.raw;
+                                }
+                                return label;
+                            }
+                        }
                     }
                 }
             }
