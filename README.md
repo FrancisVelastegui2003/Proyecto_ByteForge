@@ -48,8 +48,17 @@ Los terapeutas pueden personalizar los juegos, monitorear el progreso y analizar
   - Extensión de PHP para Visual Studio Code.  
   - Live Server (opcional para pruebas).  
 
-## Instalación  
+## Instalación 
+1. **Descargar e instalar XAMPP:**
+Una vez descargado e instalado XAMPP desde cualquier navegador web, se necesita cambiar el puerto para la base de datos, en el archivo que se visualiza en la imagen, es necesario reemplazar todos los puertos 3306 por 3307, esto se logra abriendo el documento con bloc de notas, en la opción de editar, se elige la opcion de reemplazar, aqui se hace el cambio ded puertos mencionados y por último se guarda de nuevo el archivo.
+![Reemplazo de puertos](img/xampp1.jpg)
+
+
 1. **Clonar el repositorio:**  
    ```bash
-   git clone https://github.com/usuario/proyecto.git
+   git clone https://github.com/FrancisVelastegui2003/Proyecto_ByteForge.git
+   ```
+
+   Navegar entre las carpetas desde Codigo -> Codigo_V2 -> Proyecto_ByteForge_V2
+   Esta última carpeta es la que se debe abrir en el IDE, en este caso Visual Studio Code.
 2. **Clonar el repositorio:**  
