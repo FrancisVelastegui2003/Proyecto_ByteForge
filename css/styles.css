@@ -449,6 +449,12 @@ h3 {font-size: 2.4rem;}
     display: flex;
 }
 
+/************************************* eliminar/actualizar.php ****************************************/
+
+
+
+
+
 /************************************* estadistica.php ****************************************/
 .header-estadisticas {
     display: flex;
@@ -536,6 +542,7 @@ h3 {font-size: 2.4rem;}
 
 .estilo-opciones {
     font-weight: bold;
+    text-transform: uppercase;
 }
 
 #numInstrucciones {
