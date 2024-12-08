@@ -1,5 +1,7 @@
 <?php
 include 'conexion.php'; // Archivo de conexión a la base de datos
+session_start(); // Iniciar sesión para acceder a los datos del terapeuta logueado
+
 header('Content-Type: application/json'); // Asegura que la salida sea JSON
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
@@ -11,9 +13,30 @@ if ($conexion->connect_error) {
     exit();
 }
 
+
+
+
+// Verificar si el terapeuta está logueado
+if (!isset($_SESSION['terapeuta_id'])) {
+    echo json_encode(['error' => 'Acceso no autorizado. Inicie sesión.']);
+    exit();
+}
+
+// Obtener la cédula del terapeuta logueado desde la sesión
+$terapeuta_id = $_SESSION['terapeuta_id'];
+
+
+
+
+
+
 // Consulta para obtener todos los datos de los pacientes
-$query = "SELECT cedula, nombre, apellido, edad, diagnostico FROM Paciente";
-$resultado = $conexion->query($query);
+$query = "SELECT cedula, nombre, apellido, edad, diagnostico FROM Paciente WHERE cedula_terapeuta = ?";
+$stmt = $conexion->prepare($query);
+$stmt->bind_param("s", $terapeuta_id);
+$stmt->execute();
+$resultado = $stmt->get_result();
+//$resultado = $conexion->query($query);
 
 // Verificar si la consulta tuvo éxito
 if (!$resultado) {
