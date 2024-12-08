@@ -18,6 +18,7 @@ include 'auth_check.php';
             <span>BytePrensión</span>
         </button>
     </h2>
+
     <div class="registro-container">
         <h2>Registro de paciente</h2>
         <form action="guardar_paciente.php" method="POST">

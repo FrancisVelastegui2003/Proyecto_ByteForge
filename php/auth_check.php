@@ -24,6 +24,4 @@ if (!isset($_SESSION['terapeuta_id'])) {
     header("Location: ../index.html"); // Redirigir al inicio
     exit();
 }
-
-// Ahora $_SESSION['terapeuta_id'] contiene la cédula del terapeuta loggeado
 ?>

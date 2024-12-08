@@ -13,9 +13,6 @@ if ($conexion->connect_error) {
     exit();
 }
 
-
-
-
 // Verificar si el terapeuta está logueado
 if (!isset($_SESSION['terapeuta_id'])) {
     echo json_encode(['error' => 'Acceso no autorizado. Inicie sesión.']);
@@ -24,11 +21,6 @@ if (!isset($_SESSION['terapeuta_id'])) {
 
 // Obtener la cédula del terapeuta logueado desde la sesión
 $terapeuta_id = $_SESSION['terapeuta_id'];
-
-
-
-
-
 
 // Consulta para obtener todos los datos de los pacientes
 $query = "SELECT cedula, nombre, apellido, edad, diagnostico FROM Paciente WHERE cedula_terapeuta = ?";

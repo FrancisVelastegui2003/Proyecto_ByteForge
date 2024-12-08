@@ -20,7 +20,7 @@
         <form action="guardar_terapeuta.php" method="POST">
             <div class="form-group">
                 <label for="cedula">Cédula</label>
-                <input type="text" id="cedula" name="cedula" required>
+                <input type="number" id="cedula" name="cedula" required>
             </div>
             <div class="form-group">
                 <label for="nombre">Nombre</label>
