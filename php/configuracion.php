@@ -28,6 +28,8 @@ include 'auth_check.php';
             </h1>
         </div>
 
+        
+
         <!-- Información del Paciente -->
         <div class="opciones-configuracion">
             <div>

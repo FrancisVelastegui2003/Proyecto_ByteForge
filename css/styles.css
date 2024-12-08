@@ -528,6 +528,59 @@ h3 {font-size: 2.4rem;}
     width: 80px;
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+.opciones-estadisticas-container {
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 180px;
+    border-radius: 8px;
+    padding: 0;
+}
+
+.estilo-select {
+    background-color: transparent;
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    font-size: 1.2rem;
+}
+
+.estilo-select option {
+    background-color: #7090b9;
+    color: black;
+    font-weight: 600;
+}
+
+.letras-importantes {
+    text-transform: uppercase;
+    font-weight: 600;
+    font-size: 18px;
+}
+
+#graficoEstadisticas {
+    background-color: #E0E7ED;
+    width: 100%;
+    height: 100%;
+}
+
+
+
+
+
+
 /************************************* configuracion.php ****************************************/
 .configuracion-container {
     padding: 10px;
@@ -535,6 +588,7 @@ h3 {font-size: 2.4rem;}
     grid-template-columns: 1fr 2fr;
     gap: 20px;
 }
+
 
 .opciones-configuracion {
     background-color: #E0E7ED;
@@ -569,7 +623,6 @@ h3 {font-size: 2.4rem;}
 #select-paciente {
     background-color: transparent;
     text-transform: uppercase;
-    color: white;
     font-weight: 600;
     letter-spacing: 1.5px;
     font-size: 1.2rem;
