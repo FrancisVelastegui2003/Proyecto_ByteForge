@@ -1,11 +1,11 @@
 # Proyecto_ByteForge
 ## Juego BytePrensión (Versión 2 - Versión Final)  
-Un sistema diseñado para terapias cognitivas en pacientes con Alzheimer, integrando juegos interactivos con seguimiento personalizado para cada paciente.  
+Un sistema diseñado para terapias cognitivas en pacientes con Alzheimer, integrando un juego interactivo con seguimiento personalizado para cada paciente.  
 
 ## Descripción  
 BytePrensión es una herramienta innovadora para terapeutas que trabajan con pacientes con Alzheimer. Esta es la **versión 2 y versión final del proyecto**, que incorpora mejoras significativas y funcionalidades avanzadas. Ofrece un entorno controlado y configurable donde los pacientes pueden jugar siguiendo una serie de instrucciones diseñadas para estimular su memoria y habilidades cognitivas.  
 
-Los terapeutas pueden personalizar los juegos, monitorear el progreso y analizar resultados a través de gráficos intuitivos, con soporte completo para gestionar múltiples pacientes y terapeutas.  
+Los terapeutas pueden personalizar el juego, monitorear el progreso y analizar resultados a través de gráficos intuitivos, con soporte completo para gestionar múltiples pacientes y terapeutas.  
 
 ## Estructura del Repositorio  
 - **Rama `main`:** Contiene el código y la documentación de las versiones 1 y 2 del proyecto.  
