@@ -49,11 +49,12 @@ Los terapeutas pueden personalizar el juego, monitorear el progreso y analizar r
   - Live Server (opcional para pruebas).  
 
 ## Instalación 
-1. **Instalación y configuración XAMPP:**
-  Una vez descargado e instalado XAMPP desde cualquier navegador web, se necesita cambiar el puerto para la base de datos, en el archivo que se visualiza en la imagen, es necesario reemplazar todos los puertos 3306 por 3307, esto se logra abriendo el documento con bloc de notas, en la opción de editar, se elige la opcion de reemplazar, aqui se hace el cambio de puertos mencionados y por último se guarda de nuevo el archivo.
+1. **Instalación y configuración XAMPP:**  
+   Una vez descargado e instalado XAMPP desde cualquier navegador web, se necesita cambiar el puerto para la base de datos. En el archivo que se visualiza en la imagen, es necesario reemplazar todos los puertos `3306` por `3307`. Esto se logra abriendo el documento con el Bloc de notas. En la opción de "Editar", selecciona "Reemplazar", realiza el cambio de puertos mencionados y guarda de nuevo el archivo.
 
-![Reemplazo de puertos](img/xampp1.jpg)
-![Reemplazo de puertos](img/ConfiguracionPuertos.png)
+   <img src="img/xampp1.jpg" alt="Reemplazo de puertos" width="400">
+   <img src="img/ConfiguracionPuertos.png" alt="Configuración de puertos" width="400">
+
 
   Una vez realizado el reemplazo de puertos, dentro del directorio de la computadora, es necesario dirigirse a la siguiente ruta y alli dentro reemplazar el archivo "config.inc.php" con el archivo que se encuentra en la carpeta de "recursos" de este repositorio.
    ```
