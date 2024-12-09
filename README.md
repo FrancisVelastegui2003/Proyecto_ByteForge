@@ -63,7 +63,7 @@ Los terapeutas pueden personalizar el juego, monitorear el progreso y analizar r
    ```
   Al finalizar esta configuración se puede levantar los servicios de Apache y MySQL que proporciona el programa XAMPP, como se muestra a continuación. 
   
-  ![Levantamiento de xampp](img/xampp2.jpg)
+    <img src="img/xampp2.jpg" alt="Reemplazo de puertos" width="400">
 
 2. **Clonar el repositorio:**
    
