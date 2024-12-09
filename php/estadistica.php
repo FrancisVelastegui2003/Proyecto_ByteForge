@@ -28,9 +28,7 @@ include 'auth_check.php';
             </h1>
         </div>
         <div>
-            <a href="../index.html" class="regresar">
-                <span>Salir</span>
-            </a>
+           
         </div>
     </div>
 

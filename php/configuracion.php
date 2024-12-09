@@ -51,7 +51,7 @@ include 'auth_check.php';
                 <span class="front"> Registrar nuevo paciente </span>
             </button>
 
-            <button class="opciones-btn" onclick="window.location.href='datos_paciente.php'">
+            <button class="opciones-btn" onclick="window.location.href='datos_pacientes.php'">
                 <span class="shadow"></span>
                 <span class="edge"></span>
                 <span class="front"> Editar / Eliminar Paciente </span>
