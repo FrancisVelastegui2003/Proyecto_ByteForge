@@ -15,7 +15,7 @@ try {
         mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
         $query = "INSERT INTO terapeuta (cedula, nombre, apellido, contrasena) 
-                  VALUES (?, ?, ?, ?)";
+                    VALUES (?, ?, ?, ?)";
 
         // Preparar y ejecutar la consulta para evitar inyección SQL
         $stmt = $conexion->prepare($query);

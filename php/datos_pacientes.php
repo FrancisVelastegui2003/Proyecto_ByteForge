@@ -89,11 +89,11 @@ if (isset($_POST['cedula'])) {
                     <label class="estilo-opciones">EDAD:</label>
                     <input class="estilo-opciones" type="number" id="edad" name="edad" value="" required min="1"> <br>
 
-                    <label class="estilo-opciones">DIAGNÓSTICO:</label>
-                    <textarea class="estilo-opciones" id="diagnostico" name="diagnostico" required></textarea> <br>
-
                     <label class="estilo-opciones">CÉDULA:</label>
                     <input class="estilo-opciones" type="text" id="cedula" name="cedula" value="" disabled> <br>
+
+                    <label class="estilo-opciones">DIAGNÓSTICO:</label>
+                    <textarea class="estilo-opciones" id="diagnostico" name="diagnostico" required></textarea> <br>
 
                     <button class="opciones-btn" type="button" id="btnActualizar">
                         <span class="shadow"></span>
