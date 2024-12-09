@@ -1,0 +1,839 @@
+/*Configuracion general*/
+* {margin: 5px; padding: 0;}
+
+html {font-size: 70.5%; box-sizing: border-box;}
+
+*,
+*:before,
+*:after {box-sizing: inherit;}
+
+body {
+    font-size: 16px;
+    font-family: 'Krub', sans-serif;
+    background: rgb(238, 174, 202);
+    background: radial-gradient(circle, rgba(238, 174, 202, 1) 0%, rgba(148, 187, 233, 1) 100%);
+}
+
+/*Titulo dinamico de paginas*/
+.BytePrensión {
+    position: relative;
+    padding: 5px 30px;
+    font-family: inherit;
+    background-color: var(--color-primary);
+    border: 3px solid;
+    font-size: 30px;
+    font-weight: 600;
+    color: white;
+    text-transform: uppercase;
+    overflow: hidden;
+    transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.BytePrensión:hover span {
+    background: linear-gradient(135deg, #3645d4 0%, #0b6d65 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.BytePrensión::before {
+    position: absolute;
+    content: '';
+    width: 100%;
+    height: 100%;
+    left: -110%;
+    top: -0%;
+    background: #5735d1;
+    pointer-events: none;
+    margin: auto;
+    transition: all 0.6s cubic-bezier(0.23, 1, 0.320, 1);
+}
+
+.BytePrensión:hover {
+    letter-spacing: 2px;
+    border-image: linear-gradient(135deg, #3125d4 0%, #57ebde 100%);
+    border-image-slice: 1;
+}
+
+.BytePrensión:hover::before {left: 110%;}
+
+.BytePrensión:active {scale: 0.95;}
+
+/*Mas titulos*/
+h1 {text-align: center;}
+
+h2 {font-size: 2.8rem; text-align: center;}
+
+h3 {font-size: 2.4rem;}
+
+/*Botones dinamicos para todas las pantallas*/
+.pausar {
+    outline: none;
+    cursor: pointer;
+    border: none;
+    padding: 0.9rem 2rem;
+    margin: 0;
+    font-family: inherit;
+    font-size: inherit;
+    position: relative;
+    display: inline-block;
+    letter-spacing: 0.05rem;
+    font-weight: 700;
+    font-size: 17px;
+    border-radius: 500px;
+    overflow: hidden;
+    background: #5735d1;
+    color: ghostwhite;
+    text-decoration: none;
+}
+
+.pausar span {
+    position: relative;
+    z-index: 10;
+    transition: color 0.4s;
+}
+
+.pausar:hover span {color: white;}
+
+.pausar::before,
+.pausar::after {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+}
+
+.pausar::before {
+    content: "";
+    background: #000;
+    width: 120%;
+    left: -10%;
+    transform: skew(30deg);
+    transition: transform 0.4s cubic-bezier(0.3, 1, 0.8, 1);
+}
+
+.pausar:hover::before {transform: translate3d(100%, 0, 0);}
+
+.regresar {
+    outline: none;
+    cursor: pointer;
+    border: none;
+    padding: 0.9rem 2rem;
+    margin: 0;
+    font-family: inherit;
+    font-size: inherit;
+    position: relative;
+    display: inline-block;
+    letter-spacing: 0.05rem;
+    font-weight: 700;
+    font-size: 17px;
+    border-radius: 500px;
+    overflow: hidden;
+    background: #5735d1;
+    color: ghostwhite;
+    text-decoration: none;
+}
+
+.regresar a {
+    color: white;
+    text-decoration: none;
+}
+
+.regresar span {
+    position: relative;
+    z-index: 10;
+    transition: color 0.4s;
+}
+
+.regresar:hover span {color: white;}
+
+.regresar::before,
+.regresar::after {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+}
+
+.regresar::before {
+    content: "";
+    background: #000;
+    width: 120%;
+    left: -10%;
+    transform: skew(30deg);
+    transition: transform 0.4s cubic-bezier(0.3, 1, 0.8, 1);
+}
+
+.regresar:hover::before {transform: translate3d(100%, 0, 0);}
+
+/*botones para opciones*/
+.opciones-btn {
+    position: relative;
+    background: transparent;
+    padding: 0px;
+    border: none;
+    cursor: pointer;
+    outline-offset: 4px;
+    outline-color: deeppink;
+    transition: filter 250ms;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+.shadow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: hsl(226, 25%, 69%);
+    border-radius: 8px;
+    filter: blur(2px);
+    will-change: transform;
+    transform: translateY(2px);
+    transition: transform 600ms cubic-bezier(0.3, 0.7, 0.4, 1);
+}
+
+.edge {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    border-radius: 8px;
+    background: linear-gradient(to right,
+            hsl(248, 39%, 39%) 0%,
+            hsl(248, 39%, 49%) 8%,
+            hsl(248, 39%, 39%) 92%,
+            hsl(248, 39%, 29%) 100%);
+}
+
+.front {
+    display: block;
+    position: relative;
+    border-radius: 8px;
+    background: hsl(248, 53%, 58%);
+    padding: 16px 32px;
+    color: white;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    font-size: 1.2rem;
+    transform: translateY(-4px);
+    transition: transform 600ms cubic-bezier(0.3, 0.7, 0.4, 1);
+}
+
+.opciones-btn:hover {filter: brightness(110%);}
+
+.opciones-btn:hover .front {
+    transform: translateY(-6px);
+    transition: transform 250ms cubic-bezier(0.3, 0.7, 0.4, 1.5);
+}
+
+.opciones-btn:active .front {
+    transform: translateY(-2px);
+    transition: transform 34ms;
+}
+
+.opciones-btn:hover .shadow {
+    transform: translateY(4px);
+    transition: transform 250ms cubic-bezier(0.3, 0.7, 0.4, 1.5);
+}
+
+.opciones-btn:active .shadow {
+    transform: translateY(1px);
+    transition: transform 34ms;
+}
+
+.opciones-btn:focus:not(:focus-visible) {outline: none;}
+
+/*grupo de opciones y botones para pantallas*/
+.form-group {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.form-group label {
+    font-size: 1.6rem;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 8px;
+    font-size: 1.6rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.botones {
+    display: flex;
+    justify-content: space-around;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.button-group {
+    display: flex;
+    justify-content: space-around;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.button-group .btn {
+    font-size: 1.4rem;
+    padding: 10px;
+    background-color: #6c757d;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.button-group .btn:hover {background-color: #5a6268;}
+
+/************************************* index.html ****************************************/
+/*Botones de iniciar sesion y registrarse*/
+.cssbuttons-io-button {
+    background: #7090b9;
+    color: white;
+    font-family: inherit;
+    padding: 0.35em;
+    padding-left: 1.2em;
+    font-size: 17px;
+    font-weight: 500;
+    border-radius: 0.9em;
+    border: none;
+    letter-spacing: 0.05em;
+    display: flex;
+    align-items: center;
+    box-shadow: inset 0 0 1.6em -0.6em #714da6;
+    overflow: hidden;
+    position: relative;
+    height: 2.8em;
+    padding-right: 3.3em;
+    cursor: pointer;
+    margin: 25px;
+}
+
+.cssbuttons-io-button .icon {
+    background: white;
+    margin-left: 1em;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 2.2em;
+    width: 2.2em;
+    border-radius: 0.7em;
+    box-shadow: 0.1em 0.1em 0.6em 0.2em #7b52b9;
+    right: 0.3em;
+    transition: all 0.3s;
+}
+
+.cssbuttons-io-button:hover .icon {
+    width: calc(100% - 0.6em);
+}
+
+.cssbuttons-io-button .icon svg {
+    width: 1.1em;
+    transition: transform 0.3s;
+    color: #7b52b9;
+}
+
+.cssbuttons-io-button:hover .icon svg {
+    transform: translateX(0.1em);
+}
+
+.cssbuttons-io-button:active .icon {
+    transform: scale(0.95);
+}
+
+/*contenedores index*/
+.index-container {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 20px;
+    padding: 10px;
+    margin: 0;
+}
+
+.info-juego {
+    grid-column: span 2;
+    background-color: #7090b9;
+    padding: 5px;
+    text-align: center;
+    font-size: 15px;
+    color: #FFFFFF;
+    border-radius: 8px;
+}
+
+.imagenYopciones {
+    display: flex;
+    gap: 70px;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    margin: 0;
+}
+
+.material-audiovisual {
+    background-color: #FFFFFF;
+    padding: 5px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.audiovisual-img {
+    width: 350px;
+    max-width: 350px;
+    height: auto;
+    border-radius: 15px;
+}
+
+/* Estilo del input de texto */
+#textInput {
+    margin-top: 15px;
+    padding: 8px;
+    font-size: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    width: 100%;
+    max-width: 200px;
+}
+
+.footer {
+    display: flex;
+    align-items: center;
+    background-color: #7090b9;
+    color: #FFFFFF;
+    border-radius: 8px;
+    justify-content: center;
+}
+
+.footer img {
+    width: 55px;
+    height: 55px;
+}
+
+/************************************* registros.php ****************************************/
+.registro-container {
+    max-width: 400px;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #f9f9f9;
+    text-align: center;
+    margin-top: 30px;
+}
+
+.registro-container h2 {
+    font-size: 2.4rem;
+    margin-bottom: 20px;
+}
+
+.menu-opciones {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.editar-eliminar {
+    display: flex;
+}
+
+/************************************* eliminar/actualizar.php ****************************************/
+
+
+
+
+
+/************************************* estadistica.php ****************************************/
+.header-estadisticas {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+}
+
+.estadistica-container {
+    padding: 10px;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 20px;
+}
+
+.info-paciente {
+    background-color: #E0E7ED;
+    padding: 15px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+.info-paciente label {
+    font-size: 1.2rem;
+    color: #333;
+}
+
+#paciente-id {
+    margin-top: 5px;
+    padding: 8px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 100%;
+}
+
+.datos-paciente {
+    background-color: #C8D6E5;
+    padding: 10px;
+    border-radius: 4px;
+    margin-top: 10px;
+    font-size: 1.2rem;
+    color: #333;
+    width: 100%;
+}
+
+.estadisticas-detalle {
+    background-color: #EAF0F7;
+    padding: 20px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.estadisticas-detalle p {
+    font-size: 1.4rem;
+    color: #34495E;
+    margin: 5px 0;
+}
+
+.grafico-container {
+    margin-top: 20px;
+    background-color: #FFFFFF;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 100%;
+    height: 300px;
+}
+
+#grafico {
+    width: 100%;
+    height: 100%;
+}
+
+/* container de las estadisticas y graficos */
+.container-instrucciones {
+    display: flex;
+    justify-content: center;
+}
+
+.estilo-opciones {
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+#numInstrucciones {
+    width: 80px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+.opciones-estadisticas-container {
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 180px;
+    border-radius: 8px;
+    padding: 0;
+}
+
+.estilo-select {
+    background-color: transparent;
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    font-size: 1.2rem;
+}
+
+.estilo-select option {
+    background-color: #7090b9;
+    color: black;
+    font-weight: 600;
+}
+
+.letras-importantes {
+    text-transform: uppercase;
+    font-weight: 600;
+    font-size: 18px;
+}
+
+#graficoEstadisticas {
+    background-color: #E0E7ED;
+    width: 100%;
+    height: 100%;
+}
+
+
+
+
+
+
+/************************************* configuracion.php ****************************************/
+.configuracion-container {
+    padding: 10px;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 20px;
+}
+
+
+.opciones-configuracion {
+    background-color: #E0E7ED;
+    padding: 15px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+.configuracion-reglas {
+    background-color: #EAF0F7;
+    padding: 20px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.reglas {
+    margin-top: 10px;
+    background-color: #FFFFFF;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: left;
+    width: 100%;
+}
+
+/*Seleccionar paciente*/
+#select-paciente {
+    background-color: transparent;
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    font-size: 1.2rem;
+}
+
+#select-paciente option {
+    background-color: #7090b9;
+    color: black;
+    font-weight: 600;
+}
+
+.titulo-datos {
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 10px;
+}
+
+.image-selector {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+.image-selector label {
+    flex: 0 0 calc(50% - 20px);
+    box-sizing: border-box;
+    text-align: center;
+    cursor: pointer;
+}
+
+.image-selector img {
+    width: 300px;
+    height: auto;
+    border: 2px solid transparent;
+    border-radius: 5px;
+    transition: transform 0.2s ease, border 0.2s ease;
+}
+
+.image-selector input[type="radio"] {
+    display: none;
+}
+
+.image-selector input[type="radio"]:checked + img {
+    border: 2px solid #4CAF50;
+    transform: scale(1.1);
+}
+
+.image-selector img:hover {
+    transform: scale(1.05);
+}
+
+/************************************* tablero.php ****************************************/
+.encabezado {
+    display: flex;
+    justify-content: space-between;
+}
+
+.container {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.menu ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.menu li {
+    margin: 0;
+    padding: 5px;
+    cursor: pointer;
+    font-size: 2rem;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+.menu li:hover {
+    background-color: #f0f0f0;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    transform: scale(1.05);
+}
+
+.canvas-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+canvas {
+    border: 2px solid #000;
+}
+
+
+.instruction.active {
+    color: #FF0000;
+}
+
+/*instrucciones del tablero*/
+.instruction {
+    font-size: 22px;
+    color: #333;
+    font-weight: bold;
+}
+
+.instruction.completed {
+    color: #888;
+    /* Color para indicar que la instrucción ha sido completada */
+    text-decoration: line-through;
+}
+
+.instruction.active {
+    color: #FF0000;
+    /* Destaca la instrucción activa en rojo */
+}
+
+.notification {
+    position: fixed;
+    top: 40px;
+    right: 40px;
+    padding: 20px 30px;
+    background-color: rgba(255, 0, 0, 0.9);
+    color: white;
+    font-size: 24px;
+    /* Aumenta el tamaño de la fuente */
+    font-weight: bold;
+    /* Añade negrita para mayor visibilidad */
+    border-radius: 8px;
+    z-index: 1000;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+
+@keyframes fadein {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeout {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+    }
+}
+
+#attemptCounter {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    font-size: 1.5rem;
+    color: red;
+    font-weight: bold;
+}
+
+#timeCounter {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 1.5rem;
+    color: green;
+    font-weight: bold;
+}
+
+.boton-salir {
+    background-color: #d9534f;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-top: 20px;
+    transition: background-color 0.3s ease;
+}
+
+.boton-salir:hover {
+    background-color: #c9302c;
+}
+.hidden {
+    display: none;
+}
