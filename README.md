@@ -52,9 +52,9 @@ Los terapeutas pueden personalizar el juego, monitorear el progreso y analizar r
 1. **Instalación y configuración XAMPP:**  
    Una vez descargado e instalado XAMPP desde cualquier navegador web, se necesita cambiar el puerto para la base de datos. En el archivo que se visualiza en la imagen, es necesario reemplazar todos los puertos `3306` por `3307`. Esto se logra abriendo el documento con el Bloc de notas. En la opción de "Editar", selecciona "Reemplazar", realiza el cambio de puertos mencionados y guarda de nuevo el archivo.
 
-   <img src="img/xampp1.jpg" alt="Reemplazo de puertos" width="400">
+   <img src="img/xampp1.jpg" alt="Reemplazo de puertos" width="500">
 
-   <img src="img/ConfiguracionPuertos.png" alt="Configuración de puertos" width="600">
+   <img src="img/ConfiguracionPuertos.png" alt="Configuración de puertos" width="500">
 
 
   Una vez realizado el reemplazo de puertos, dentro del directorio de la computadora, es necesario dirigirse a la siguiente ruta y alli dentro reemplazar el archivo "config.inc.php" con el archivo que se encuentra en la carpeta de "recursos" de este repositorio.
@@ -63,7 +63,7 @@ Los terapeutas pueden personalizar el juego, monitorear el progreso y analizar r
    ```
   Al finalizar esta configuración se puede levantar los servicios de Apache y MySQL que proporciona el programa XAMPP, como se muestra a continuación. 
   
-  <img src="img/xampp2.jpg" alt="Reemplazo de puertos" width="400">
+  <img src="img/xampp2.jpg" alt="Reemplazo de puertos" width="500">
 
 2. **Clonar el repositorio:**
    
