@@ -55,7 +55,6 @@ function cargarPacientes() {
         })
         .catch(error => {
             console.error("Error al cargar pacientes:", error);
-            alert("No se pudo cargar la lista de pacientes. Verifique la conexión.");
         });
 }
 document.addEventListener("DOMContentLoaded", function () {
@@ -183,6 +182,5 @@ function cargarPacientes() {
         })
         .catch(error => {
             console.error("Error al cargar pacientes:", error);
-            alert("No se pudo cargar la lista de pacientes. Verifique la conexión.");
         });
 }
