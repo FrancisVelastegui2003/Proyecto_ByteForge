@@ -35,14 +35,14 @@ Los terapeutas pueden personalizar el juego, monitorear el progreso y analizar r
 - **Software:**  
   - XAMPP (para configurar el servidor local).  
   - Navegador web compatible:
-      - Google Chrome >= 60.
-      - Mozilla Firefox >= 54.
-      - Microsoft Edge (Chromium) >= 79.
-      - Safari >= 11.
-      - Opera >= 47. 
+      - Google Chrome: versión 60 o superior.
+      - Mozilla Firefox: versión 54 o superior.
+      - Microsoft Edge (Chromium): versión 79 o superior.
+      - Safari: versión 11 o superior.
+      - Opera: versión 47 o superior. 
 - **Lenguajes y tecnologías:**  
-  - PHP >= 7.4.  
-  - MySQL >= 5.7.  
+  - PHP: versión 7.4 o superior.
+  - MySQL: versión 5.7 o superior. 
   - HTML, CSS, JavaScript.  
 - **Extensiones recomendadas en el IDE:**  
   - Extensión de PHP para Visual Studio Code.  
