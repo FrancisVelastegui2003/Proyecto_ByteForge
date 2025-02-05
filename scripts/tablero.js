@@ -49,6 +49,7 @@ const tablero = {
     },
 };
 
+// Variables globales
 const canvas = document.getElementById("tablero");
 const ctx = canvas.getContext("2d");
 const cellSize = 50;
@@ -58,6 +59,7 @@ const cols = 10;
 // Selecciona las posiciones desde el tablero
 let { starPosition, blackPosition, numberPositions } = tablero.tablero1;
 
+// Variables de estado del juego
 let tableroSeleccionado;
 let selectedColor = "";
 let drawTriangleMode = false;
@@ -69,7 +71,7 @@ let activeInstructions = [];
 let numInstrucciones = 1;
 let instruccionesAleatorias = false;
 
-
+// Instrucciones del juego
 const instructions = [
     { text: "Colorea de rojo la casilla que está encima de la estrella.", color: "#FF0000", check: checkAboveStar },
     { text: "Colorea de café la casilla que está a la derecha de la que tiene el número 15.", color: "#8B4513", check: checkRightOfNumber(15) },
@@ -84,6 +86,7 @@ const instructions = [
     { text: "Escribe la séptima letra del abecedario en la segunda fila y segunda columna.", textInput: true, check: checkSecondRowSecondCol }
 ];
 
+// Función para cargar la configuración del juego
 function cargarConfiguracion() {
     // Usar la misma clave que se utiliza en handleSelection()
     const configuracion = JSON.parse(localStorage.getItem("configuracionJuego"));
@@ -115,7 +118,7 @@ function cargarConfiguracion() {
     configureInstructions(numInstrucciones, instruccionesAleatorias);
 }
 
-
+// Función para manejar la selección de tablero
 document.addEventListener("DOMContentLoaded", function () {
     initializeGame();
     cargarConfiguracion();
@@ -125,6 +128,7 @@ document.addEventListener("DOMContentLoaded", function () {
     displayCurrentInstruction();
 });
 
+// Función para establecer las reglas del juego
 function setupReglasForm() {
     // Obtén los valores del formulario
     numInstrucciones = parseInt(document.getElementById("numInstrucciones").value, 10);
@@ -134,6 +138,7 @@ function setupReglasForm() {
     configureInstructions(numInstrucciones, instruccionesAleatorias);
 }
 
+// Función para configurar las instrucciones del juego
 function configureInstructions(num = 1, aleatorias = false) {
     console.log("Configurando instrucciones con:", { num, aleatorias });
     activeInstructions = [...instructions];
@@ -331,6 +336,7 @@ function colorCell(row, col, color) {
     ctx.strokeRect(col * cellSize, row * cellSize, cellSize, cellSize);
 }
 
+// Dibuja un triángulo en la celda
 function drawTriangleInCell(row, col) {
     if (isPredefinedCell(row, col)) {
         showBlockMessage();
@@ -346,6 +352,7 @@ function drawTriangleInCell(row, col) {
     ctx.fill();
 }
 
+// Escribe texto en la celda
 function writeOnCell(row, col, text) {
     if (isPredefinedCell(row, col)) {
         showBlockMessage();
@@ -354,6 +361,7 @@ function writeOnCell(row, col, text) {
     ctx.fillText(text, col * cellSize + cellSize / 3, row * cellSize + cellSize / 1.5);
 }
 
+// Limpia una celda
 function clearCell(row, col) {
     if (isPredefinedCell(row, col)) {
         showBlockMessage();
@@ -373,7 +381,6 @@ function getCellFromEvent(event) {
     const y = event.clientY - rect.top;
     return { col: Math.floor(x / cellSize), row: Math.floor(y / cellSize) };
 }
-
 
 // Verifica si la acción cumple con la condición de la instrucción actual
 function checkConditions(row, col, action) {
@@ -410,6 +417,7 @@ function displaySuccessMessage(message) {
     }, 500);
 }
 
+// Detiene el temporizador
 function stopTimer() {
     cancelAnimationFrame(timerRequest);
     document.getElementById("timer").classList.remove("hidden");
@@ -435,6 +443,7 @@ function checkAboveStar(row, col, color) {
     return color === "#FF0000" && row === starPosition.row - 1 && col === starPosition.col;
 }
 
+// Funciones de verificación para las instrucciones
 function checkRightOfNumber(number) {
     return (row, col, color) => {
         const pos = numberPositions[number];
@@ -530,13 +539,13 @@ function togglePause() {
     }
 }
 
-
 // Temporizador
 function startTimer() {
     startTime = Date.now();
     updateTimer();
 }
 
+// Actualiza el temporizador cada segundo
 function updateTimer() {
     if (isPaused) return; // No hacer nada si el temporizador está pausado
 
@@ -553,6 +562,7 @@ document.querySelector('#finalizar').addEventListener("click", () => {
     stopGameAndSaveStats();
 });
 
+// Función para detener el juego y guardar las estadísticas
 function stopGameAndSaveStats() {
     const totalTime = Math.floor((Date.now() - startTime) / 1000);
     const minutes = Math.floor(totalTime / 60);
