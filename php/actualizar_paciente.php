@@ -10,8 +10,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $diagnostico = $_POST['diagnostico'];
 
     // Validar que la edad sea mayor que 0
-    if ($edad <= 0) {
-        echo json_encode(['error' => 'La edad debe ser mayor que 0']);
+    if ($edad <= 40) {
+        echo json_encode(['error' => 'La edad debe ser mayor que 40']);
         exit();
     }
 
