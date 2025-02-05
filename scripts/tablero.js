@@ -258,12 +258,53 @@ function enableTextInput() {
     drawTriangleMode = false;
 }
 
+// Función para verificar si una celda es predefinida (estrella, negra, números)
+function isPredefinedCell(row, col) {
+    // Verificar si la casilla es la estrella
+    if (starPosition && row === starPosition.row && col === starPosition.col) {
+        return true;
+    }
+
+    // Verificar si la casilla es la negra
+    if (blackPosition && row === blackPosition.row && col === blackPosition.col) {
+        return true;
+    }
+
+    // Verificar si la casilla es una con número
+    if (numberPositions) {
+        for (const number in numberPositions) {
+            if (numberPositions[number].row === row && numberPositions[number].col === col) {
+                return true;
+            }
+        }
+    }
+
+    return false;
+}
+
+// Mostrar mensaje visual cuando intentas modificar una casilla bloqueada
+function showBlockMessage() {
+    const blockMessage = document.getElementById("blockMessage");
+    blockMessage.innerText = "No puedes modificar esta casilla predefinida.";
+    blockMessage.style.opacity = "1";
+
+    setTimeout(() => {
+        blockMessage.style.opacity = "0";
+    }, 2000);
+}
+
 // Maneja clics en el lienzo
 canvas.addEventListener("click", (event) => {
     const { row, col } = getCellFromEvent(event);
 
+    // Bloqueo de casillas predefinidas
+    if (isPredefinedCell(row, col)) {
+        showBlockMessage();
+        return;
+    }
+
     if (selectedColor === "clear") {
-        clearCell(row, col); // Limpia la celda seleccionada
+        clearCell(row, col);
     } else if (selectedColor) {
         colorCell(row, col, selectedColor);
         checkConditions(row, col, selectedColor);
@@ -279,22 +320,22 @@ canvas.addEventListener("click", (event) => {
     }
 });
 
-// Determina la celda del clic
-function getCellFromEvent(event) {
-    const rect = canvas.getBoundingClientRect();
-    const x = event.clientX - rect.left;
-    const y = event.clientY - rect.top;
-    return { col: Math.floor(x / cellSize), row: Math.floor(y / cellSize) };
-}
-
-// Funciones auxiliares para modificar el tablero
+// Funciones de modificación con restricciones
 function colorCell(row, col, color) {
+    if (isPredefinedCell(row, col)) {
+        showBlockMessage();
+        return;
+    }
     ctx.fillStyle = color;
     ctx.fillRect(col * cellSize, row * cellSize, cellSize, cellSize);
     ctx.strokeRect(col * cellSize, row * cellSize, cellSize, cellSize);
 }
 
 function drawTriangleInCell(row, col) {
+    if (isPredefinedCell(row, col)) {
+        showBlockMessage();
+        return;
+    }
     const x = col * cellSize;
     const y = row * cellSize;
     ctx.beginPath();
@@ -306,18 +347,31 @@ function drawTriangleInCell(row, col) {
 }
 
 function writeOnCell(row, col, text) {
+    if (isPredefinedCell(row, col)) {
+        showBlockMessage();
+        return;
+    }
     ctx.fillText(text, col * cellSize + cellSize / 3, row * cellSize + cellSize / 1.5);
 }
 
 function clearCell(row, col) {
+    if (isPredefinedCell(row, col)) {
+        showBlockMessage();
+        return;
+    }
     const x = col * cellSize;
     const y = row * cellSize;
-
-    // Limpiar el contenido de la celda específica
     ctx.clearRect(x, y, cellSize, cellSize);
-
-    // Redibujar los bordes de la celda para mantener el aspecto del tablero
     ctx.strokeRect(x, y, cellSize, cellSize);
+}
+
+
+// Determina la celda del clic
+function getCellFromEvent(event) {
+    const rect = canvas.getBoundingClientRect();
+    const x = event.clientX - rect.left;
+    const y = event.clientY - rect.top;
+    return { col: Math.floor(x / cellSize), row: Math.floor(y / cellSize) };
 }
 
 
