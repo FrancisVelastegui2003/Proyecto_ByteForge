@@ -1,5 +1,6 @@
 <?php
 include 'conexion.php';
+session_start(); // Iniciar sesión para manejar mensajes de error
 
 try {
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -12,27 +13,26 @@ try {
 
         // Validar que la edad sea mayor a 40
         if ($edad <= 40) {
-            echo <<<HTML
-                <script>
-                    alert("Error: La edad del paciente debe ser mayor a 40 años.");
-                    window.location.href = "../php/registro.php";
-                </script>
-            HTML;
-            exit(); // Detiene la ejecución
+            $_SESSION['error_message'] = "Error: La edad del paciente debe ser mayor a 40 años.";
+            header("Location: ../php/registro.php");
+            exit();
         }
 
-        // Validar que la cédula tenga exactamente 10 dígitos numéricos
+        // Validar que la cédula del paciente tenga exactamente 10 dígitos numéricos
         if (!preg_match('/^\d{10}$/', $cedula)) {
-            echo <<<HTML
-                <script>
-                    alert("Error: La cédula debe contener exactamente 10 dígitos numéricos.");
-                    window.location.href = "../php/registro.php";
-                </script>
-            HTML;
-            exit(); // Detiene la ejecución
+            $_SESSION['error_message'] = "Error: La cédula del paciente debe contener exactamente 10 dígitos numéricos.";
+            header("Location: ../php/registro.php");
+            exit();
         }
 
-        // Verificar si la cédula ya está registrada en la base de datos
+        // Validar que la cédula del terapeuta tenga exactamente 10 dígitos numéricos
+        if (!preg_match('/^\d{10}$/', $cedula_terapeuta)) {
+            $_SESSION['error_message'] = "Error: La cédula del terapeuta debe contener exactamente 10 dígitos numéricos.";
+            header("Location: ../php/registro.php");
+            exit();
+        }
+
+        // Verificar si la cédula del paciente ya está registrada en la base de datos
         $queryCheck = "SELECT cedula FROM Paciente WHERE cedula = ?";
         $stmtCheck = $conexion->prepare($queryCheck);
         $stmtCheck->bind_param("s", $cedula);
@@ -40,13 +40,9 @@ try {
         $stmtCheck->store_result();
 
         if ($stmtCheck->num_rows > 0) {
-            echo <<<HTML
-                <script>
-                    alert("Error: Ya existe un paciente registrado con esta cédula.");
-                    window.location.href = "../php/registro.php";
-                </script>
-            HTML;
-            exit(); // Detiene la ejecución
+            $_SESSION['error_message'] = "Error: Ya existe un paciente registrado con esta cédula.";
+            header("Location: ../php/registro.php");
+            exit();
         }
 
         // Habilitar el modo de excepción en MySQLi
@@ -61,24 +57,15 @@ try {
         $stmt->execute();
 
         // Redirigir en caso de éxito
-        echo <<<HTML
-            <script>
-                alert("Paciente registrado exitosamente.");
-                window.location.href = "../php/configuracion.php";
-            </script>
-        HTML;
-        exit(); // Detiene la ejecución después de insertar correctamente
+        $_SESSION['success_message'] = "Paciente registrado exitosamente.";
+        header("Location: ../php/configuracion.php");
+        exit();
     }
 } catch (mysqli_sql_exception $e) {
-    // Manejo de errores
-    $mensajeError = addslashes($e->getMessage());
-    echo <<<HTML
-        <script>
-            alert("Error al guardar paciente: {$mensajeError}");
-            window.location.href = "../php/registro.php";
-        </script>
-    HTML;
-    exit(); // Detiene la ejecución en caso de error
+    // Manejo de errores de base de datos
+    $_SESSION['error_message'] = "Error al guardar paciente: " . addslashes($e->getMessage());
+    header("Location: ../php/registro.php");
+    exit();
 } finally {
     // Cerrar la conexión
     $conexion->close();
