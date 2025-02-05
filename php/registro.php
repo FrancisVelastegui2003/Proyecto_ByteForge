@@ -33,7 +33,7 @@ include 'auth_check.php';
             </div>
             <div class="form-group">
                 <label for="edad">Edad</label>
-                <input type="number" id="edad" name="edad" min="1" required>
+                <input type="text" id="edad" name="edad" min="1" required>
             </div>
             <div class="form-group">
                 <label for="diagnostico">Diagnóstico</label>
@@ -41,11 +41,11 @@ include 'auth_check.php';
             </div>
             <div class="form-group">
                 <label for="id">Cedula Paciente</label>
-                <input type="number" id="id" name="id" required>
+                <input type="text" id="id" name="id" required>
             </div>
             <div class="form-group">
                 <label for="id_terapeuta">Cedula Terapeuta a cargo</label>
-                <input type="number" id="id" name="id_terapeuta" required>
+                <input type="text" id="id" name="id_terapeuta" required>
             </div>
             <div class="botones">
                 <button class="regresar" type="submit" class="btn" onclick="window.location.href='configuracion.php'">

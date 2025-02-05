@@ -87,7 +87,7 @@ if (isset($_POST['cedula'])) {
                     <input class="estilo-opciones" type="text" id="apellido" name="apellido" value="" required> <br>
 
                     <label class="estilo-opciones">EDAD:</label>
-                    <input class="estilo-opciones" type="number" id="edad" name="edad" value="" required min="1"> <br>
+                    <input class="estilo-opciones" type="text" id="edad" name="edad" value="" required min="1"> <br>
 
                     <label class="estilo-opciones">CÉDULA:</label>
                     <input class="estilo-opciones" type="text" id="cedula" name="cedula" value="" disabled> <br>
