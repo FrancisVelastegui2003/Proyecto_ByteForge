@@ -1,5 +1,9 @@
 <?php
 include 'auth_check.php';
+include 'conexion.php'; // Conexión a la base de datos
+
+// Obtener los datos del terapeuta logueado desde la sesión
+$terapeuta_id = $_SESSION['terapeuta_id']; // Cedula del terapeuta logueado
 ?>
 
 <!DOCTYPE html>
@@ -22,6 +26,13 @@ include 'auth_check.php';
 
     <div class="registro-container">
         <h2>Registro de paciente</h2>
+                <!-- Mostrar mensaje de error si existe -->
+                <?php if (isset($_SESSION['error_message'])): ?>
+            <div class="error-message">
+                <?php echo $_SESSION['error_message']; ?>
+            </div>
+            <?php unset($_SESSION['error_message']); // Limpiar el mensaje después de mostrarlo ?>
+        <?php endif; ?>
         <form action="guardar_paciente.php" method="POST">
             <div class="form-group">
                 <label for="nombre">Nombre</label>
@@ -45,7 +56,7 @@ include 'auth_check.php';
             </div>
             <div class="form-group">
                 <label for="id_terapeuta">Cedula Terapeuta a cargo</label>
-                <input type="text" id="id" name="id_terapeuta" required>
+                <input type="text" id="id_terapeuta" name="id_terapeuta" value="<?php echo $_SESSION['terapeuta_id']; ?>" readonly>
             </div>
             <div class="botones">
                 <button class="regresar" type="submit" class="btn" onclick="window.location.href='configuracion.php'">
